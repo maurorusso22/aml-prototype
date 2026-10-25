@@ -1,0 +1,18 @@
+{
+  "kind": "business",
+  "customer_id": "CU-000001",
+  "legal_name": "ACME LOGISTICA SRL",
+  "legal_form": "SRL",
+  "sector": "Road freight transport",
+  "vat_number": "09123456780",
+  "incorporation_date": "2012-04-02",
+  "declared_annual_turnover": "850000.00",
+  "residence": {
+    "street": "Via Esempio 40",
+    "city": "Milano",
+    "postal_code": "20100",
+    "country": "IT"
+  },
+  "risk_rating": "medium",
+  "onboarding_date": "2015-06-01"
+}

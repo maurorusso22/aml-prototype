@@ -1,0 +1,106 @@
+{
+  "case_id": "CASE-000001",
+  "period_start": "2025-10-01",
+  "period_end": "2026-09-30",
+  "alert": {
+    "alert_id": "AL-000001",
+    "customer_id": "CU-000001",
+    "transaction_id": "TX-000004",
+    "raised_at": "2026-09-16T06:00:00+02:00",
+    "scenario": "large_cash_deposit",
+    "reason": "Cash deposit well above the customer's usual monthly activity."
+  },
+  "customer": {
+    "kind": "individual",
+    "customer_id": "CU-000001",
+    "first_name": "Anna",
+    "last_name": "Verdi",
+    "birth_date": "1985-03-12",
+    "nationality": "IT",
+    "tax_code": "VRDNNA85C52F205A",
+    "occupation": "Logistics clerk",
+    "declared_annual_income": "32000.00",
+    "residence": {
+      "street": "Via Esempio 12",
+      "city": "Milano",
+      "postal_code": "20100",
+      "country": "IT"
+    },
+    "risk_rating": "low",
+    "onboarding_date": "2015-06-01"
+  },
+  "accounts": [
+    {
+      "account_id": "AC-000001",
+      "iban": "IT00A9999900001000000004521",
+      "currency": "EUR",
+      "status": "active",
+      "opened_on": "2015-06-01",
+      "closed_on": null,
+      "balance": "5230.40"
+    }
+  ],
+  "cards": [
+    {
+      "card_id": "CA-000001",
+      "account_id": "AC-000001",
+      "card_type": "debit",
+      "masked_pan": "**** **** **** 4821",
+      "issued_on": "2024-01-15",
+      "expires_on": "2029-01-31"
+    }
+  ],
+  "transactions": [
+    {
+      "transaction_id": "TX-000001",
+      "account_id": "AC-000001",
+      "booked_at": "2026-08-27T09:15:00+02:00",
+      "amount": "2100.00",
+      "direction": "inbound",
+      "channel": "interbank",
+      "transaction_type": "wire_transfer",
+      "description": "BONIF. SEPA DA ACME LOGISTICA SRL IBAN IT00X9999901234000000123456 CAUS. STIPENDIO AGOSTO"
+    },
+    {
+      "transaction_id": "TX-000002",
+      "account_id": "AC-000001",
+      "booked_at": "2026-09-01T08:00:00+02:00",
+      "amount": "750.00",
+      "direction": "outbound",
+      "channel": "interbank",
+      "transaction_type": "direct_debit",
+      "description": "ADDEBITO SDD CANONE LOCAZIONE SETTEMBRE"
+    },
+    {
+      "transaction_id": "TX-000003",
+      "account_id": "AC-000001",
+      "card_id": "CA-000001",
+      "booked_at": "2026-09-05T18:42:00+02:00",
+      "amount": "45.30",
+      "direction": "outbound",
+      "channel": "pos",
+      "transaction_type": "card_payment",
+      "description": "POS SUPERMERCATO ESEMPIO MILANO"
+    },
+    {
+      "transaction_id": "TX-000004",
+      "account_id": "AC-000001",
+      "booked_at": "2026-09-15T11:05:00+02:00",
+      "amount": "9500.00",
+      "direction": "inbound",
+      "channel": "branch",
+      "transaction_type": "cash_deposit",
+      "description": "VERSAMENTO CONTANTI"
+    },
+    {
+      "transaction_id": "TX-000005",
+      "account_id": "AC-000001",
+      "booked_at": "2026-09-15T16:30:00+02:00",
+      "amount": "9000.00",
+      "direction": "outbound",
+      "channel": "online",
+      "transaction_type": "wire_transfer",
+      "description": "BONIFICO A FAVORE DI J. MUELLER IBAN DE00999999990000001234 CAUS. PRESTITO"
+    }
+  ]
+}
