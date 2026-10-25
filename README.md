@@ -85,7 +85,7 @@ flowchart LR
 The core design rule is **"the LLM reads, Python reasons"**.
 
 1. **LLM enrichment.** Transaction records contain free text that rules handle poorly: formats vary, labels are abbreviated or missing, field order changes. The LLM performs narrow extraction and classification tasks on that text and returns schema-constrained fields.
-2. **Output validation.** Every LLM answer is checked before use. Labels must belong to a closed set; extracted strings such as IBANs and names must appear verbatim in the source text, so the model cannot invent them; IBANs must have a valid structure. `unknown` is an accepted answer, because abstaining is better than guessing. Items that fail validation fall back to a rule-based extractor, and the report appendix counts how many did.
+2. **Output validation.** Every LLM answer is checked before use. Labels must belong to a closed set; extracted strings such as IBANs and names must appear verbatim in the source text, so the model cannot invent them; IBANs must have a valid structure. Abstaining (`null`, or `unknown` for the payment purpose) is an accepted answer, because it is better than guessing. Items that fail validation fall back to a rule-based extractor, and the report appendix counts how many did.
 3. **Deterministic analytics.** Python computes every aggregate, ratio, chart, and red flag on the enriched transactions. Each result becomes a *fact* with a stable ID and the list of transactions that support it.
 4. **Templated report.** The report text is built from templates filled with facts. There is no free-form generated prose, so every sentence can be traced back to the data.
 5. **Human in the loop.** The final decision fields are left blank for the analyst.
@@ -96,7 +96,7 @@ The core design rule is **"the LLM reads, Python reasons"**.
 |---|---|---|
 | IBAN extraction | Wire transfer description | Counterparty IBAN, or `null` |
 | Counterparty extraction | Wire transfer description | Counterparty name, or `null` |
-| Counterparty type | Counterparty name | `natural_person`, `legal_person`, or `unknown` |
+| Counterparty type | Counterparty name | `natural_person` or `legal_person` |
 | Payment purpose | Wire transfer description | `salary`, `rent`, `invoice`, `loan`, `family_support`, `other`, or `unknown` |
 
 Each task is a prompt file plus an output schema, evaluated on its own; new tasks can be added the same way.
@@ -139,7 +139,7 @@ These fields feed the analytics: counterparties are grouped by name and IBAN, sp
 | 9 | Red flags and typologies | Triggered rules with evidence (e.g. structuring, pass-through of funds, dormant account reactivation) | Indirect: rules use enriched fields |
 | 10 | Profile consistency | Declared income or turnover vs observed flows by purpose | Payment purpose |
 | 11 | Analyst assessment | Blank fields for the decision (escalate / close / request more information) and notes | — |
-| 12 | Appendix | Methodology, data lineage, enrichment statistics (LLM, fallback, unknown), limitations | — |
+| 12 | Appendix | Methodology, data lineage, enrichment statistics (LLM vs fallback), limitations | — |
 
 The analysis catalogue is being expanded; the detailed specification of each analysis will live in [`docs/`](docs/).
 
@@ -199,7 +199,7 @@ The synthetic generator provides ground-truth labels, so LLM quality is measured
 
 - **Extraction:** exact-match accuracy for IBANs and counterparty names, after normalisation.
 - **Classification:** precision, recall, F1, and confusion matrix for counterparty type and payment purpose.
-- **Abstention and invention:** share of `unknown` answers, and share of extracted values not found in the source text (blocked by validation, but still measured).
+- **Abstention and invention:** share of `null` and `unknown` answers, and share of extracted values not found in the source text (blocked by validation, but still measured).
 - **Baseline comparison:** every metric for `baseline`, `local`, and `anthropic`, on the full dataset and on a *hard* subset (typos, abbreviations, missing labels).
 - **End to end:** expected red flags per scenario, and risk indicator vs expected outcome.
 - **Tests:** unit tests for every analyser, rule, and validator; golden tests on fact sheets.
@@ -297,7 +297,7 @@ Development follows the phases in [`docs/implementation-plan.md`](docs/implement
 
 - A prototype for demonstration, not a production system.
 - Rules, thresholds, and the high-risk country list are illustrative and not kept up to date.
-- Sanctions screening, adverse-media search, and PEP list matching are out of scope; the related fields are synthetic flags.
+- Sanctions screening, adverse-media search, and PEP list matching are out of scope.
 - Validation blocks invented values, but not every LLM error: a real name can still be assigned to the wrong role (payer instead of beneficiary). A human must always review the report.
 - Synthetic descriptions cannot capture the full variety of real-world formats; real performance would need to be measured on real, properly governed data.
 

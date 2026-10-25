@@ -9,7 +9,7 @@ This plan breaks the prototype into small, independently testable phases. Each p
 | Principle | What it means in practice |
 |---|---|
 | The LLM reads, Python reasons | The LLM only extracts and classifies free-text fields. Every figure, red flag, and report sentence comes from deterministic code. |
-| Validate every LLM answer | Schema-constrained output, closed label sets, verbatim check on extracted strings, `unknown` always allowed. |
+| Validate every LLM answer | Schema-constrained output, closed label sets, verbatim check on extracted strings, abstention (`null`) always allowed. |
 | Synthetic first | No real data, ever. Identifiers are invalid by construction and tests enforce it. |
 | Offline by default | The rule-based `baseline` enricher lets CI and reviewers run the whole pipeline without any LLM or API key. |
 | Small modules | Each source file stays within 100–150 lines; each analysis and each LLM task is its own module. |
@@ -29,10 +29,9 @@ This plan breaks the prototype into small, independently testable phases. Each p
 ### Phase 1 — Domain model
 
 - Pydantic v2 schemas: `Customer` (individual or business), `Account`, `Card`, `Transaction` (with free-text `description`), `Alert`, `CaseBundle`.
-- `Enrichment` schema: `counterparty_name`, `counterparty_iban`, `counterparty_type`, `payment_purpose`, `source` (`llm`, `baseline`, `unknown`).
-- Enums for direction, channel (branch, ATM, online, POS, wire), transaction type, and the LLM label sets.
+- `Enrichment` schema: `counterparty_name`, `counterparty_iban`, `counterparty_type`, `payment_purpose`, `source` (`llm`, `baseline`).
+- Enums for direction, channel (branch, ATM, online, POS, interbank), transaction type, and the LLM label sets.
 - `Fact` schema: `id`, `category`, `label`, `value`, `unit`, `evidence` (transaction IDs).
-- Export of the JSON schemas to `docs/data-model.md`.
 
 **Done when:** hand-written fixtures validate, and invalid ones are rejected with clear errors.
 
@@ -79,7 +78,7 @@ This plan breaks the prototype into small, independently testable phases. Each p
 - python-docx document with one builder module per section.
 - Text from templates filled with facts, in English or Italian; no free-form generated prose.
 - Tables and embedded charts; fields derived from LLM enrichment marked as such.
-- Blank analyst assessment section; enrichment statistics (LLM, fallback, unknown) in the appendix.
+- Blank analyst assessment section; enrichment statistics (LLM vs fallback) in the appendix.
 - Header or footer stating "Synthetic data — prototype".
 - DOCX core properties (author, company, title) set explicitly, so no local metadata leaks.
 
@@ -104,7 +103,7 @@ This plan breaks the prototype into small, independently testable phases. Each p
 
 ### Phase 9 — Documentation and polish
 
-- `docs/architecture.md`, `docs/data-model.md`, `docs/llm-tasks.md`, `docs/analysis-catalog.md`, `docs/privacy.md`, `docs/evaluation.md`.
+- `docs/architecture.md`, `docs/llm-tasks.md`, `docs/analysis-catalog.md`, `docs/privacy.md`, `docs/evaluation.md`.
 - README updated with screenshots, real Quickstart output, and evaluation highlights.
 
 **Done when:** a reviewer can understand, run, and evaluate the project from the docs alone.
