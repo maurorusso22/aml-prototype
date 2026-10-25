@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+
+# Tooling caches and reports
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Secrets: only the template is tracked
+.env
+.env.*
+!.env.example
+
+# Generated reports (curated samples live in examples/)
+output/
+
+# Editors and OS
+.DS_Store
+.idea/
+.vscode/
+
+# Local Claude Code state
+.claude/settings.local.json
+.claude/.cc-writes/
