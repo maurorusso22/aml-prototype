@@ -164,20 +164,22 @@ Wire transfer descriptions are written from a set of invented templates, with re
 
 ## LLM integration
 
-Enrichment sits behind a small interface, so the same pipeline runs with different backends:
+Enrichment sits behind a small interface, so the same pipeline runs with different backends, listed in order of preference:
 
 | Enricher | Purpose |
 |---|---|
+| `local` (default) | An open-weight model served locally via Ollama (default `llama3.1:8b`, configurable). In banking deployments of this kind, the LLM runs on the institution's own servers; this backend reproduces that architecture. |
+| `anthropic` | Claude through the official Anthropic Python SDK (default model `claude-haiku-5-5`, fast and inexpensive, configurable), with structured outputs based on Pydantic schemas and low effort for these narrow tasks. |
 | `baseline` | Rule-based extractor, no LLM. Runs offline; used in CI, as the fallback for failed validations, and as the evaluation baseline. |
-| `local` | An open-weight model served locally via Ollama. In banking deployments of this kind, the LLM runs on the institution's own servers; this backend reproduces that architecture. |
-| `anthropic` | Claude through the official Anthropic Python SDK (default model `claude-opus-5-5`, configurable), with structured outputs based on Pydantic schemas. Convenient for the demo, and acceptable here only because all data is synthetic. |
 
 Prompt design:
 
-- one versioned prompt file per task in `prompts/`, not strings buried in code;
-- few-shot examples taken from synthetic data only;
+- one versioned prompt file per task in [`src/aml_reporter/enrichment/prompts/`](src/aml_reporter/enrichment/prompts/), not strings buried in code;
+- few-shot examples made of invented data only;
 - closed label sets, and an explicit instruction to answer `unknown` or `null` instead of guessing;
-- several descriptions per request, and a cache keyed on the normalised description, since the same descriptions recur (salary, rent, utilities).
+- up to 20 inputs per request, and a cache keyed on the normalised description, since the same descriptions recur (salary, rent, utilities).
+
+Failure handling: API errors, timeouts, refusals, malformed JSON, missing answers, and values that fail validation never stop the pipeline. The affected transaction is enriched by the baseline instead, and its `source` says so.
 
 ## Privacy by design
 
@@ -233,7 +235,6 @@ aml-prototype/
 ├── config/
 │   ├── rules.yaml              # Illustrative red-flag rules and thresholds
 │   └── risk_countries.yaml     # Illustrative high-risk jurisdiction list
-├── prompts/                    # Versioned prompt templates, one per LLM task
 ├── data/
 │   ├── samples/                # Synthetic case bundles (generated)
 │   └── labels/                 # Ground-truth labels for evaluation (generated)
@@ -243,7 +244,7 @@ aml-prototype/
 │   ├── models/                 # Pydantic domain schemas
 │   ├── synthetic/              # Synthetic data, descriptions, and labels
 │   ├── ingestion/              # Case bundle loading and validation
-│   ├── enrichment/             # LLM tasks, output validation, rule-based baseline
+│   ├── enrichment/             # LLM tasks, prompts, output validation, rule-based baseline
 │   ├── llm/                    # Backend clients (local, anthropic)
 │   ├── analytics/              # One module per analysis
 │   ├── rules/                  # Red-flag rule engine
@@ -255,7 +256,7 @@ aml-prototype/
 
 ## Quickstart
 
-> Target interface — available once the CLI phase of the implementation plan is complete.
+Available now:
 
 ```bash
 git clone https://github.com/<your-username>/aml-prototype.git
@@ -265,6 +266,21 @@ uv sync
 # Generate the synthetic case bundles and labels
 uv run aml-report synth --scenario all --seed 42
 
+# Enrich a case with the default backend, a local model served by Ollama
+ollama pull llama3.1:8b
+uv run aml-report enrich data/samples/pass_through.json --limit 10
+
+# Or with Claude
+cp .env.example .env   # then set ANTHROPIC_API_KEY
+uv run aml-report enrich data/samples/pass_through.json --enricher anthropic --limit 10
+
+# Or fully offline, with the rule-based baseline
+uv run aml-report enrich data/samples/pass_through.json --enricher baseline
+```
+
+Target interface, available once the later phases of the implementation plan are complete:
+
+```bash
 # Build a report offline with the rule-based baseline, no LLM needed
 uv run aml-report generate data/samples/structuring_cash.json --enricher baseline
 
@@ -272,7 +288,6 @@ uv run aml-report generate data/samples/structuring_cash.json --enricher baselin
 uv run aml-report generate data/samples/structuring_cash.json --enricher local
 
 # Build a report with Claude, in Italian
-cp .env.example .env   # then set ANTHROPIC_API_KEY
 uv run aml-report generate data/samples/structuring_cash.json --enricher anthropic --lang it
 
 # Compare enrichers on the labelled synthetic dataset
@@ -284,7 +299,8 @@ uv run aml-report evaluate --enricher baseline --enricher local
 ```bash
 uv sync                      # Create the virtual environment with dev tools
 uv run pre-commit install    # Run ruff, mypy, and gitleaks on every commit
-uv run pytest                # Run the test suite
+uv run pytest                # Run the test suite, offline
+uv run pytest -m integration # Smoke-test the configured LLM backends
 ```
 
 CI runs the same hooks on all files, the test suite, and a secret scan of the full git history.

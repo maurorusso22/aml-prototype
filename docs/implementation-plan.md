@@ -11,7 +11,7 @@ This plan breaks the prototype into small, independently testable phases. Each p
 | The LLM reads, Python reasons | The LLM only extracts and classifies free-text fields. Every figure, red flag, and report sentence comes from deterministic code. |
 | Validate every LLM answer | Schema-constrained output, closed label sets, verbatim check on extracted strings, abstention (`null`) always allowed. |
 | Synthetic first | No real data, ever. Identifiers are invalid by construction and tests enforce it. |
-| Offline by default | The rule-based `baseline` enricher lets CI and reviewers run the whole pipeline without any LLM or API key. |
+| Local LLM by default | The default backend is a local model, as inside a bank's perimeter. The rule-based `baseline` takes over whenever no LLM answers, so CI and reviewers can run everything without any LLM or API key. |
 | Small modules | Each source file stays within 100–150 lines; each analysis and each LLM task is its own module. |
 | Human in the loop | The report presents evidence and a risk indicator; the decision stays with the analyst. |
 
@@ -48,11 +48,12 @@ This plan breaks the prototype into small, independently testable phases. Each p
 
 ### Phase 3 — LLM enrichment
 
-- `Enricher` interface: `enrich(transactions) -> list[Enrichment]`, with three backends: `baseline` (regular expressions and keyword rules), `local` (Ollama), `anthropic` (Claude via the official SDK, structured outputs with Pydantic schemas).
+- `Enricher` interface: `enrich(transactions) -> list[Enrichment]`, with three backends in order of preference: `local` (Ollama, the default), `anthropic` (Claude via the official SDK, structured outputs with Pydantic schemas), `baseline` (regular expressions and keyword rules).
 - One prompt file and output schema per task: IBAN extraction, counterparty extraction, counterparty type, payment purpose. Few-shot examples from synthetic data only.
 - Several descriptions per request; cache keyed on the normalised description.
 - Output validation: schema and label set; extracted strings must appear verbatim in the source text; IBAN structure check (country code, length, pattern, not the checksum, since synthetic IBANs are deliberately invalid). On failure, fall back to `baseline` and record it in `source`.
 - Graceful handling of API errors, refusals, and timeouts: fallback, never crash.
+- CLI command `aml-report enrich`, added early so backends can be tried by hand; smoke tests marked `integration` and excluded from the default run.
 
 **Done when:** the `baseline` enricher runs on all scenarios, `local` and `anthropic` pass a smoke test on a sample, and validators are unit-tested against adversarial outputs (invented IBAN, label outside the set, malformed JSON).
 
