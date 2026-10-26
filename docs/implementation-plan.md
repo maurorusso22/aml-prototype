@@ -37,7 +37,7 @@ This plan breaks the prototype into small, independently testable phases. Each p
 
 ### Phase 2 — Synthetic data generator
 
-- Base generator with Faker (`it_IT`), seeded for reproducibility.
+- Seeded generator with curated lists of common Italian names and fictitious streets, so output never depends on third-party data and never points to a recognisable person.
 - Invalid-by-construction identifiers: IBAN with check digits `00` and a fictitious bank code, *codice fiscale* with wrong control character, card numbers failing Luhn and stored masked.
 - Description writer: invented templates plus noise (abbreviations, truncation, typos, field order, missing IBAN), with a `hard` tag on the noisiest ones.
 - Ground-truth labels written to `data/labels/`, separate from the case bundles.

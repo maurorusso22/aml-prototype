@@ -183,8 +183,8 @@ Prompt design:
 
 Even though all data is synthetic, the pipeline is designed as it would be for real data.
 
-- **Synthetic only.** Data comes from [Faker](https://faker.readthedocs.io/) (`it_IT` locale) plus scenario injectors, with a fixed seed for reproducibility.
-- **Invalid-by-construction identifiers.** IBANs use check digits `00`, which no real IBAN can have, and a fictitious bank code; fiscal codes (*codice fiscale*) carry a wrong control character; card numbers fail the Luhn check and are only ever stored masked. Tests enforce all three rules.
+- **Synthetic only.** A seeded generator builds every case from scenario templates, using only very common Italian first names and surnames (so no generated person points to a recognisable individual) and deliberately fictitious street names.
+- **Invalid-by-construction identifiers.** IBANs use check digits `00`, which no real IBAN can have, fail the mod-97 checksum, and carry a fictitious bank code; fiscal codes (*codice fiscale*) carry a wrong control character; VAT numbers have a wrong check digit; card numbers fail the Luhn check and are only ever stored masked. Tests enforce every rule.
 - **LLM inside the perimeter.** With real data, the model must run on infrastructure controlled by the institution, so customer data never leaves its perimeter. The `local` backend shows this setup end to end.
 - **Data minimisation.** Each LLM call receives only the text its task needs (a transaction description or a counterparty name), never the customer profile or the account history.
 - **No secrets in the repo.** `.env` is git-ignored, `.env.example` documents the variables, and CI runs a secret scanner.
@@ -212,7 +212,7 @@ Results will be published in `docs/evaluation.md`.
 |---|---|
 | Language and packaging | Python 3.12+, [uv](https://docs.astral.sh/uv/) |
 | Data and validation | pandas, Pydantic v2 |
-| Synthetic data | Faker |
+| Synthetic data | Seeded Python generator, no external data |
 | LLM | Anthropic Python SDK, httpx (Ollama) |
 | Report | python-docx, matplotlib |
 | Evaluation | scikit-learn (metrics) |
