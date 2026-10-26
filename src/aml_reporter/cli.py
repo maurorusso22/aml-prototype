@@ -9,7 +9,8 @@ import typer
 from dotenv import load_dotenv
 from pydantic import TypeAdapter
 
-from .enrichment import enrichable, make_enricher
+from .analytics import build_fact_sheet
+from .enrichment import Enricher, enrichable, make_enricher
 from .models import CaseBundle, Enrichment
 from .settings import ENRICHERS, Settings
 from .synthetic import SCENARIOS, generate_cases, write_cases
@@ -69,17 +70,61 @@ def enrich(
         limit: Enrich only this many transactions, e.g. for a quick smoke test.
         output: File to write; standard output when omitted.
     """
-    settings = Settings.from_env()
-    name = enricher or settings.enricher
-    if name not in ENRICHERS:
-        raise typer.BadParameter(f"unknown enricher {name}; choose from {', '.join(ENRICHERS)}")
+    chosen = _enricher(enricher)
     bundle = CaseBundle.model_validate_json(case_file.read_text(encoding="utf-8"))
-    transactions = enrichable(bundle.transactions)[:limit]
-    enrichments = make_enricher(name, settings).enrich(transactions)
-    payload = ENRICHMENTS.dump_json(enrichments, indent=2).decode() + "\n"
-    if output is None:
-        typer.echo(payload, nl=False)
-    else:
-        output.write_text(payload, encoding="utf-8")
+    enrichments = chosen.enrich(enrichable(bundle.transactions)[:limit])
+    _write(ENRICHMENTS.dump_json(enrichments, indent=2).decode(), output)
     sources = Counter(str(enrichment.source) for enrichment in enrichments)
     typer.echo(f"{len(enrichments)} enriched: {dict(sources)}", err=True)
+
+
+@app.command(help="Compute every fact of a case bundle: the fact sheet.")
+def analyze(
+    case_file: Annotated[Path, typer.Argument(help="Case bundle JSON file.")],
+    enricher: Annotated[
+        str | None, typer.Option(help="local, anthropic, or baseline; default AML_ENRICHER.")
+    ] = None,
+    output: Annotated[Path | None, typer.Option(help="Write JSON here, not stdout.")] = None,
+) -> None:
+    """Enrich one case bundle and run every analyser on it.
+
+    Args:
+        case_file: Case bundle to read.
+        enricher: Enricher name; the AML_ENRICHER setting when omitted.
+        output: File to write; standard output when omitted.
+    """
+    chosen = _enricher(enricher)
+    bundle = CaseBundle.model_validate_json(case_file.read_text(encoding="utf-8"))
+    sheet = build_fact_sheet(bundle, chosen.enrich(bundle.transactions))
+    _write(sheet.model_dump_json(indent=2), output)
+    typer.echo(f"{len(sheet.facts)} facts for {sheet.case_id}", err=True)
+
+
+def _enricher(name: str | None) -> Enricher:
+    """Build the enricher chosen on the command line or in the settings.
+
+    Args:
+        name: Enricher name; the AML_ENRICHER setting when None.
+
+    Returns:
+        The enricher.
+    """
+    settings = Settings.from_env()
+    chosen = name or settings.enricher
+    if chosen not in ENRICHERS:
+        raise typer.BadParameter(f"unknown enricher {chosen}; choose from {', '.join(ENRICHERS)}")
+    return make_enricher(chosen, settings)
+
+
+def _write(payload: str, output: Path | None) -> None:
+    """Write JSON to a file, or to standard output.
+
+    Args:
+        payload: JSON text.
+        output: Destination file; standard output when None.
+    """
+    if output is None:
+        typer.echo(payload)
+    else:
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output.write_text(payload + "\n", encoding="utf-8")
