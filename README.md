@@ -213,7 +213,7 @@ Results will be published in `docs/evaluation.md`.
 | Area | Tools |
 |---|---|
 | Language and packaging | Python 3.12+, [uv](https://docs.astral.sh/uv/) |
-| Data and validation | pandas, Pydantic v2 |
+| Data and validation | Pydantic v2; analytics in plain Python with exact decimals |
 | Synthetic data | Seeded Python generator, no external data |
 | LLM | Anthropic Python SDK, httpx (Ollama) |
 | Report | python-docx, matplotlib |
@@ -276,6 +276,9 @@ uv run aml-report enrich data/samples/pass_through.json --enricher anthropic --l
 
 # Or fully offline, with the rule-based baseline
 uv run aml-report enrich data/samples/pass_through.json --enricher baseline
+
+# Compute the fact sheet: every figure the report will cite, with its evidence
+uv run aml-report analyze data/samples/structuring_cash.json --output output/facts.json
 ```
 
 Target interface, available once the later phases of the implementation plan are complete:

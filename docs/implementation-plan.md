@@ -59,10 +59,11 @@ This plan breaks the prototype into small, independently testable phases. Each p
 
 ### Phase 4 — Analytics engine
 
-- Analyser interface: `analyze(case, enrichments) -> list[Fact]`, registered in a simple plug-in registry.
-- Initial analysers: alert in context (baseline comparison), flow summary, channel and cash mix, payment purpose mix, counterparties (grouping by name and IBAN, natural vs legal persons, concentration), geographic exposure (IBAN country code), profile consistency, temporal patterns (velocity, dormancy).
-- Charts rendered with matplotlib for the report.
-- Fact sheet export to JSON.
+- Analyser interface: a function from the analysis context (case bundle plus enrichments) to facts, registered with a decorator; adding an analysis means writing one function.
+- Initial analysers: alert in context (baseline comparison), flow summary, channel and cash mix, payment purpose mix, counterparties (grouping by name and IBAN, natural vs legal persons, concentration), geographic exposure (IBAN country code), customer and relationship, profile consistency, temporal patterns (inactivity, bursts).
+- Plain Python with exact decimals rather than pandas: a case has a few hundred transactions, and the code stays fully typed.
+- Charts rendered with matplotlib for the report, with a colour-blind-safe palette.
+- Fact sheet export to JSON, and CLI command `aml-report analyze`.
 
 **Done when:** every analyser has unit tests, and the fact sheet of each scenario matches a golden file.
 
