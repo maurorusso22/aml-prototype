@@ -6,7 +6,19 @@ from typing import Any
 
 import pytest
 
+from aml_reporter.synthetic import GeneratedCase, generate_cases
+
 FIXTURES_DIR = Path(__file__).parent / "fixtures"  # Hand-written synthetic test data
+
+
+@pytest.fixture(scope="session")
+def pass_through_case() -> GeneratedCase:
+    """Generate the pass-through scenario once for the whole test session.
+
+    Returns:
+        The case and its labels.
+    """
+    return generate_cases(["pass_through"], 42)[0]
 
 
 def _load(name: str) -> dict[str, Any]:
