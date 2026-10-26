@@ -8,7 +8,10 @@ license-files = ["LICENSE"]
 authors = [{ name = "Mauro Russo" }]
 requires-python = ">=3.12"
 dependencies = [
+    "anthropic>=2.3.0",
+    "httpx>=0.28.1",
     "pydantic>=2.14.1",
+    "python-dotenv>=1.2.4",
     "typer>=0.27.3",
 ]
 
@@ -57,7 +60,15 @@ warn_required_dynamic_aliases = true
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = ["-ra", "--strict-markers", "--strict-config", "--import-mode=importlib"]
+addopts = [
+    "-ra",
+    "--strict-markers",
+    "--strict-config",
+    "--import-mode=importlib",
+    "-m",
+    "not integration",
+]
+markers = ["integration: calls a real LLM backend; run with `pytest -m integration`"]
 
 [tool.coverage.run]
 source = ["aml_reporter"]
