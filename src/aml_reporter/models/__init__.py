@@ -19,7 +19,7 @@ from .enums import (
     RiskRating,
     TransactionType,
 )
-from .fact import Fact
+from .fact import Fact, FactSheet
 from .transaction import Transaction
 
 __all__ = [  # Public names of the domain model package
@@ -40,6 +40,7 @@ __all__ = [  # Public names of the domain model package
     "EnrichmentSource",
     "Fact",
     "FactCategory",
+    "FactSheet",
     "IndividualCustomer",
     "Outcome",
     "PaymentPurpose",
