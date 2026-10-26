@@ -31,6 +31,18 @@ def test_enrich_writes_baseline_enrichments(tmp_path: Path) -> None:
     assert {enrichment["source"] for enrichment in enrichments} == {"baseline"}
 
 
+def test_analyze_writes_a_fact_sheet(tmp_path: Path) -> None:
+    """`analyze` enriches a bundle and writes its fact sheet."""
+    RUNNER.invoke(app, ["synth", "--scenario", "structuring_cash", "--out-dir", str(tmp_path)])
+    bundle, output = tmp_path / "samples" / "structuring_cash.json", tmp_path / "facts.json"
+    args = ["analyze", str(bundle), "--enricher", "baseline", "--output", str(output)]
+    result = RUNNER.invoke(app, args)
+    assert result.exit_code == 0, result.output
+    sheet = json.loads(output.read_text(encoding="utf-8"))
+    assert sheet["case_id"] == "CASE-000003"
+    assert "F-CASH-004" in {fact["id"] for fact in sheet["facts"]}
+
+
 def test_enrich_rejects_unknown_enrichers(tmp_path: Path) -> None:
     """An unknown enricher name fails with a clear message."""
     result = RUNNER.invoke(app, ["enrich", str(tmp_path / "x.json"), "--enricher", "magic"])
