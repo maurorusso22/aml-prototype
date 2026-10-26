@@ -1,0 +1,351 @@
+{
+  "case_id": "CASE-000001",
+  "scenario": "fp_salary_bonus",
+  "expected_outcome": "close",
+  "transactions": [
+    {
+      "transaction_id": "TX-010001",
+      "counterparty_name": "BRUNO PAOLA",
+      "counterparty_iban": "IT00R9999942300604084475986",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-010005",
+      "counterparty_name": "ORION ENERGIA SAS",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-010014",
+      "counterparty_name": "NOVA TECNOLOGIE SRL",
+      "counterparty_iban": "IT00X9999919621105584271318",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-010017",
+      "counterparty_name": "BRUNO PAOLA",
+      "counterparty_iban": "IT00R9999942300604084475986",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-010019",
+      "counterparty_name": "ORION ENERGIA SAS",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-010022",
+      "counterparty_name": "S. SANTORO",
+      "counterparty_iban": "IT00Q9999905438324605491618",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "family_support",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-010026",
+      "counterparty_name": "NOVA TECNOLOGIE SRL",
+      "counterparty_iban": "IT00X9999919621105584271318",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-010028",
+      "counterparty_name": "BRUNO PAOLA",
+      "counterparty_iban": "IT00R9999942300604084475986",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-010033",
+      "counterparty_name": "ORION ENERGIA SAS",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-010039",
+      "counterparty_name": "NOVA TECNOLOGIE SRL",
+      "counterparty_iban": "IT00X9999919621105584271318",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-010040",
+      "counterparty_name": "S. SANTORO",
+      "counterparty_iban": "IT00Y9999965546969943854316",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "family_support",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-010046",
+      "counterparty_name": "BRUNO PAOLA",
+      "counterparty_iban": "IT00R9999942300604084475986",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-010048",
+      "counterparty_name": "S. SANTORO",
+      "counterparty_iban": "IT00Y9999965546969943854316",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "family_support",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-010052",
+      "counterparty_name": "ORION ENERGIA SAS",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-010056",
+      "counterparty_name": "NOVA TECNOLOGIE SRL",
+      "counterparty_iban": "IT00X9999919621105584271318",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-010059",
+      "counterparty_name": "BRUNO PAOLA",
+      "counterparty_iban": null,
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-010061",
+      "counterparty_name": "ORION ENERGIA SAS",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-010067",
+      "counterparty_name": "NOVA TECNOLOGIE SRL",
+      "counterparty_iban": "IT00X9999919621105584271318",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-010068",
+      "counterparty_name": "BRUNO PAOLA",
+      "counterparty_iban": null,
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-010070",
+      "counterparty_name": "ORION ENERGIA SAS",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-010075",
+      "counterparty_name": "NOVA TECNOLOGIE SRL",
+      "counterparty_iban": "IT00X9999919621105584271318",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-010080",
+      "counterparty_name": "BRUNO PAOLA",
+      "counterparty_iban": "IT00R9999942300604084475986",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-010083",
+      "counterparty_name": "ORION ENERGIA SAS",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-010090",
+      "counterparty_name": "NOVA TECNOLOGIE SRL",
+      "counterparty_iban": "IT00X9999919621105584271318",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-010091",
+      "counterparty_name": "BRUNO PAOLA",
+      "counterparty_iban": null,
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-010093",
+      "counterparty_name": "ORION ENERGIA SAS",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-010098",
+      "counterparty_name": "NOVA TECNOLOGIE SRL",
+      "counterparty_iban": "IT00X9999919621105584271318",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-010101",
+      "counterparty_name": "BRUNO PAOLA",
+      "counterparty_iban": "IT00R9999942300604084475986",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-010102",
+      "counterparty_name": "S. SANTORO",
+      "counterparty_iban": null,
+      "counterparty_type": "natural_person",
+      "payment_purpose": "family_support",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-010108",
+      "counterparty_name": "ORION ENERGIA SAS",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-010111",
+      "counterparty_name": "NOVA TECNOLOGIE SRL",
+      "counterparty_iban": "IT00X9999919621105584271318",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-010114",
+      "counterparty_name": "BRUNO PAOLA",
+      "counterparty_iban": null,
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-010117",
+      "counterparty_name": "ORION ENERGIA SAS",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-010122",
+      "counterparty_name": "S. SANTORO",
+      "counterparty_iban": null,
+      "counterparty_type": "natural_person",
+      "payment_purpose": "family_support",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-010123",
+      "counterparty_name": "NOVA TECNOLOGIE SRL",
+      "counterparty_iban": "IT00X9999919621105584271318",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-010126",
+      "counterparty_name": "BRUNO PAOLA",
+      "counterparty_iban": null,
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-010131",
+      "counterparty_name": "ORION ENERGIA SAS",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-010134",
+      "counterparty_name": "NOVA TECNOLOGIE SRL",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-010138",
+      "counterparty_name": "BRUNO PAOLA",
+      "counterparty_iban": "IT00R9999942300604084475986",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-010139",
+      "counterparty_name": "S. SANTORO",
+      "counterparty_iban": null,
+      "counterparty_type": "natural_person",
+      "payment_purpose": "family_support",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-010145",
+      "counterparty_name": "ORION ENERGIA SAS",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-010146",
+      "counterparty_name": "NOVA TECNOLOGIE SRL",
+      "counterparty_iban": "IT00X9999919621105584271318",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-010150",
+      "counterparty_name": "NOVA TECNOLOGIE SRL",
+      "counterparty_iban": "IT00X9999919621105584271318",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": true
+    }
+  ]
+}

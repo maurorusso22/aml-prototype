@@ -1,0 +1,135 @@
+{
+  "case_id": "CASE-000005",
+  "scenario": "dormant_reactivation",
+  "expected_outcome": "escalate",
+  "transactions": [
+    {
+      "transaction_id": "TX-050002",
+      "counterparty_name": "S. DE LUCA",
+      "counterparty_iban": null,
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-050008",
+      "counterparty_name": "F. GIORDANO",
+      "counterparty_iban": "IT00R9999905241148954358144",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "family_support",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-050009",
+      "counterparty_name": "ARGO ENERGIA SNC",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-050010",
+      "counterparty_name": "VEGA COSTRUZIONI SNC",
+      "counterparty_iban": "IT00V9999973508176250320793",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-050012",
+      "counterparty_name": "S. DE LUCA",
+      "counterparty_iban": "IT00Y9999917504650428393246",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-050017",
+      "counterparty_name": "ARGO ENERGIA SNC",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-050023",
+      "counterparty_name": "VEGA COSTRUZIONI SNC",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-050024",
+      "counterparty_name": "S. DE LUCA",
+      "counterparty_iban": null,
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-050031",
+      "counterparty_name": "ARGO ENERGIA SNC",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-050032",
+      "counterparty_name": "GIORDANO SARA",
+      "counterparty_iban": "IT00G9999913007536711732061",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "family_support",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-050035",
+      "counterparty_name": "VEGA COSTRUZIONI SNC",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-050036",
+      "counterparty_name": "ARGO HOLDING GMBH",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-050037",
+      "counterparty_name": "ARGO HOLDING GMBH",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-050040",
+      "counterparty_name": "ANDREA ROMANO",
+      "counterparty_iban": "IT00U9999932661568095994580",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "other",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-050041",
+      "counterparty_name": "ROBERTO ROSSI",
+      "counterparty_iban": null,
+      "counterparty_type": "natural_person",
+      "payment_purpose": "other",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-050042",
+      "counterparty_name": "ARGO HOLDING GMBH",
+      "counterparty_iban": "DE00999957135913801034",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    }
+  ]
+}

@@ -1,0 +1,327 @@
+{
+  "case_id": "CASE-000003",
+  "scenario": "structuring_cash",
+  "expected_outcome": "escalate",
+  "transactions": [
+    {
+      "transaction_id": "TX-030001",
+      "counterparty_name": "LORENZO RIZZO",
+      "counterparty_iban": null,
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-030008",
+      "counterparty_name": "ARGO ENERGIA SRL",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-030012",
+      "counterparty_name": "ALFA ALIMENTARI SAS",
+      "counterparty_iban": "IT00E9999956689122578471115",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-030014",
+      "counterparty_name": "LORENZO RIZZO",
+      "counterparty_iban": null,
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-030018",
+      "counterparty_name": "ARGO ENERGIA SRL",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-030023",
+      "counterparty_name": "ALFA ALIMENTARI SAS",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-030024",
+      "counterparty_name": "LORENZO RIZZO",
+      "counterparty_iban": "IT00B9999942009876550870949",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-030029",
+      "counterparty_name": "ARGO ENERGIA SRL",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-030031",
+      "counterparty_name": "ALFA ALIMENTARI SAS",
+      "counterparty_iban": "IT00E9999956689122578471115",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-030036",
+      "counterparty_name": "LORENZO RIZZO",
+      "counterparty_iban": "IT00B9999942009876550870949",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-030038",
+      "counterparty_name": "P. RIZZO",
+      "counterparty_iban": null,
+      "counterparty_type": "natural_person",
+      "payment_purpose": "family_support",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-030039",
+      "counterparty_name": "ARGO ENERGIA SRL",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-030044",
+      "counterparty_name": "ALFA ALIMENTARI SAS",
+      "counterparty_iban": "IT00E9999956689122578471115",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-030046",
+      "counterparty_name": "LORENZO RIZZO",
+      "counterparty_iban": "IT00B9999942009876550870949",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-030051",
+      "counterparty_name": "ARGO ENERGIA SRL",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-030054",
+      "counterparty_name": "ALFA ALIMENTARI SAS",
+      "counterparty_iban": "IT00E9999956689122578471115",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-030059",
+      "counterparty_name": "LORENZO RIZZO",
+      "counterparty_iban": "IT00B9999942009876550870949",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-030062",
+      "counterparty_name": "ARGO ENERGIA SRL",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-030067",
+      "counterparty_name": "ALFA ALIMENTARI SAS",
+      "counterparty_iban": "IT00E9999956689122578471115",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-030070",
+      "counterparty_name": "LORENZO RIZZO",
+      "counterparty_iban": "IT00B9999942009876550870949",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-030074",
+      "counterparty_name": "ARGO ENERGIA SRL",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-030077",
+      "counterparty_name": "ALFA ALIMENTARI SAS",
+      "counterparty_iban": "IT00E9999956689122578471115",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-030079",
+      "counterparty_name": "LORENZO RIZZO",
+      "counterparty_iban": null,
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-030081",
+      "counterparty_name": "S. RIZZO",
+      "counterparty_iban": "IT00J9999901062036637950122",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "family_support",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-030085",
+      "counterparty_name": "ARGO ENERGIA SRL",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-030090",
+      "counterparty_name": "ALFA ALIMENTARI SAS",
+      "counterparty_iban": "IT00E9999956689122578471115",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-030092",
+      "counterparty_name": "LORENZO RIZZO",
+      "counterparty_iban": "IT00B9999942009876550870949",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-030095",
+      "counterparty_name": "ARGO ENERGIA SRL",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-030100",
+      "counterparty_name": "ALFA ALIMENTARI SAS",
+      "counterparty_iban": "IT00E9999956689122578471115",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-030101",
+      "counterparty_name": "LORENZO RIZZO",
+      "counterparty_iban": "IT00B9999942009876550870949",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-030105",
+      "counterparty_name": "ARGO ENERGIA SRL",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-030108",
+      "counterparty_name": "ALFA ALIMENTARI SAS",
+      "counterparty_iban": "IT00E9999956689122578471115",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-030113",
+      "counterparty_name": "LORENZO RIZZO",
+      "counterparty_iban": null,
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-030114",
+      "counterparty_name": "S. RIZZO",
+      "counterparty_iban": "IT00J9999901062036637950122",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "family_support",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-030117",
+      "counterparty_name": "ARGO ENERGIA SRL",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-030126",
+      "counterparty_name": "ALFA ALIMENTARI SAS",
+      "counterparty_iban": "IT00E9999956689122578471115",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-030131",
+      "counterparty_name": "LORENZO RIZZO",
+      "counterparty_iban": "IT00B9999942009876550870949",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-030132",
+      "counterparty_name": "P. RIZZO",
+      "counterparty_iban": "IT00W9999912063969982026826",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "family_support",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-030138",
+      "counterparty_name": "ARGO ENERGIA SRL",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-030139",
+      "counterparty_name": "ALFA ALIMENTARI SAS",
+      "counterparty_iban": "IT00E9999956689122578471115",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": true
+    }
+  ]
+}

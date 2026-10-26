@@ -1,0 +1,439 @@
+{
+  "case_id": "CASE-000004",
+  "scenario": "pass_through",
+  "expected_outcome": "escalate",
+  "transactions": [
+    {
+      "transaction_id": "TX-040001",
+      "counterparty_name": "A. BIANCHI",
+      "counterparty_iban": null,
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-040003",
+      "counterparty_name": "COSTA VALENTINA",
+      "counterparty_iban": "IT00W9999917665926877313700",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "family_support",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-040006",
+      "counterparty_name": "VEGA ENERGIA SPA",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-040012",
+      "counterparty_name": "ACME TECNOLOGIE SNC",
+      "counterparty_iban": "IT00X9999913125472034548514",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-040015",
+      "counterparty_name": "A. BIANCHI",
+      "counterparty_iban": "IT00V9999927450398108587864",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-040018",
+      "counterparty_name": "VEGA ENERGIA SPA",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-040023",
+      "counterparty_name": "ACME TECNOLOGIE SNC",
+      "counterparty_iban": "IT00X9999913125472034548514",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-040027",
+      "counterparty_name": "A. BIANCHI",
+      "counterparty_iban": "IT00V9999927450398108587864",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-040030",
+      "counterparty_name": "VEGA ENERGIA SPA",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-040035",
+      "counterparty_name": "ACME TECNOLOGIE SNC",
+      "counterparty_iban": "IT00X9999913125472034548514",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-040036",
+      "counterparty_name": "A. BIANCHI",
+      "counterparty_iban": "IT00V9999927450398108587864",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-040043",
+      "counterparty_name": "VEGA ENERGIA SPA",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-040045",
+      "counterparty_name": "ACME TECNOLOGIE SNC",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-040053",
+      "counterparty_name": "A. BIANCHI",
+      "counterparty_iban": "IT00V9999927450398108587864",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-040056",
+      "counterparty_name": "VEGA ENERGIA SPA",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-040059",
+      "counterparty_name": "ACME TECNOLOGIE SNC",
+      "counterparty_iban": "IT00X9999913125472034548514",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-040060",
+      "counterparty_name": "A. BIANCHI",
+      "counterparty_iban": "IT00V9999927450398108587864",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-040062",
+      "counterparty_name": "MATTEO COSTA",
+      "counterparty_iban": "IT00P9999988658182147790409",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "family_support",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-040064",
+      "counterparty_name": "VEGA ENERGIA SPA",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-040069",
+      "counterparty_name": "ACME TECNOLOGIE SNC",
+      "counterparty_iban": "IT00X9999913125472034548514",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-040075",
+      "counterparty_name": "A. BIANCHI",
+      "counterparty_iban": "IT00V9999927450398108587864",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-040082",
+      "counterparty_name": "VEGA ENERGIA SPA",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-040085",
+      "counterparty_name": "ACME TECNOLOGIE SNC",
+      "counterparty_iban": "IT00X9999913125472034548514",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-040087",
+      "counterparty_name": "A. BIANCHI",
+      "counterparty_iban": "IT00V9999927450398108587864",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-040091",
+      "counterparty_name": "VEGA ENERGIA SPA",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-040095",
+      "counterparty_name": "ACME TECNOLOGIE SNC",
+      "counterparty_iban": "IT00X9999913125472034548514",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-040098",
+      "counterparty_name": "A. BIANCHI",
+      "counterparty_iban": null,
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-040103",
+      "counterparty_name": "VEGA ENERGIA SPA",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-040110",
+      "counterparty_name": "ACME TECNOLOGIE SNC",
+      "counterparty_iban": "IT00X9999913125472034548514",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-040113",
+      "counterparty_name": "A. BIANCHI",
+      "counterparty_iban": null,
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-040115",
+      "counterparty_name": "VEGA ENERGIA SPA",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-040119",
+      "counterparty_name": "ACME TECNOLOGIE SNC",
+      "counterparty_iban": "IT00X9999913125472034548514",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-040121",
+      "counterparty_name": "A. BIANCHI",
+      "counterparty_iban": null,
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-040125",
+      "counterparty_name": "VEGA ENERGIA SPA",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-040128",
+      "counterparty_name": "CHIARA GIORDANO",
+      "counterparty_iban": "IT00I9999904462732622634913",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "other",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-040129",
+      "counterparty_name": "COSTA GIORGIA",
+      "counterparty_iban": "IT00D9999984476325052442507",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "loan",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-040130",
+      "counterparty_name": "ACME TECNOLOGIE SNC",
+      "counterparty_iban": "IT00X9999913125472034548514",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-040131",
+      "counterparty_name": "L. GIORDANO",
+      "counterparty_iban": null,
+      "counterparty_type": "natural_person",
+      "payment_purpose": "loan",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-040132",
+      "counterparty_name": "V. ROSSI",
+      "counterparty_iban": "IT00D9999935464547591599874",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "loan",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-040133",
+      "counterparty_name": "GRECO MARCO",
+      "counterparty_iban": "IT00A9999953795031858827568",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "other",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-040135",
+      "counterparty_name": "I. MANCINI",
+      "counterparty_iban": "IT00K9999981170874371641425",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "loan",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-040136",
+      "counterparty_name": "ROMANO LORENZO",
+      "counterparty_iban": "IT00F9999996137569804096354",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "loan",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-040137",
+      "counterparty_name": "A. GRECO",
+      "counterparty_iban": null,
+      "counterparty_type": "natural_person",
+      "payment_purpose": "other",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-040138",
+      "counterparty_name": "L. MARINO",
+      "counterparty_iban": "IT00N9999961779129341810308",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "unknown",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-040140",
+      "counterparty_name": "S. DE LUCA",
+      "counterparty_iban": "IT00W9999910607899478302523",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "other",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-040141",
+      "counterparty_name": "A. BIANCHI",
+      "counterparty_iban": null,
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-040144",
+      "counterparty_name": "E. BARBIERI",
+      "counterparty_iban": "IT00Y9999979064607321752480",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "other",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-040145",
+      "counterparty_name": "A. GALLO",
+      "counterparty_iban": "IT00V9999973842814896784313",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "other",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-040146",
+      "counterparty_name": "ORION TRADING SA",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "other",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-040147",
+      "counterparty_name": "G. RINALDI",
+      "counterparty_iban": "LT009999244048814790",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-040148",
+      "counterparty_name": "ORION TRADING SA",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "other",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-040150",
+      "counterparty_name": "VEGA ENERGIA SPA",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-040152",
+      "counterparty_name": "ACME TECNOLOGIE SNC",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-040154",
+      "counterparty_name": "COSTA VALENTINA",
+      "counterparty_iban": "IT00W9999917665926877313700",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "family_support",
+      "hard": true
+    }
+  ]
+}

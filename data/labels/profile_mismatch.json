@@ -1,0 +1,943 @@
+{
+  "case_id": "CASE-000006",
+  "scenario": "profile_mismatch",
+  "expected_outcome": "request_information",
+  "transactions": [
+    {
+      "transaction_id": "TX-060001",
+      "counterparty_name": "ARGO COSTRUZIONI SNC",
+      "counterparty_iban": "IT00X9999947171346350505691",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-060003",
+      "counterparty_name": "BARBIERI VALENTINA",
+      "counterparty_iban": null,
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060004",
+      "counterparty_name": "ACME TECNOLOGIE SNC",
+      "counterparty_iban": "IT00H9999905952029235783700",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060005",
+      "counterparty_name": "LUMEN IMPIANTI SPA",
+      "counterparty_iban": "IT00P9999920960305759374107",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060006",
+      "counterparty_name": "ZENIT ALIMENTARI SNC",
+      "counterparty_iban": "IT00I9999909863484113578550",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-060008",
+      "counterparty_name": "ARGO COSTRUZIONI SPA",
+      "counterparty_iban": "IT00L9999947352839723907897",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060009",
+      "counterparty_name": "ACME TECNOLOGIE SNC",
+      "counterparty_iban": "IT00H9999905952029235783700",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060011",
+      "counterparty_name": "DELTA ENERGIA SNC",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060012",
+      "counterparty_name": "ARGO COSTRUZIONI SNC",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060013",
+      "counterparty_name": "ZENIT ALIMENTARI SNC",
+      "counterparty_iban": "IT00I9999909863484113578550",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060014",
+      "counterparty_name": "BARBIERI VALENTINA",
+      "counterparty_iban": null,
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-060015",
+      "counterparty_name": "LUMEN IMPIANTI SPA",
+      "counterparty_iban": "IT00P9999920960305759374107",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060016",
+      "counterparty_name": "ATLAS TECNOLOGIE SNC",
+      "counterparty_iban": "IT00H9999941528782117835179",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060017",
+      "counterparty_name": "ACME TECNOLOGIE SNC",
+      "counterparty_iban": "IT00H9999905952029235783700",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060018",
+      "counterparty_name": "DELTA ENERGIA SNC",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060020",
+      "counterparty_name": "LUMEN IMPIANTI SPA",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060021",
+      "counterparty_name": "ZENIT ALIMENTARI SNC",
+      "counterparty_iban": "IT00I9999909863484113578550",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-060023",
+      "counterparty_name": "ARGO COSTRUZIONI SNC",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060024",
+      "counterparty_name": "ALFA IMPIANTI SRL",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060027",
+      "counterparty_name": "BARBIERI VALENTINA",
+      "counterparty_iban": "IT00T9999928001396842477929",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060028",
+      "counterparty_name": "ARGO COSTRUZIONI SNC",
+      "counterparty_iban": "IT00X9999947171346350505691",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060030",
+      "counterparty_name": "ARGO COSTRUZIONI SPA",
+      "counterparty_iban": "IT00L9999947352839723907897",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-060032",
+      "counterparty_name": "ALFA IMPIANTI SRL",
+      "counterparty_iban": "IT00T9999999081169255387056",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-060033",
+      "counterparty_name": "ATLAS TECNOLOGIE SNC",
+      "counterparty_iban": "IT00H9999941528782117835179",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060034",
+      "counterparty_name": "DELTA ENERGIA SNC",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-060035",
+      "counterparty_name": "ARGO COSTRUZIONI SPA",
+      "counterparty_iban": "IT00L9999947352839723907897",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060036",
+      "counterparty_name": "ARGO COSTRUZIONI SNC",
+      "counterparty_iban": "IT00X9999947171346350505691",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-060037",
+      "counterparty_name": "ATLAS TECNOLOGIE SNC",
+      "counterparty_iban": "IT00H9999941528782117835179",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060039",
+      "counterparty_name": "ACME TECNOLOGIE SNC",
+      "counterparty_iban": "IT00H9999905952029235783700",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060041",
+      "counterparty_name": "ACME TECNOLOGIE SNC",
+      "counterparty_iban": "IT00H9999905952029235783700",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-060043",
+      "counterparty_name": "BARBIERI VALENTINA",
+      "counterparty_iban": "IT00T9999928001396842477929",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-060047",
+      "counterparty_name": "LUMEN IMPIANTI SPA",
+      "counterparty_iban": "IT00P9999920960305759374107",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060048",
+      "counterparty_name": "LUMEN IMPIANTI SPA",
+      "counterparty_iban": "IT00P9999920960305759374107",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060049",
+      "counterparty_name": "ACME TECNOLOGIE SNC",
+      "counterparty_iban": "IT00H9999905952029235783700",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060050",
+      "counterparty_name": "DELTA ENERGIA SNC",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060051",
+      "counterparty_name": "ARGO COSTRUZIONI SPA",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-060052",
+      "counterparty_name": "ACME TECNOLOGIE SNC",
+      "counterparty_iban": "IT00H9999905952029235783700",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-060053",
+      "counterparty_name": "ARGO COSTRUZIONI SPA",
+      "counterparty_iban": "IT00L9999947352839723907897",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-060054",
+      "counterparty_name": "ACME TECNOLOGIE SNC",
+      "counterparty_iban": "IT00H9999905952029235783700",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060056",
+      "counterparty_name": "ZENIT ALIMENTARI SNC",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-060057",
+      "counterparty_name": "BARBIERI VALENTINA",
+      "counterparty_iban": "IT00T9999928001396842477929",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-060058",
+      "counterparty_name": "ALFA IMPIANTI SRL",
+      "counterparty_iban": "IT00T9999999081169255387056",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-060059",
+      "counterparty_name": "ATLAS TECNOLOGIE SNC",
+      "counterparty_iban": "IT00H9999941528782117835179",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060063",
+      "counterparty_name": "ALFA IMPIANTI SRL",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060064",
+      "counterparty_name": "DELTA ENERGIA SNC",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-060066",
+      "counterparty_name": "ALFA IMPIANTI SRL",
+      "counterparty_iban": "IT00T9999999081169255387056",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-060068",
+      "counterparty_name": "BARBIERI VALENTINA",
+      "counterparty_iban": "IT00T9999928001396842477929",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-060070",
+      "counterparty_name": "ALFA IMPIANTI SRL",
+      "counterparty_iban": "IT00T9999999081169255387056",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060071",
+      "counterparty_name": "ORION COSTRUZIONI SNC",
+      "counterparty_iban": "IT00T9999999651788330205778",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-060072",
+      "counterparty_name": "DELTA ENERGIA SNC",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060075",
+      "counterparty_name": "LUMEN IMPIANTI SPA",
+      "counterparty_iban": "IT00P9999920960305759374107",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060077",
+      "counterparty_name": "ALFA IMPIANTI SRL",
+      "counterparty_iban": "IT00T9999999081169255387056",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060078",
+      "counterparty_name": "ACME TECNOLOGIE SNC",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060079",
+      "counterparty_name": "ALFA IMPIANTI SRL",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060081",
+      "counterparty_name": "ZENIT ALIMENTARI SNC",
+      "counterparty_iban": "IT00I9999909863484113578550",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-060082",
+      "counterparty_name": "ATLAS TECNOLOGIE SNC",
+      "counterparty_iban": "IT00H9999941528782117835179",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060083",
+      "counterparty_name": "ARGO COSTRUZIONI SPA",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060084",
+      "counterparty_name": "BARBIERI VALENTINA",
+      "counterparty_iban": "IT00T9999928001396842477929",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-060086",
+      "counterparty_name": "ALFA IMPIANTI SRL",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-060087",
+      "counterparty_name": "ZENIT ALIMENTARI SNC",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060089",
+      "counterparty_name": "ORION COSTRUZIONI SNC",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-060090",
+      "counterparty_name": "ORION COSTRUZIONI SNC",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-060092",
+      "counterparty_name": "ARGO COSTRUZIONI SNC",
+      "counterparty_iban": "IT00X9999947171346350505691",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060093",
+      "counterparty_name": "DELTA ENERGIA SNC",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-060094",
+      "counterparty_name": "ALFA IMPIANTI SRL",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060095",
+      "counterparty_name": "ARGO COSTRUZIONI SNC",
+      "counterparty_iban": "IT00X9999947171346350505691",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060097",
+      "counterparty_name": "ALFA IMPIANTI SRL",
+      "counterparty_iban": "IT00T9999999081169255387056",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-060098",
+      "counterparty_name": "ZENIT ALIMENTARI SNC",
+      "counterparty_iban": "IT00I9999909863484113578550",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060099",
+      "counterparty_name": "ORION COSTRUZIONI SNC",
+      "counterparty_iban": "IT00T9999999651788330205778",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060101",
+      "counterparty_name": "BARBIERI VALENTINA",
+      "counterparty_iban": "IT00T9999928001396842477929",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060102",
+      "counterparty_name": "ORION COSTRUZIONI SNC",
+      "counterparty_iban": "IT00T9999999651788330205778",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060104",
+      "counterparty_name": "ARGO COSTRUZIONI SPA",
+      "counterparty_iban": "IT00L9999947352839723907897",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-060105",
+      "counterparty_name": "ARGO COSTRUZIONI SNC",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060106",
+      "counterparty_name": "ORION COSTRUZIONI SNC",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060107",
+      "counterparty_name": "DELTA ENERGIA SNC",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060109",
+      "counterparty_name": "ARGO COSTRUZIONI SNC",
+      "counterparty_iban": "IT00X9999947171346350505691",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060110",
+      "counterparty_name": "ACME TECNOLOGIE SNC",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060111",
+      "counterparty_name": "ALFA IMPIANTI SRL",
+      "counterparty_iban": "IT00T9999999081169255387056",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060112",
+      "counterparty_name": "ALFA IMPIANTI SRL",
+      "counterparty_iban": "IT00T9999999081169255387056",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-060114",
+      "counterparty_name": "ACME TECNOLOGIE SNC",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060115",
+      "counterparty_name": "BARBIERI VALENTINA",
+      "counterparty_iban": "IT00T9999928001396842477929",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060118",
+      "counterparty_name": "ATLAS TECNOLOGIE SNC",
+      "counterparty_iban": "IT00H9999941528782117835179",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-060119",
+      "counterparty_name": "ACME TECNOLOGIE SNC",
+      "counterparty_iban": "IT00H9999905952029235783700",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-060120",
+      "counterparty_name": "LUMEN IMPIANTI SPA",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-060122",
+      "counterparty_name": "ZENIT ALIMENTARI SNC",
+      "counterparty_iban": "IT00I9999909863484113578550",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-060123",
+      "counterparty_name": "ALFA IMPIANTI SRL",
+      "counterparty_iban": "IT00T9999999081169255387056",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-060124",
+      "counterparty_name": "LUMEN IMPIANTI SPA",
+      "counterparty_iban": "IT00P9999920960305759374107",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-060125",
+      "counterparty_name": "ARGO COSTRUZIONI SPA",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-060126",
+      "counterparty_name": "DELTA ENERGIA SNC",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-060127",
+      "counterparty_name": "ACME TECNOLOGIE SNC",
+      "counterparty_iban": "IT00H9999905952029235783700",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-060131",
+      "counterparty_name": "ATLAS TECNOLOGIE SNC",
+      "counterparty_iban": "IT00H9999941528782117835179",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060132",
+      "counterparty_name": "ARGO COSTRUZIONI SPA",
+      "counterparty_iban": "IT00L9999947352839723907897",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-060133",
+      "counterparty_name": "BARBIERI VALENTINA",
+      "counterparty_iban": "IT00T9999928001396842477929",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060135",
+      "counterparty_name": "ARGO COSTRUZIONI SNC",
+      "counterparty_iban": "IT00X9999947171346350505691",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-060137",
+      "counterparty_name": "LUMEN IMPIANTI SPA",
+      "counterparty_iban": "IT00P9999920960305759374107",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060138",
+      "counterparty_name": "ACME TECNOLOGIE SNC",
+      "counterparty_iban": "IT00H9999905952029235783700",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-060139",
+      "counterparty_name": "DELTA ENERGIA SNC",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060140",
+      "counterparty_name": "ARGO COSTRUZIONI SNC",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060143",
+      "counterparty_name": "BARBIERI VALENTINA",
+      "counterparty_iban": "IT00T9999928001396842477929",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060144",
+      "counterparty_name": "ZENIT ALIMENTARI SNC",
+      "counterparty_iban": "IT00I9999909863484113578550",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-060145",
+      "counterparty_name": "ARGO COSTRUZIONI SNC",
+      "counterparty_iban": "IT00X9999947171346350505691",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060146",
+      "counterparty_name": "ARGO COSTRUZIONI SPA",
+      "counterparty_iban": "IT00L9999947352839723907897",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060148",
+      "counterparty_name": "DELTA ENERGIA SNC",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060150",
+      "counterparty_name": "ZENIT ALIMENTARI SNC",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060152",
+      "counterparty_name": "ORION COSTRUZIONI SNC",
+      "counterparty_iban": "IT00T9999999651788330205778",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060153",
+      "counterparty_name": "ATLAS TECNOLOGIE SNC",
+      "counterparty_iban": "IT00H9999941528782117835179",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060154",
+      "counterparty_name": "ACME TECNOLOGIE SNC",
+      "counterparty_iban": "IT00H9999905952029235783700",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060156",
+      "counterparty_name": "BARBIERI VALENTINA",
+      "counterparty_iban": "IT00T9999928001396842477929",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060157",
+      "counterparty_name": "ORION COSTRUZIONI SNC",
+      "counterparty_iban": "IT00T9999999651788330205778",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060160",
+      "counterparty_name": "ALFA IMPIANTI SRL",
+      "counterparty_iban": "IT00T9999999081169255387056",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-060161",
+      "counterparty_name": "DELTA ENERGIA SNC",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060164",
+      "counterparty_name": "ACME TECNOLOGIE SNC",
+      "counterparty_iban": "IT00H9999905952029235783700",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060165",
+      "counterparty_name": "ARGO COSTRUZIONI SPA",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060166",
+      "counterparty_name": "ALFA IMPIANTI SRL",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060167",
+      "counterparty_name": "ALFA IMPIANTI SRL",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060168",
+      "counterparty_name": "ARGO COSTRUZIONI SNC",
+      "counterparty_iban": "IT00X9999947171346350505691",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-060171",
+      "counterparty_name": "ZENIT ALIMENTARI SNC",
+      "counterparty_iban": "IT00I9999909863484113578550",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    }
+  ]
+}

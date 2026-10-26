@@ -1,0 +1,439 @@
+{
+  "case_id": "CASE-000002",
+  "scenario": "fp_property_sale",
+  "expected_outcome": "close",
+  "transactions": [
+    {
+      "transaction_id": "TX-020001",
+      "counterparty_name": "G. GIORDANO",
+      "counterparty_iban": null,
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-020003",
+      "counterparty_name": "ANNA RINALDI",
+      "counterparty_iban": null,
+      "counterparty_type": "natural_person",
+      "payment_purpose": "family_support",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-020008",
+      "counterparty_name": "ALFA ENERGIA SPA",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-020010",
+      "counterparty_name": "ALFA FINANZIARIA SPA",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "loan",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-020014",
+      "counterparty_name": "ZENIT IMPIANTI SNC",
+      "counterparty_iban": "IT00G9999988925684944313776",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-020017",
+      "counterparty_name": "G. GIORDANO",
+      "counterparty_iban": null,
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-020021",
+      "counterparty_name": "ALFA FINANZIARIA SPA",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "loan",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-020023",
+      "counterparty_name": "ALFA ENERGIA SPA",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-020025",
+      "counterparty_name": "ZENIT IMPIANTI SNC",
+      "counterparty_iban": "IT00G9999988925684944313776",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-020026",
+      "counterparty_name": "ANNA RINALDI",
+      "counterparty_iban": null,
+      "counterparty_type": "natural_person",
+      "payment_purpose": "family_support",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-020030",
+      "counterparty_name": "G. GIORDANO",
+      "counterparty_iban": "IT00R9999916360413654697152",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-020035",
+      "counterparty_name": "ALFA ENERGIA SPA",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-020037",
+      "counterparty_name": "ALFA FINANZIARIA SPA",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "loan",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-020040",
+      "counterparty_name": "ZENIT IMPIANTI SNC",
+      "counterparty_iban": "IT00G9999988925684944313776",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-020045",
+      "counterparty_name": "G. GIORDANO",
+      "counterparty_iban": null,
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-020048",
+      "counterparty_name": "ALFA ENERGIA SPA",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-020049",
+      "counterparty_name": "ALFA FINANZIARIA SPA",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "loan",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-020052",
+      "counterparty_name": "ZENIT IMPIANTI SNC",
+      "counterparty_iban": "IT00G9999988925684944313776",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-020054",
+      "counterparty_name": "LUCA RINALDI",
+      "counterparty_iban": "IT00N9999925033933212893351",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "family_support",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-020058",
+      "counterparty_name": "G. GIORDANO",
+      "counterparty_iban": null,
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-020060",
+      "counterparty_name": "ALFA ENERGIA SPA",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-020061",
+      "counterparty_name": "ALFA FINANZIARIA SPA",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "loan",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-020063",
+      "counterparty_name": "ANNA RINALDI",
+      "counterparty_iban": "IT00B9999959942461793684165",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "family_support",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-020069",
+      "counterparty_name": "ZENIT IMPIANTI SNC",
+      "counterparty_iban": "IT00G9999988925684944313776",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-020070",
+      "counterparty_name": "G. GIORDANO",
+      "counterparty_iban": "IT00R9999916360413654697152",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-020076",
+      "counterparty_name": "ALFA FINANZIARIA SPA",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "loan",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-020078",
+      "counterparty_name": "ALFA ENERGIA SPA",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-020079",
+      "counterparty_name": "ZENIT IMPIANTI SNC",
+      "counterparty_iban": "IT00G9999988925684944313776",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-020081",
+      "counterparty_name": "G. GIORDANO",
+      "counterparty_iban": "IT00R9999916360413654697152",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-020084",
+      "counterparty_name": "ALFA ENERGIA SPA",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-020085",
+      "counterparty_name": "ALFA FINANZIARIA SPA",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "loan",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-020093",
+      "counterparty_name": "ZENIT IMPIANTI SNC",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-020096",
+      "counterparty_name": "G. GIORDANO",
+      "counterparty_iban": null,
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-020100",
+      "counterparty_name": "ALFA FINANZIARIA SPA",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "loan",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-020102",
+      "counterparty_name": "ALFA ENERGIA SPA",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-020103",
+      "counterparty_name": "ZENIT IMPIANTI SNC",
+      "counterparty_iban": "IT00G9999988925684944313776",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-020105",
+      "counterparty_name": "G. GIORDANO",
+      "counterparty_iban": null,
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-020110",
+      "counterparty_name": "ALFA ENERGIA SPA",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-020111",
+      "counterparty_name": "ALFA FINANZIARIA SPA",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "loan",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-020117",
+      "counterparty_name": "ZENIT IMPIANTI SNC",
+      "counterparty_iban": "IT00G9999988925684944313776",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-020119",
+      "counterparty_name": "G. GIORDANO",
+      "counterparty_iban": null,
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-020121",
+      "counterparty_name": "ALFA ENERGIA SPA",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-020122",
+      "counterparty_name": "ALFA FINANZIARIA SPA",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "loan",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-020125",
+      "counterparty_name": "ZENIT IMPIANTI SNC",
+      "counterparty_iban": "IT00G9999988925684944313776",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-020128",
+      "counterparty_name": "G. GIORDANO",
+      "counterparty_iban": null,
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-020130",
+      "counterparty_name": "ALFA FINANZIARIA SPA",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "loan",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-020131",
+      "counterparty_name": "LUCA RINALDI",
+      "counterparty_iban": "IT00N9999925033933212893351",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "family_support",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-020132",
+      "counterparty_name": "ALFA ENERGIA SPA",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-020136",
+      "counterparty_name": "ZENIT IMPIANTI SNC",
+      "counterparty_iban": "IT00G9999988925684944313776",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": true
+    },
+    {
+      "transaction_id": "TX-020138",
+      "counterparty_name": "G. GIORDANO",
+      "counterparty_iban": null,
+      "counterparty_type": "natural_person",
+      "payment_purpose": "rent",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-020142",
+      "counterparty_name": "ALFA FINANZIARIA SPA",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "loan",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-020143",
+      "counterparty_name": "MORETTI ALESSANDRO",
+      "counterparty_iban": "IT00Y9999920677690664488333",
+      "counterparty_type": "natural_person",
+      "payment_purpose": "other",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-020145",
+      "counterparty_name": "ALFA ENERGIA SPA",
+      "counterparty_iban": null,
+      "counterparty_type": "legal_person",
+      "payment_purpose": "invoice",
+      "hard": false
+    },
+    {
+      "transaction_id": "TX-020149",
+      "counterparty_name": "ZENIT IMPIANTI SNC",
+      "counterparty_iban": "IT00G9999988925684944313776",
+      "counterparty_type": "legal_person",
+      "payment_purpose": "salary",
+      "hard": false
+    }
+  ]
+}
