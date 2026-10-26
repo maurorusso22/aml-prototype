@@ -87,6 +87,14 @@ class EnrichmentSource(StrEnum):
     BASELINE = "baseline"  # The rule-based extractor
 
 
+class Outcome(StrEnum):
+    """Analyst decision on an alert."""
+
+    ESCALATE = "escalate"  # Investigate further, towards a suspicious transaction report
+    CLOSE = "close"  # False positive
+    REQUEST_INFORMATION = "request_information"  # Ask the customer for supporting documents
+
+
 class FactCategory(StrEnum):
     """Report area a fact belongs to."""
 
