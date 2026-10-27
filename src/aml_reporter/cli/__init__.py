@@ -3,7 +3,7 @@
 Importing the command modules registers their commands on the application.
 """
 
-from . import data, pipeline
+from . import data, documents, pipeline
 from .app import app
 
-__all__ = ["app", "data", "pipeline"]  # Command modules are imported for their registration
+__all__ = ["app", "data", "documents", "pipeline"]  # Command modules register their commands
