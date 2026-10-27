@@ -117,6 +117,8 @@ This plan breaks the prototype into small, independently testable phases. Each p
 - `docs/architecture.md`, `docs/llm-tasks.md`, `docs/analysis-catalog.md`, `docs/privacy.md`, `docs/evaluation.md`.
 - README updated with screenshots, real Quickstart output, and evaluation highlights.
 
+- Each document is short and links to the code; the README links to all of them and shows real command output.
+
 **Done when:** a reviewer can understand, run, and evaluate the project from the docs alone.
 
 ## Pre-publication checklist
