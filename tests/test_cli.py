@@ -75,6 +75,26 @@ def test_examples_writes_every_case_in_every_language(tmp_path: Path) -> None:
     assert written == ["pass_through_en.docx", "pass_through_it.docx"]
 
 
+def test_evaluate_writes_markdown_and_json(tmp_path: Path) -> None:
+    """`evaluate` scores the baseline by default and writes both report formats."""
+    RUNNER.invoke(app, ["synth", "--scenario", "pass_through", "--out-dir", str(tmp_path)])
+    output = tmp_path / "docs" / "evaluation.md"
+    args = ["evaluate", "--data-dir", str(tmp_path), "--output", str(output)]
+    result = RUNNER.invoke(app, args)
+    assert result.exit_code == 0, result.output
+    assert "1/1 cases right" in result.output
+    assert output.read_text(encoding="utf-8").startswith("# Evaluation")
+    run = json.loads(output.with_suffix(".json").read_text(encoding="utf-8"))
+    assert [score["enricher"] for score in run["enrichers"]] == ["baseline"]
+
+
+def test_evaluate_needs_case_bundles(tmp_path: Path) -> None:
+    """An empty data folder fails with a hint instead of an empty report."""
+    result = RUNNER.invoke(app, ["evaluate", "--data-dir", str(tmp_path)])
+    assert result.exit_code != 0
+    assert "run synth first" in result.output
+
+
 def test_generate_rejects_unknown_languages(tmp_path: Path) -> None:
     """An unsupported language fails with a clear message."""
     result = RUNNER.invoke(app, ["generate", str(tmp_path / "x.json"), "--lang", "fr"])

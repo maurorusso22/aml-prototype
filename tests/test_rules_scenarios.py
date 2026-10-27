@@ -4,16 +4,11 @@ import pytest
 
 from aml_reporter.analytics import build_fact_sheet
 from aml_reporter.enrichment import BaselineEnricher
-from aml_reporter.models import Outcome, RiskLevel
+from aml_reporter.evaluation.runner import LEVEL_FOR_OUTCOME
 from aml_reporter.rules import assess, load_rules
 from aml_reporter.synthetic import SCENARIOS, generate_cases
 
 SEEDS = range(42, 47)  # Several seeds, so thresholds are not tuned to a single draw
-LEVEL_FOR_OUTCOME = {  # Risk level the indicator should reach for each expected outcome
-    Outcome.CLOSE: RiskLevel.LOW,
-    Outcome.REQUEST_INFORMATION: RiskLevel.MEDIUM,
-    Outcome.ESCALATE: RiskLevel.HIGH,
-}
 
 
 @pytest.mark.parametrize("seed", SEEDS)
