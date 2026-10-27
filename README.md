@@ -162,6 +162,15 @@ A Word document in English or Italian, built from fixed templates filled with fa
 
 The analysis catalogue is being expanded; the detailed specification of each analysis will live in [`docs/`](docs/).
 
+### Examples
+
+Reports for all six scenarios, in English and Italian, are in [`examples/`](examples/). Below, the first page of the pass-through case and the monthly flows chart from the same report: the spike at the end is the money collected and wired abroad.
+
+<p align="center">
+  <img src="docs/images/report_first_page.png" width="48%" alt="First page of the pass-through report: case summary, risk indicator, red flags, and the alert in context">
+  <img src="docs/images/monthly_flows.png" width="48%" alt="Monthly inflows and outflows of the pass-through case, with a spike in the last two months">
+</p>
+
 ## Synthetic data
 
 ### Scenarios
@@ -198,7 +207,7 @@ Prompt design:
 - closed label sets, and an explicit instruction to answer `unknown` or `null` instead of guessing;
 - up to 20 inputs per request, and a cache keyed on the normalised description, since the same descriptions recur (salary, rent, utilities).
 
-Failure handling: API errors, timeouts, refusals, malformed JSON, missing answers, and values that fail validation never stop the pipeline. The affected transaction is enriched by the baseline instead, and its `source` says so.
+Failure handling: API errors, timeouts, refusals, malformed JSON, missing answers, and values that fail validation never stop the pipeline. Items a model skips are asked once more; whatever still fails is enriched by the baseline instead, and its `source` says so. Small local models tend to skip items with nothing to extract, or to write `null` as text: the retry and a lenient reading of "no value" lifted the share of LLM-enriched transactions on one example case from a third to nine in ten.
 
 ## Privacy by design
 

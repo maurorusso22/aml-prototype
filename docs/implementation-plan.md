@@ -95,6 +95,7 @@ This plan breaks the prototype into small, independently testable phases. Each p
 
 - Typer CLI: `synth`, `enrich` (enriched transactions only), `analyze` (fact sheet only), `assess` (red flags and risk indicator), `generate` (full report), `evaluate`.
 - Sample reports for each scenario committed to `examples/`, with screenshots for the README.
+- CLI command `aml-report examples`, which enriches each sample case once and writes it in every language; `evaluate` comes with Phase 8.
 
 **Done when:** the README Quickstart works on a clean clone.
 
