@@ -65,6 +65,16 @@ def test_generate_writes_a_word_report(tmp_path: Path) -> None:
     assert output.read_bytes().startswith(b"PK")
 
 
+def test_examples_writes_every_case_in_every_language(tmp_path: Path) -> None:
+    """`examples` writes one report per sample case and language."""
+    RUNNER.invoke(app, ["synth", "--scenario", "pass_through", "--out-dir", str(tmp_path)])
+    args = ["examples", "--enricher", "baseline", "--data-dir", str(tmp_path)]
+    result = RUNNER.invoke(app, [*args, "--out-dir", str(tmp_path / "examples")])
+    assert result.exit_code == 0, result.output
+    written = sorted(path.name for path in (tmp_path / "examples").iterdir())
+    assert written == ["pass_through_en.docx", "pass_through_it.docx"]
+
+
 def test_generate_rejects_unknown_languages(tmp_path: Path) -> None:
     """An unsupported language fails with a clear message."""
     result = RUNNER.invoke(app, ["generate", str(tmp_path / "x.json"), "--lang", "fr"])

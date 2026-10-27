@@ -44,16 +44,26 @@ def test_names_are_returned_as_written() -> None:
     assert check_name(None, TEXT) is None
 
 
+@pytest.mark.parametrize("value", [None, "", "   ", "null", "None", "N/A"])
+def test_null_written_as_text_means_no_value(value: object) -> None:
+    """Small models often write null as text; it means "nothing found", not an invented value.
+
+    Args:
+        value: How a model said "no value".
+    """
+    assert check_iban(value, TEXT) is None
+    assert check_name(value, TEXT) is None
+
+
 @pytest.mark.parametrize(
     ("value", "reason"),
     [
         pytest.param("ACME SERVIZI SRL", "does not appear", id="invented-name"),
-        pytest.param("   ", "blank", id="blank"),
-        pytest.param(["ACME"], "blank", id="not-text"),
+        pytest.param(["ACME"], "not text", id="not-text"),
     ],
 )
 def test_bad_names_are_rejected(value: object, reason: str) -> None:
-    """Names absent from the text, blank, or not text never pass.
+    """Names absent from the text, or not text, never pass.
 
     Args:
         value: Answer returned by a misbehaving model.

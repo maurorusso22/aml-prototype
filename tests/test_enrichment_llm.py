@@ -14,7 +14,7 @@ from aml_reporter.llm import LLMError, parse_json
 from aml_reporter.models import EnrichmentSource
 from aml_reporter.synthetic import GeneratedCase
 
-type Corruption = Callable[[str, dict[str, object]], dict[str, object] | None]
+type Corruption = Callable[[str, dict[str, str], dict[str, object]], dict[str, object] | None]
 
 
 class OracleClient:
@@ -27,7 +27,7 @@ class OracleClient:
 
         Args:
             case: Case whose labels hold the right answers.
-            corrupt: Rewrites or drops (returns None) an answer, given the schema name.
+            corrupt: Rewrites or drops (returns None) an answer, given the schema name and item.
             down: Fail every call, like an unreachable API.
         """
         texts = {tx.transaction_id: normalise(tx.description) for tx in case.bundle.transactions}
@@ -50,9 +50,13 @@ class OracleClient:
         self.calls += 1
         if self.down:
             raise LLMError("backend unreachable")
-        answers = [self._answer(schema.__name__, item) for item in json.loads(user)]
+        items = json.loads(user)
+        answers = [self._answer(schema.__name__, item) for item in items]
         if self.corrupt:
-            corrupted = (self.corrupt(schema.__name__, answer) for answer in answers)
+            corrupted = (
+                self.corrupt(schema.__name__, item, answer)
+                for item, answer in zip(items, answers, strict=True)
+            )
             answers = [answer for answer in corrupted if answer is not None]
         return parse_json(json.dumps({"answers": answers}), schema)
 
@@ -96,11 +100,12 @@ def test_correct_answers_reproduce_the_labels(pass_through_case: GeneratedCase) 
 def test_invented_values_fall_back_to_the_baseline(pass_through_case: GeneratedCase) -> None:
     """An IBAN or a name that is not in the text sends the record to the baseline."""
 
-    def invent(schema: str, answer: dict[str, object]) -> dict[str, object]:
+    def invent(schema: str, item: dict[str, str], answer: dict[str, object]) -> dict[str, object]:
         """Replace every IBAN with one that appears in no description.
 
         Args:
             schema: Name of the answer schema.
+            item: Item sent to the model, unused.
             answer: Correct answer.
 
         Returns:
@@ -115,29 +120,59 @@ def test_invented_values_fall_back_to_the_baseline(pass_through_case: GeneratedC
     assert {enrichment.source for enrichment in enrichments} == {EnrichmentSource.BASELINE}
 
 
-def test_missing_answer_affects_only_its_item(pass_through_case: GeneratedCase) -> None:
-    """When an answer is dropped, only the transactions with that description fall back."""
+def test_skipped_answers_are_asked_again(pass_through_case: GeneratedCase) -> None:
+    """Items a model skips once are asked again, so nothing falls back."""
+    skipped: set[str] = set()
 
-    def drop_first(schema: str, answer: dict[str, object]) -> dict[str, object] | None:
-        """Drop the first purpose answer of every batch.
+    def skip_once(
+        schema: str, item: dict[str, str], answer: dict[str, object]
+    ) -> dict[str, object] | None:
+        """Skip every item without an IBAN, but only the first time it is asked.
 
         Args:
             schema: Name of the answer schema.
+            item: Item sent to the model.
             answer: Correct answer.
 
         Returns:
-            None for the dropped answer, the answer otherwise.
+            None for a skipped item, the answer otherwise.
         """
-        return None if schema == "PurposeAnswers" and answer["id"] == 0 else answer
+        if schema == "IbanAnswers" and answer["iban"] is None and item["text"] not in skipped:
+            skipped.add(item["text"])
+            return None
+        return answer
 
+    transactions = pass_through_case.bundle.transactions
+    enrichments = LLMEnricher(OracleClient(pass_through_case, skip_once)).enrich(transactions)
+    assert skipped
+    assert {enrichment.source for enrichment in enrichments} == {EnrichmentSource.LLM}
+
+
+def test_persistent_gap_affects_only_its_item(pass_through_case: GeneratedCase) -> None:
+    """An item the model never answers sends only the transactions with that text back."""
     transactions = enrichable(pass_through_case.bundle.transactions)
-    dropped = set(sorted({normalise(tx.description) for tx in transactions})[::BATCH_SIZE])
-    enrichments = LLMEnricher(OracleClient(pass_through_case, drop_first)).enrich(transactions)
+    never = sorted({normalise(tx.description) for tx in transactions})[0]
+
+    def skip_always(
+        schema: str, item: dict[str, str], answer: dict[str, object]
+    ) -> dict[str, object] | None:
+        """Never answer the purpose of one description.
+
+        Args:
+            schema: Name of the answer schema.
+            item: Item sent to the model.
+            answer: Correct answer.
+
+        Returns:
+            None for that description, the answer otherwise.
+        """
+        return None if schema == "PurposeAnswers" and item.get("text") == never else answer
+
+    enrichments = LLMEnricher(OracleClient(pass_through_case, skip_always)).enrich(transactions)
     for tx, enrichment in zip(transactions, enrichments, strict=True):
-        fell_back = normalise(tx.description) in dropped
-        assert enrichment.source is (
-            EnrichmentSource.BASELINE if fell_back else EnrichmentSource.LLM
-        )
+        fell_back = normalise(tx.description) == never
+        expected = EnrichmentSource.BASELINE if fell_back else EnrichmentSource.LLM
+        assert enrichment.source is expected
 
 
 def test_backend_failure_never_crashes(pass_through_case: GeneratedCase) -> None:
