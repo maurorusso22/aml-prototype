@@ -2,6 +2,12 @@
   "case_id": "CASE-000005",
   "scenario": "dormant_reactivation",
   "expected_outcome": "escalate",
+  "expected_flags": [
+    "RF-DORMANT-REACTIVATION",
+    "RF-FOREIGN-INFLOWS",
+    "RF-CASH-WITHDRAWALS",
+    "RF-OUTFLOW-SPIKE"
+  ],
   "transactions": [
     {
       "transaction_id": "TX-050002",

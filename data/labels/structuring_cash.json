@@ -2,6 +2,9 @@
   "case_id": "CASE-000003",
   "scenario": "structuring_cash",
   "expected_outcome": "escalate",
+  "expected_flags": [
+    "RF-STRUCTURING"
+  ],
   "transactions": [
     {
       "transaction_id": "TX-030001",

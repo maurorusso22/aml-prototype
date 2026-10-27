@@ -87,6 +87,14 @@ class EnrichmentSource(StrEnum):
     BASELINE = "baseline"  # The rule-based extractor
 
 
+class RiskLevel(StrEnum):
+    """Severity of a red flag, and level of the overall risk indicator."""
+
+    LOW = "low"  # Worth noting
+    MEDIUM = "medium"  # Needs an explanation from the customer
+    HIGH = "high"  # Points to a known money-laundering typology
+
+
 class Outcome(StrEnum):
     """Analyst decision on an alert."""
 

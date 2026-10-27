@@ -1,0 +1,67 @@
+# Illustrative red-flag rules for the synthetic scenarios of this prototype.
+# Thresholds are invented: they are not taken from any regulation, institution, or internal
+# policy, and no real jurisdiction is designated as high risk.
+# A rule fires when every condition in `when` holds; each condition reads one fact by id.
+
+# Points each raised flag adds to the risk indicator, by severity
+[points]
+low = 1
+medium = 2
+high = 3
+
+# Minimum score for each level of the risk indicator; below `medium` the level is low
+[levels]
+medium = 2
+high = 3
+
+[[rules]]
+id = "RF-STRUCTURING"
+name = "Cash split below the threshold"
+description = "At least three recent cash deposits each stay just below the illustrative cash threshold."
+severity = "high"
+when = [{ fact = "F-CASH-004", op = ">=", value = 3 }]
+
+[[rules]]
+id = "RF-PASS-THROUGH"
+name = "Funds collected from many people and passed on"
+description = "At least five different people sent money recently, and recent outflows are at least twice the usual level."
+severity = "high"
+when = [
+    { fact = "F-CPTY-005", op = ">=", value = 5 },
+    { fact = "F-FLOW-008", op = ">=", value = 2 },
+]
+
+[[rules]]
+id = "RF-DORMANT-REACTIVATION"
+name = "Dormant account brought back to life"
+description = "The alerted transaction follows at least 90 days without any customer-initiated activity."
+severity = "high"
+when = [{ fact = "F-TIME-002", op = ">=", value = 90 }]
+
+[[rules]]
+id = "RF-FOREIGN-INFLOWS"
+name = "Large inflows from abroad"
+description = "Inflows from foreign accounts total at least EUR 10,000."
+severity = "medium"
+when = [{ fact = "F-GEO-002", op = ">=", value = 10000 }]
+
+[[rules]]
+id = "RF-CASH-WITHDRAWALS"
+name = "Large recent cash withdrawals"
+description = "Cash withdrawn in the last 90 days totals at least EUR 5,000."
+severity = "medium"
+when = [{ fact = "F-CASH-006", op = ">=", value = 5000 }]
+
+[[rules]]
+id = "RF-PROFILE-MISMATCH"
+name = "Activity far above the declared profile"
+description = "Salary or invoice inflows reach at least three times the income or turnover declared at onboarding."
+severity = "medium"
+when = [{ fact = "F-PROF-004", op = ">=", value = 3 }]
+
+[[rules]]
+id = "RF-OUTFLOW-SPIKE"
+name = "Recent outflows far above usual"
+description = "Outflows in the last 90 days are at least twice the usual level."
+severity = "low"
+when = [{ fact = "F-FLOW-008", op = ">=", value = 2 }]

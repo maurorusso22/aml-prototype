@@ -4,7 +4,7 @@ from pydantic import Field
 
 from ..models import CounterpartyType, Outcome, PaymentPurpose
 from ..models.base import DomainModel
-from ..models.formats import CaseId, Iban, NonEmptyStr, ScenarioName, TransactionId
+from ..models.formats import CaseId, Iban, NonEmptyStr, RuleId, ScenarioName, TransactionId
 
 
 class TransactionLabel(DomainModel):
@@ -24,4 +24,5 @@ class CaseLabels(DomainModel):
     case_id: CaseId = Field(description="Case the labels refer to.")
     scenario: ScenarioName = Field(description="Synthetic scenario that produced the case.")
     expected_outcome: Outcome = Field(description="Decision an analyst should reach.")
+    expected_flags: tuple[RuleId, ...] = Field(description="Red-flag rules the case should raise.")
     transactions: tuple[TransactionLabel, ...] = Field(description="One label per description.")

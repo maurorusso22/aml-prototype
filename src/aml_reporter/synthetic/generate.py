@@ -27,7 +27,7 @@ def generate_cases(names: Sequence[str], seed: int) -> list[GeneratedCase]:
         case_index = registry.index(name) + 1
         scenario = SCENARIOS[name]
         run = scenario.build(SynthContext.create(seed, case_index), case_index)
-        cases.append(assemble(run, name, scenario.expected_outcome))
+        cases.append(assemble(run, name, scenario.expected_outcome, scenario.expected_flags))
     return cases
 
 

@@ -2,6 +2,7 @@
 
 from .accounts import Account, Card
 from .alert import Alert
+from .assessment import RedFlag, RiskAssessment
 from .case import CaseBundle
 from .customer import Address, BusinessCustomer, Customer, IndividualCustomer
 from .enrichment import Enrichment
@@ -16,6 +17,7 @@ from .enums import (
     FactCategory,
     Outcome,
     PaymentPurpose,
+    RiskLevel,
     RiskRating,
     TransactionType,
 )
@@ -44,6 +46,9 @@ __all__ = [  # Public names of the domain model package
     "IndividualCustomer",
     "Outcome",
     "PaymentPurpose",
+    "RedFlag",
+    "RiskAssessment",
+    "RiskLevel",
     "RiskRating",
     "Transaction",
     "TransactionType",

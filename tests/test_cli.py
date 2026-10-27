@@ -43,6 +43,18 @@ def test_analyze_writes_a_fact_sheet(tmp_path: Path) -> None:
     assert "F-CASH-004" in {fact["id"] for fact in sheet["facts"]}
 
 
+def test_assess_writes_flags_and_risk_level(tmp_path: Path) -> None:
+    """`assess` writes the red flags and the risk indicator of a bundle."""
+    RUNNER.invoke(app, ["synth", "--scenario", "structuring_cash", "--out-dir", str(tmp_path)])
+    bundle, output = tmp_path / "samples" / "structuring_cash.json", tmp_path / "risk.json"
+    args = ["assess", str(bundle), "--enricher", "baseline", "--output", str(output)]
+    result = RUNNER.invoke(app, args)
+    assert result.exit_code == 0, result.output
+    assessment = json.loads(output.read_text(encoding="utf-8"))
+    assert [flag["rule_id"] for flag in assessment["flags"]] == ["RF-STRUCTURING"]
+    assert assessment["level"] == "high"
+
+
 def test_enrich_rejects_unknown_enrichers(tmp_path: Path) -> None:
     """An unknown enricher name fails with a clear message."""
     result = RUNNER.invoke(app, ["enrich", str(tmp_path / "x.json"), "--enricher", "magic"])

@@ -17,6 +17,7 @@ type TransactionId = Annotated[str, StringConstraints(pattern=r"^TX-\d{6}$")]
 type AlertId = Annotated[str, StringConstraints(pattern=r"^AL-\d{6}$")]
 type FactId = Annotated[str, StringConstraints(pattern=r"^F-[A-Z]+-\d{3}$")]
 type ScenarioName = Annotated[str, StringConstraints(pattern=r"^[a-z][a-z0-9_]*$")]
+type RuleId = Annotated[str, StringConstraints(pattern=r"^RF-[A-Z]+(-[A-Z]+)*$")]
 
 # Country code, two check digits, then the national account number (BBAN)
 type Iban = Annotated[str, StringConstraints(pattern=r"^[A-Z]{2}\d{2}[A-Z0-9]{11,30}$")]

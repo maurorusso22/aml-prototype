@@ -2,6 +2,10 @@
   "case_id": "CASE-000004",
   "scenario": "pass_through",
   "expected_outcome": "escalate",
+  "expected_flags": [
+    "RF-PASS-THROUGH",
+    "RF-OUTFLOW-SPIKE"
+  ],
   "transactions": [
     {
       "transaction_id": "TX-040001",

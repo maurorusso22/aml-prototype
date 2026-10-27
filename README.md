@@ -28,6 +28,7 @@ AML Case Reporter takes a transaction flagged as suspicious, together with the c
 - [What it does](#what-it-does)
 - [How it works](#how-it-works)
 - [LLM tasks](#llm-tasks)
+- [Red-flag rules](#red-flag-rules)
 - [The report](#the-report)
 - [Synthetic data](#synthetic-data)
 - [LLM integration](#llm-integration)
@@ -124,6 +125,22 @@ These fields feed the analytics: counterparties are grouped by name and IBAN, sp
 
 **Why not just regular expressions?** A rule-based extractor is included as a baseline. It works on well-formed descriptions but breaks on abbreviations, missing labels, swapped field order, and typos. The [evaluation](#evaluation) measures exactly how much the LLM adds over it.
 
+## Red-flag rules
+
+About 70 facts per case feed a small set of transparent rules, defined in [`rules.toml`](src/aml_reporter/rules/rules.toml). Each rule compares facts with a threshold; when all its conditions hold, it raises a red flag that cites those facts and their transactions.
+
+| Rule | Looks for | Severity |
+|---|---|---|
+| `RF-STRUCTURING` | Several recent cash deposits just below a threshold | high |
+| `RF-PASS-THROUGH` | Money from many different people, with outflows at least twice the usual level | high |
+| `RF-DORMANT-REACTIVATION` | The alert follows 90+ days without customer activity | high |
+| `RF-FOREIGN-INFLOWS` | Large inflows from foreign accounts | medium |
+| `RF-CASH-WITHDRAWALS` | Large recent cash withdrawals | medium |
+| `RF-PROFILE-MISMATCH` | Salary or invoice inflows at 3× the declared income or turnover | medium |
+| `RF-OUTFLOW-SPIKE` | Recent outflows at least twice the usual level | low |
+
+The risk indicator is a plain sum: 1, 2, or 3 points per flag by severity; 2 points or more is medium, 3 or more is high. No machine-learned score, so every level can be explained flag by flag. Thresholds are illustrative and invented for the synthetic scenarios.
+
 ## The report
 
 | # | Section | Content | LLM contribution |
@@ -135,7 +152,7 @@ These fields feed the analytics: counterparties are grouped by name and IBAN, sp
 | 5 | Relationship overview | Accounts and cards, status, opening dates, balances | — |
 | 6 | Transaction behaviour | Monthly inflows and outflows, channels, cash share, payment purpose mix, charts | Payment purpose |
 | 7 | Counterparty analysis | Top and new counterparties, concentration, natural vs legal persons, recurring vs one-off | Counterparty name, IBAN, type |
-| 8 | Geographic exposure | Countries derived from counterparty IBANs, exposure to an illustrative high-risk list | IBAN |
+| 8 | Geographic exposure | Countries derived from counterparty IBANs, and flows with foreign accounts | IBAN |
 | 9 | Red flags and typologies | Triggered rules with evidence (e.g. structuring, pass-through of funds, dormant account reactivation) | Indirect: rules use enriched fields |
 | 10 | Profile consistency | Declared income or turnover vs observed flows by purpose | Payment purpose |
 | 11 | Analyst assessment | Blank fields for the decision (escalate / close / request more information) and notes | — |
@@ -232,9 +249,6 @@ aml-prototype/
 ├── LICENSE
 ├── pyproject.toml
 ├── .env.example
-├── config/
-│   ├── rules.yaml              # Illustrative red-flag rules and thresholds
-│   └── risk_countries.yaml     # Illustrative high-risk jurisdiction list
 ├── data/
 │   ├── samples/                # Synthetic case bundles (generated)
 │   └── labels/                 # Ground-truth labels for evaluation (generated)
@@ -247,7 +261,7 @@ aml-prototype/
 │   ├── enrichment/             # LLM tasks, prompts, output validation, rule-based baseline
 │   ├── llm/                    # Backend clients (local, anthropic)
 │   ├── analytics/              # One module per analysis
-│   ├── rules/                  # Red-flag rule engine
+│   ├── rules/                  # Red-flag rule engine and illustrative rules (rules.toml)
 │   ├── report/                 # DOCX builder, sections, charts
 │   ├── evaluation/             # Metrics against ground-truth labels
 │   └── cli.py
@@ -279,6 +293,9 @@ uv run aml-report enrich data/samples/pass_through.json --enricher baseline
 
 # Compute the fact sheet: every figure the report will cite, with its evidence
 uv run aml-report analyze data/samples/structuring_cash.json --output output/facts.json
+
+# Raise the red flags and compute the risk indicator
+uv run aml-report assess data/samples/structuring_cash.json
 ```
 
 Target interface, available once the later phases of the implementation plan are complete:
@@ -315,7 +332,7 @@ Development follows the phases in [`docs/implementation-plan.md`](docs/implement
 ## Limitations
 
 - A prototype for demonstration, not a production system.
-- Rules, thresholds, and the high-risk country list are illustrative and not kept up to date.
+- Rules and thresholds are illustrative, and no real jurisdiction is designated as high risk.
 - Sanctions screening, adverse-media search, and PEP list matching are out of scope.
 - Validation blocks invented values, but not every LLM error: a real name can still be assigned to the wrong role (payer instead of beneficiary). A human must always review the report.
 - Synthetic descriptions cannot capture the full variety of real-world formats; real performance would need to be measured on real, properly governed data.

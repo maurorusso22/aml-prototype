@@ -2,6 +2,7 @@
   "case_id": "CASE-000002",
   "scenario": "fp_property_sale",
   "expected_outcome": "close",
+  "expected_flags": [],
   "transactions": [
     {
       "transaction_id": "TX-020001",

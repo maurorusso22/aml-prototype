@@ -2,6 +2,9 @@
   "case_id": "CASE-000006",
   "scenario": "profile_mismatch",
   "expected_outcome": "request_information",
+  "expected_flags": [
+    "RF-PROFILE-MISMATCH"
+  ],
   "transactions": [
     {
       "transaction_id": "TX-060001",

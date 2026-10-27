@@ -2,6 +2,7 @@
   "case_id": "CASE-000001",
   "scenario": "fp_salary_bonus",
   "expected_outcome": "close",
+  "expected_flags": [],
   "transactions": [
     {
       "transaction_id": "TX-010001",

@@ -22,13 +22,16 @@ class GeneratedCase(NamedTuple):
     labels: CaseLabels
 
 
-def assemble(run: ScenarioRun, scenario: str, outcome: Outcome) -> GeneratedCase:
+def assemble(
+    run: ScenarioRun, scenario: str, outcome: Outcome, flags: tuple[str, ...]
+) -> GeneratedCase:
     """Sort the drafts, assign identifiers, and build the bundle and its labels.
 
     Args:
         run: Result of a scenario.
         scenario: Scenario name, stored in the labels.
         outcome: Decision an analyst should reach.
+        flags: Red-flag rules the case should raise.
 
     Returns:
         The validated case and its labels.
@@ -62,7 +65,11 @@ def assemble(run: ScenarioRun, scenario: str, outcome: Outcome) -> GeneratedCase
         if draft.label is not None
     )
     case_labels = CaseLabels(
-        case_id=bundle.case_id, scenario=scenario, expected_outcome=outcome, transactions=labels
+        case_id=bundle.case_id,
+        scenario=scenario,
+        expected_outcome=outcome,
+        expected_flags=flags,
+        transactions=labels,
     )
     return GeneratedCase(bundle, case_labels)
 

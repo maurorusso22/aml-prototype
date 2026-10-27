@@ -69,7 +69,9 @@ This plan breaks the prototype into small, independently testable phases. Each p
 
 ### Phase 5 — Red-flag rules
 
-- Rules defined in `config/rules.yaml`: condition on facts, severity, description, illustrative threshold.
+- Rules defined in `src/aml_reporter/rules/rules.toml` (read with the standard library, validated with Pydantic): conditions on facts, severity, description, illustrative thresholds.
+- No high-risk country list: the prototype does not designate real jurisdictions; geographic rules look at foreign flows instead.
+- Expected flags stored with each scenario's ground truth; CLI command `aml-report assess`.
 - Triggered flags carry their evidence (fact IDs and transaction IDs).
 - Transparent additive risk indicator (low / medium / high), no black-box model.
 
@@ -88,7 +90,7 @@ This plan breaks the prototype into small, independently testable phases. Each p
 
 ### Phase 7 — CLI and examples
 
-- Typer CLI: `synth`, `enrich` (enriched transactions only), `analyze` (fact sheet only), `generate` (full report), `evaluate`.
+- Typer CLI: `synth`, `enrich` (enriched transactions only), `analyze` (fact sheet only), `assess` (red flags and risk indicator), `generate` (full report), `evaluate`.
 - Sample reports for each scenario committed to `examples/`, with screenshots for the README.
 
 **Done when:** the README Quickstart works on a clean clone.
@@ -120,7 +122,7 @@ Run before every push to the public repository:
 - [ ] Generated DOCX files carry only the explicitly set metadata.
 - [ ] Screenshots show synthetic data only.
 - [ ] Secret scan passes; no `.env` or API key committed.
-- [ ] Rules, thresholds, and country lists are marked as illustrative.
+- [ ] Rules and thresholds are marked as illustrative; no real jurisdiction is labelled high risk.
 
 ## Open points
 
