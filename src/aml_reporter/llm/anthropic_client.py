@@ -27,6 +27,7 @@ class AnthropicClient:
             client: SDK client; by default one that reads credentials from the environment.
         """
         self.model = model
+        self.input_tokens = self.output_tokens = 0  # Usage so far, for cost estimates
         self._client = client or anthropic.Anthropic()
 
     def complete[T: BaseModel](self, system: str, user: str, schema: type[T]) -> T:
@@ -58,6 +59,8 @@ class AnthropicClient:
             raise LLMError("Anthropic API unreachable or timed out") from error
         except ValidationError as error:
             raise LLMError(f"output does not match {schema.__name__}") from error
+        self.input_tokens += response.usage.input_tokens
+        self.output_tokens += response.usage.output_tokens
         if response.stop_reason != "end_turn" or response.parsed_output is None:
             raise LLMError(f"no usable answer (stop reason: {response.stop_reason})")
         return response.parsed_output

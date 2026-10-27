@@ -16,6 +16,7 @@ from aml_reporter.llm.anthropic_client import DEFAULT_MODEL
 
 REQUEST = httpx2.Request("POST", "https://api.anthropic.com/v1/messages")  # For SDK errors
 EMPTY = PurposeAnswers(answers=[])  # A valid, empty answer
+USAGE = SimpleNamespace(input_tokens=1200, output_tokens=300)  # Token counts of a fake call
 
 
 def fake_sdk(outcome: object) -> tuple[Any, list[dict[str, Any]]]:
@@ -48,8 +49,10 @@ def fake_sdk(outcome: object) -> tuple[Any, list[dict[str, Any]]]:
 
 def test_anthropic_success_uses_haiku_with_structured_output() -> None:
     """A normal answer is returned, requested from Haiku with the schema and low effort."""
-    sdk, calls = fake_sdk(SimpleNamespace(stop_reason="end_turn", parsed_output=EMPTY))
-    assert AnthropicClient(client=sdk).complete("s", "u", PurposeAnswers) is EMPTY
+    sdk, calls = fake_sdk(SimpleNamespace(stop_reason="end_turn", parsed_output=EMPTY, usage=USAGE))
+    client = AnthropicClient(client=sdk)
+    assert client.complete("s", "u", PurposeAnswers) is EMPTY
+    assert (client.input_tokens, client.output_tokens) == (1200, 300)
     request = calls[0]
     assert request["model"] == DEFAULT_MODEL == "claude-haiku-5-5"
     assert request["output_format"] is PurposeAnswers
@@ -73,8 +76,12 @@ def _schema_error() -> ValidationError:
 @pytest.mark.parametrize(
     "outcome",
     [
-        pytest.param(SimpleNamespace(stop_reason="refusal", parsed_output=None), id="refusal"),
-        pytest.param(SimpleNamespace(stop_reason="max_tokens", parsed_output=None), id="cut"),
+        pytest.param(
+            SimpleNamespace(stop_reason="refusal", parsed_output=None, usage=USAGE), id="refusal"
+        ),
+        pytest.param(
+            SimpleNamespace(stop_reason="max_tokens", parsed_output=None, usage=USAGE), id="cut"
+        ),
         pytest.param(anthropic.APIConnectionError(request=REQUEST), id="unreachable"),
         pytest.param(
             anthropic.InternalServerError(

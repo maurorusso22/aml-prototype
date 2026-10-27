@@ -142,10 +142,11 @@ def test_skipped_answers_are_asked_again(pass_through_case: GeneratedCase) -> No
             return None
         return answer
 
-    transactions = pass_through_case.bundle.transactions
-    enrichments = LLMEnricher(OracleClient(pass_through_case, skip_once)).enrich(transactions)
+    enricher = LLMEnricher(OracleClient(pass_through_case, skip_once))
+    enrichments = enricher.enrich(pass_through_case.bundle.transactions)
     assert skipped
     assert {enrichment.source for enrichment in enrichments} == {EnrichmentSource.LLM}
+    assert not enricher.rejections
 
 
 def test_persistent_gap_affects_only_its_item(pass_through_case: GeneratedCase) -> None:
@@ -168,7 +169,9 @@ def test_persistent_gap_affects_only_its_item(pass_through_case: GeneratedCase) 
         """
         return None if schema == "PurposeAnswers" and item.get("text") == never else answer
 
-    enrichments = LLMEnricher(OracleClient(pass_through_case, skip_always)).enrich(transactions)
+    enricher = LLMEnricher(OracleClient(pass_through_case, skip_always))
+    enrichments = enricher.enrich(transactions)
+    assert dict(enricher.rejections) == {"payment_purpose: no answer after retry": 1}
     for tx, enrichment in zip(transactions, enrichments, strict=True):
         fell_back = normalise(tx.description) == never
         expected = EnrichmentSource.BASELINE if fell_back else EnrichmentSource.LLM
@@ -181,6 +184,7 @@ def test_backend_failure_never_crashes(pass_through_case: GeneratedCase) -> None
     enrichments = enricher.enrich(pass_through_case.bundle.transactions)
     assert len(enrichments) == len(pass_through_case.labels.transactions)
     assert {enrichment.source for enrichment in enrichments} == {EnrichmentSource.BASELINE}
+    assert all(reason.endswith("batch failed") for reason in enricher.rejections)
 
 
 def test_batches_and_cache(pass_through_case: GeneratedCase) -> None:

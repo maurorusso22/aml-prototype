@@ -37,7 +37,8 @@ class LLMEnricher:
             client: LLM backend.
             fallback: Enricher used when an answer is missing or invalid.
         """
-        self._client = client
+        self.client = client
+        self.rejections: Counter[str] = Counter()  # Failed answers, by task and reason
         self._fallback = fallback or BaselineEnricher()
         self._answers: dict[Key, object] = {}
         self._failed: set[Key] = set()
@@ -78,7 +79,9 @@ class LLMEnricher:
             logger.info("%s: asking again for %d unanswered inputs", task.name, len(unanswered))
         for start in range(0, len(unanswered), BATCH_SIZE):
             still = self._run_batch(task, unanswered[start : start + BATCH_SIZE])
-            self._failed.update((task.name, value) for value in still)
+            if still:
+                self._failed.update((task.name, value) for value in still)
+                self.rejections[f"{task.name}: no answer after retry"] += len(still)
 
     def _run_batch(self, task: Task, batch: Sequence[str]) -> list[str]:
         """Ask one batch, store each answer that passes its check, and report the gaps.
@@ -92,10 +95,11 @@ class LLMEnricher:
         """
         items = [{"id": number, task.input_key: value} for number, value in enumerate(batch)]
         try:
-            result = self._client.complete(task.prompt, json.dumps(items), task.schema)
+            result = self.client.complete(task.prompt, json.dumps(items), task.schema)
         except LLMError as error:
             logger.warning("%s: batch of %d failed: %s", task.name, len(batch), error)
             self._failed.update((task.name, value) for value in batch)
+            self.rejections[f"{task.name}: batch failed"] += len(batch)
             return []
         counts = Counter(answer.id for answer in result.answers)
         by_id = {answer.id: answer for answer in result.answers if counts[answer.id] == 1}
@@ -110,6 +114,7 @@ class LLMEnricher:
             except InvalidAnswerError as error:
                 logger.info("%s: answer %d rejected: %s", task.name, number, error)
                 self._failed.add((task.name, value))
+                self.rejections[f"{task.name}: {error}"] += 1
         return unanswered
 
     def _enrichment(self, transaction: Transaction) -> Enrichment:
