@@ -106,6 +106,9 @@ This plan breaks the prototype into small, independently testable phases. Each p
 - End to end: expected red flags per scenario, risk indicator vs expected outcome.
 - Cost and latency per 1,000 descriptions for the LLM backends.
 - Runs with `baseline` in CI; with the LLM backends on demand. Results table in `docs/evaluation.md`.
+- Metrics in plain Python, no scikit-learn. Abstention and invention are measured against the labels, as *missed* (label has a value, enricher none) and *invented* (label has none, enricher gives one); values absent from the text are already rejected by validation, so the enricher counts those rejections by reason instead.
+- The Anthropic client counts input and output tokens; costs use list prices.
+- CLI command `aml-report evaluate`, which writes the Markdown report and the raw results (`docs/evaluation.json`); the baseline evaluation runs in the default test suite with accuracy floors.
 
 **Done when:** metrics are reproducible and published.
 

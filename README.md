@@ -227,14 +227,32 @@ These measures follow privacy-by-design principles such as those in GDPR Article
 
 The synthetic generator provides ground-truth labels, so LLM quality is measured, not assumed:
 
-- **Extraction:** exact-match accuracy for IBANs and counterparty names, after normalisation.
-- **Classification:** precision, recall, F1, and confusion matrix for counterparty type and payment purpose.
-- **Abstention and invention:** share of `null` and `unknown` answers, and share of extracted values not found in the source text (blocked by validation, but still measured).
-- **Baseline comparison:** every metric for `baseline`, `local`, and `anthropic`, on the full dataset and on a *hard* subset (typos, abbreviations, missing labels).
+- **Extraction:** exact-match accuracy for IBANs and counterparty names (names ignore case and spacing).
+- **Classification:** precision, recall, F1, macro F1, and confusion matrix for counterparty type and payment purpose.
+- **Missed and invented values:** share of descriptions where the enricher leaves empty a value the label has, and where it fills in a value the label lacks. Values not found in the source text never get this far: validation rejects them, and the rejections are counted by reason.
+- **Baseline comparison:** every metric for each enricher, on all descriptions and on the *easy* and *hard* subsets (hard: typos, abbreviations, missing labels, swapped fields).
 - **End to end:** expected red flags per scenario, and risk indicator vs expected outcome.
-- **Tests:** unit tests for every analyser, rule, and validator; golden tests on fact sheets.
+- **Speed and cost:** seconds and, for the Claude API, list-price USD per 1,000 descriptions.
+- **Tests:** unit tests for every analyser, rule, and validator; golden tests on fact sheets; the baseline evaluation runs in CI with accuracy floors.
 
-Results will be published in `docs/evaluation.md`.
+### Results
+
+From the [full report](docs/evaluation.md): 6 synthetic cases, 324 descriptions, 133 of them hard.
+
+| Accuracy | `baseline` | `local` (llama3.1:8b) |
+|---|---:|---:|
+| IBAN | 100.0% | 99.7% |
+| Counterparty | 69.1% | 95.4% |
+| Counterparty, hard descriptions | 57.1% | 93.2% |
+| Natural or legal person | 85.8% | 100.0% |
+| Payment purpose | 83.6% | 95.1% |
+| Payment purpose, hard descriptions | 76.7% | 91.7% |
+| Cases with the expected flags and risk level | 6 / 6 | 6 / 6 |
+
+- **Rules are enough for IBANs**, which follow one fixed structure. For names and purposes they fall short: they leave 14% of counterparties and 16% of purposes empty, extract a wrong name for another 17% of descriptions, and do worse on hard ones.
+- **The local model closes most of that gap**, and keeps it on hard descriptions. It never invents a counterparty; 15 IBAN answers failed validation (not in the text, or malformed), and those records fell back to the baseline, as designed.
+- **The decision on these cases does not change**: both enrichers raise exactly the expected flags. The rules that read enriched fields group counterparties by IBAN when there is one and take countries from IBANs, which the baseline already reads perfectly; the profile check sums salary or invoice inflows, and the purposes the baseline misses do not move it across its threshold. The LLM's gain shows in the counterparty names, types, and purposes the report cites.
+- **Speed is the price**: about 2.7 seconds per description for an 8B model on the machine used, against well under a millisecond for the rules. `--enricher anthropic` adds Claude Haiku 5.5 to the comparison, with its cost at list price.
 
 ## Tech stack
 
@@ -245,7 +263,7 @@ Results will be published in `docs/evaluation.md`.
 | Synthetic data | Seeded Python generator, no external data |
 | LLM | Anthropic Python SDK, httpx (Ollama) |
 | Report | python-docx, matplotlib |
-| Evaluation | scikit-learn (metrics) |
+| Evaluation | Plain Python metrics, Markdown report |
 | CLI | Typer |
 | Quality | pytest, ruff, mypy, pre-commit, gitleaks |
 | CI | GitHub Actions |
@@ -313,12 +331,8 @@ uv run aml-report generate data/samples/structuring_cash.json
 
 # The same report in Italian, offline with the rule-based baseline
 uv run aml-report generate data/samples/structuring_cash.json --enricher baseline --lang it
-```
 
-Target interface, available once the evaluation phase is complete:
-
-```bash
-# Compare enrichers on the labelled synthetic dataset
+# Compare enrichers on the labelled dataset; writes docs/evaluation.md and docs/evaluation.json
 uv run aml-report evaluate --enricher baseline --enricher local
 ```
 

@@ -1,0 +1,1284 @@
+{
+  "generated_at": "2026-10-27T21:02:53Z",
+  "dataset": "data/",
+  "hard_items": 133,
+  "enrichers": [
+    {
+      "enricher": "baseline",
+      "model": "rules",
+      "descriptions": 324,
+      "seconds": 0.01,
+      "llm_share": 0.0,
+      "cost_usd": null,
+      "rejections": {},
+      "tasks": [
+        {
+          "task": "iban",
+          "subset": "all",
+          "items": 324,
+          "accuracy": 1.0,
+          "missed": 0.0,
+          "invented": 0.0,
+          "macro_f1": null,
+          "classes": {},
+          "confusion": {}
+        },
+        {
+          "task": "counterparty",
+          "subset": "all",
+          "items": 324,
+          "accuracy": 0.6914,
+          "missed": 0.142,
+          "invented": 0.0,
+          "macro_f1": null,
+          "classes": {},
+          "confusion": {}
+        },
+        {
+          "task": "counterparty_type",
+          "subset": "all",
+          "items": 324,
+          "accuracy": 0.858,
+          "missed": 0.142,
+          "invented": 0.0,
+          "macro_f1": 0.9113,
+          "classes": {
+            "natural_person": {
+              "precision": 1.0,
+              "recall": 0.7879,
+              "f1": 0.8814,
+              "support": 99
+            },
+            "legal_person": {
+              "precision": 1.0,
+              "recall": 0.8889,
+              "f1": 0.9412,
+              "support": 225
+            },
+            "none": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 0
+            }
+          },
+          "confusion": {
+            "natural_person": {
+              "natural_person": 78,
+              "legal_person": 0,
+              "none": 21
+            },
+            "legal_person": {
+              "natural_person": 0,
+              "legal_person": 200,
+              "none": 25
+            },
+            "none": {
+              "natural_person": 0,
+              "legal_person": 0,
+              "none": 0
+            }
+          }
+        },
+        {
+          "task": "payment_purpose",
+          "subset": "all",
+          "items": 324,
+          "accuracy": 0.8364,
+          "missed": 0.1636,
+          "invented": 0.0,
+          "macro_f1": 0.8901,
+          "classes": {
+            "salary": {
+              "precision": 1.0,
+              "recall": 0.8846,
+              "f1": 0.9388,
+              "support": 52
+            },
+            "rent": {
+              "precision": 1.0,
+              "recall": 0.873,
+              "f1": 0.9322,
+              "support": 63
+            },
+            "invoice": {
+              "precision": 1.0,
+              "recall": 0.825,
+              "f1": 0.9041,
+              "support": 160
+            },
+            "loan": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 17
+            },
+            "family_support": {
+              "precision": 1.0,
+              "recall": 0.65,
+              "f1": 0.7879,
+              "support": 20
+            },
+            "other": {
+              "precision": 1.0,
+              "recall": 0.6364,
+              "f1": 0.7778,
+              "support": 11
+            },
+            "unknown": {
+              "precision": 0.0185,
+              "recall": 1.0,
+              "f1": 0.0364,
+              "support": 1
+            }
+          },
+          "confusion": {
+            "salary": {
+              "salary": 46,
+              "rent": 0,
+              "invoice": 0,
+              "loan": 0,
+              "family_support": 0,
+              "other": 0,
+              "unknown": 6
+            },
+            "rent": {
+              "salary": 0,
+              "rent": 55,
+              "invoice": 0,
+              "loan": 0,
+              "family_support": 0,
+              "other": 0,
+              "unknown": 8
+            },
+            "invoice": {
+              "salary": 0,
+              "rent": 0,
+              "invoice": 132,
+              "loan": 0,
+              "family_support": 0,
+              "other": 0,
+              "unknown": 28
+            },
+            "loan": {
+              "salary": 0,
+              "rent": 0,
+              "invoice": 0,
+              "loan": 17,
+              "family_support": 0,
+              "other": 0,
+              "unknown": 0
+            },
+            "family_support": {
+              "salary": 0,
+              "rent": 0,
+              "invoice": 0,
+              "loan": 0,
+              "family_support": 13,
+              "other": 0,
+              "unknown": 7
+            },
+            "other": {
+              "salary": 0,
+              "rent": 0,
+              "invoice": 0,
+              "loan": 0,
+              "family_support": 0,
+              "other": 7,
+              "unknown": 4
+            },
+            "unknown": {
+              "salary": 0,
+              "rent": 0,
+              "invoice": 0,
+              "loan": 0,
+              "family_support": 0,
+              "other": 0,
+              "unknown": 1
+            }
+          }
+        },
+        {
+          "task": "iban",
+          "subset": "easy",
+          "items": 191,
+          "accuracy": 1.0,
+          "missed": 0.0,
+          "invented": 0.0,
+          "macro_f1": null,
+          "classes": {},
+          "confusion": {}
+        },
+        {
+          "task": "counterparty",
+          "subset": "easy",
+          "items": 191,
+          "accuracy": 0.7749,
+          "missed": 0.0733,
+          "invented": 0.0,
+          "macro_f1": null,
+          "classes": {},
+          "confusion": {}
+        },
+        {
+          "task": "counterparty_type",
+          "subset": "easy",
+          "items": 191,
+          "accuracy": 0.9267,
+          "missed": 0.0733,
+          "invented": 0.0,
+          "macro_f1": 0.956,
+          "classes": {
+            "natural_person": {
+              "precision": 1.0,
+              "recall": 0.8909,
+              "f1": 0.9423,
+              "support": 55
+            },
+            "legal_person": {
+              "precision": 1.0,
+              "recall": 0.9412,
+              "f1": 0.9697,
+              "support": 136
+            },
+            "none": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 0
+            }
+          },
+          "confusion": {
+            "natural_person": {
+              "natural_person": 49,
+              "legal_person": 0,
+              "none": 6
+            },
+            "legal_person": {
+              "natural_person": 0,
+              "legal_person": 128,
+              "none": 8
+            },
+            "none": {
+              "natural_person": 0,
+              "legal_person": 0,
+              "none": 0
+            }
+          }
+        },
+        {
+          "task": "payment_purpose",
+          "subset": "easy",
+          "items": 191,
+          "accuracy": 0.8848,
+          "missed": 0.1152,
+          "invented": 0.0,
+          "macro_f1": 0.9208,
+          "classes": {
+            "salary": {
+              "precision": 1.0,
+              "recall": 0.8929,
+              "f1": 0.9434,
+              "support": 28
+            },
+            "rent": {
+              "precision": 1.0,
+              "recall": 0.9167,
+              "f1": 0.9565,
+              "support": 36
+            },
+            "invoice": {
+              "precision": 1.0,
+              "recall": 0.88,
+              "f1": 0.9362,
+              "support": 100
+            },
+            "loan": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 12
+            },
+            "family_support": {
+              "precision": 1.0,
+              "recall": 0.6667,
+              "f1": 0.8,
+              "support": 9
+            },
+            "other": {
+              "precision": 1.0,
+              "recall": 0.8,
+              "f1": 0.8889,
+              "support": 5
+            },
+            "unknown": {
+              "precision": 0.0435,
+              "recall": 1.0,
+              "f1": 0.0833,
+              "support": 1
+            }
+          },
+          "confusion": {
+            "salary": {
+              "salary": 25,
+              "rent": 0,
+              "invoice": 0,
+              "loan": 0,
+              "family_support": 0,
+              "other": 0,
+              "unknown": 3
+            },
+            "rent": {
+              "salary": 0,
+              "rent": 33,
+              "invoice": 0,
+              "loan": 0,
+              "family_support": 0,
+              "other": 0,
+              "unknown": 3
+            },
+            "invoice": {
+              "salary": 0,
+              "rent": 0,
+              "invoice": 88,
+              "loan": 0,
+              "family_support": 0,
+              "other": 0,
+              "unknown": 12
+            },
+            "loan": {
+              "salary": 0,
+              "rent": 0,
+              "invoice": 0,
+              "loan": 12,
+              "family_support": 0,
+              "other": 0,
+              "unknown": 0
+            },
+            "family_support": {
+              "salary": 0,
+              "rent": 0,
+              "invoice": 0,
+              "loan": 0,
+              "family_support": 6,
+              "other": 0,
+              "unknown": 3
+            },
+            "other": {
+              "salary": 0,
+              "rent": 0,
+              "invoice": 0,
+              "loan": 0,
+              "family_support": 0,
+              "other": 4,
+              "unknown": 1
+            },
+            "unknown": {
+              "salary": 0,
+              "rent": 0,
+              "invoice": 0,
+              "loan": 0,
+              "family_support": 0,
+              "other": 0,
+              "unknown": 1
+            }
+          }
+        },
+        {
+          "task": "iban",
+          "subset": "hard",
+          "items": 133,
+          "accuracy": 1.0,
+          "missed": 0.0,
+          "invented": 0.0,
+          "macro_f1": null,
+          "classes": {},
+          "confusion": {}
+        },
+        {
+          "task": "counterparty",
+          "subset": "hard",
+          "items": 133,
+          "accuracy": 0.5714,
+          "missed": 0.2406,
+          "invented": 0.0,
+          "macro_f1": null,
+          "classes": {},
+          "confusion": {}
+        },
+        {
+          "task": "counterparty_type",
+          "subset": "hard",
+          "items": 133,
+          "accuracy": 0.7594,
+          "missed": 0.2406,
+          "invented": 0.0,
+          "macro_f1": 0.8444,
+          "classes": {
+            "natural_person": {
+              "precision": 1.0,
+              "recall": 0.6591,
+              "f1": 0.7945,
+              "support": 44
+            },
+            "legal_person": {
+              "precision": 1.0,
+              "recall": 0.809,
+              "f1": 0.8944,
+              "support": 89
+            },
+            "none": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 0
+            }
+          },
+          "confusion": {
+            "natural_person": {
+              "natural_person": 29,
+              "legal_person": 0,
+              "none": 15
+            },
+            "legal_person": {
+              "natural_person": 0,
+              "legal_person": 72,
+              "none": 17
+            },
+            "none": {
+              "natural_person": 0,
+              "legal_person": 0,
+              "none": 0
+            }
+          }
+        },
+        {
+          "task": "payment_purpose",
+          "subset": "hard",
+          "items": 133,
+          "accuracy": 0.7669,
+          "missed": 0.2331,
+          "invented": 0.0,
+          "macro_f1": 0.8537,
+          "classes": {
+            "salary": {
+              "precision": 1.0,
+              "recall": 0.875,
+              "f1": 0.9333,
+              "support": 24
+            },
+            "rent": {
+              "precision": 1.0,
+              "recall": 0.8148,
+              "f1": 0.898,
+              "support": 27
+            },
+            "invoice": {
+              "precision": 1.0,
+              "recall": 0.7333,
+              "f1": 0.8462,
+              "support": 60
+            },
+            "loan": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 5
+            },
+            "family_support": {
+              "precision": 1.0,
+              "recall": 0.6364,
+              "f1": 0.7778,
+              "support": 11
+            },
+            "other": {
+              "precision": 1.0,
+              "recall": 0.5,
+              "f1": 0.6667,
+              "support": 6
+            },
+            "unknown": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 0
+            }
+          },
+          "confusion": {
+            "salary": {
+              "salary": 21,
+              "rent": 0,
+              "invoice": 0,
+              "loan": 0,
+              "family_support": 0,
+              "other": 0,
+              "unknown": 3
+            },
+            "rent": {
+              "salary": 0,
+              "rent": 22,
+              "invoice": 0,
+              "loan": 0,
+              "family_support": 0,
+              "other": 0,
+              "unknown": 5
+            },
+            "invoice": {
+              "salary": 0,
+              "rent": 0,
+              "invoice": 44,
+              "loan": 0,
+              "family_support": 0,
+              "other": 0,
+              "unknown": 16
+            },
+            "loan": {
+              "salary": 0,
+              "rent": 0,
+              "invoice": 0,
+              "loan": 5,
+              "family_support": 0,
+              "other": 0,
+              "unknown": 0
+            },
+            "family_support": {
+              "salary": 0,
+              "rent": 0,
+              "invoice": 0,
+              "loan": 0,
+              "family_support": 7,
+              "other": 0,
+              "unknown": 4
+            },
+            "other": {
+              "salary": 0,
+              "rent": 0,
+              "invoice": 0,
+              "loan": 0,
+              "family_support": 0,
+              "other": 3,
+              "unknown": 3
+            },
+            "unknown": {
+              "salary": 0,
+              "rent": 0,
+              "invoice": 0,
+              "loan": 0,
+              "family_support": 0,
+              "other": 0,
+              "unknown": 0
+            }
+          }
+        }
+      ],
+      "cases": [
+        {
+          "scenario": "dormant_reactivation",
+          "expected_flags": [
+            "RF-DORMANT-REACTIVATION",
+            "RF-FOREIGN-INFLOWS",
+            "RF-CASH-WITHDRAWALS",
+            "RF-OUTFLOW-SPIKE"
+          ],
+          "raised_flags": [
+            "RF-DORMANT-REACTIVATION",
+            "RF-FOREIGN-INFLOWS",
+            "RF-CASH-WITHDRAWALS",
+            "RF-OUTFLOW-SPIKE"
+          ],
+          "expected_level": "high",
+          "level": "high"
+        },
+        {
+          "scenario": "fp_property_sale",
+          "expected_flags": [],
+          "raised_flags": [],
+          "expected_level": "low",
+          "level": "low"
+        },
+        {
+          "scenario": "fp_salary_bonus",
+          "expected_flags": [],
+          "raised_flags": [],
+          "expected_level": "low",
+          "level": "low"
+        },
+        {
+          "scenario": "pass_through",
+          "expected_flags": [
+            "RF-PASS-THROUGH",
+            "RF-OUTFLOW-SPIKE"
+          ],
+          "raised_flags": [
+            "RF-PASS-THROUGH",
+            "RF-OUTFLOW-SPIKE"
+          ],
+          "expected_level": "high",
+          "level": "high"
+        },
+        {
+          "scenario": "profile_mismatch",
+          "expected_flags": [
+            "RF-PROFILE-MISMATCH"
+          ],
+          "raised_flags": [
+            "RF-PROFILE-MISMATCH"
+          ],
+          "expected_level": "medium",
+          "level": "medium"
+        },
+        {
+          "scenario": "structuring_cash",
+          "expected_flags": [
+            "RF-STRUCTURING"
+          ],
+          "raised_flags": [
+            "RF-STRUCTURING"
+          ],
+          "expected_level": "high",
+          "level": "high"
+        }
+      ]
+    },
+    {
+      "enricher": "local",
+      "model": "llama3.1:8b",
+      "descriptions": 324,
+      "seconds": 868.93,
+      "llm_share": 0.9537,
+      "cost_usd": null,
+      "rejections": {
+        "iban: IBAN does not appear in the description": 10,
+        "iban: IBAN has an invalid structure": 5
+      },
+      "tasks": [
+        {
+          "task": "iban",
+          "subset": "all",
+          "items": 324,
+          "accuracy": 0.9969,
+          "missed": 0.0031,
+          "invented": 0.0,
+          "macro_f1": null,
+          "classes": {},
+          "confusion": {}
+        },
+        {
+          "task": "counterparty",
+          "subset": "all",
+          "items": 324,
+          "accuracy": 0.9537,
+          "missed": 0.0,
+          "invented": 0.0,
+          "macro_f1": null,
+          "classes": {},
+          "confusion": {}
+        },
+        {
+          "task": "counterparty_type",
+          "subset": "all",
+          "items": 324,
+          "accuracy": 1.0,
+          "missed": 0.0,
+          "invented": 0.0,
+          "macro_f1": 1.0,
+          "classes": {
+            "natural_person": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 99
+            },
+            "legal_person": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 225
+            },
+            "none": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 0
+            }
+          },
+          "confusion": {
+            "natural_person": {
+              "natural_person": 99,
+              "legal_person": 0,
+              "none": 0
+            },
+            "legal_person": {
+              "natural_person": 0,
+              "legal_person": 225,
+              "none": 0
+            },
+            "none": {
+              "natural_person": 0,
+              "legal_person": 0,
+              "none": 0
+            }
+          }
+        },
+        {
+          "task": "payment_purpose",
+          "subset": "all",
+          "items": 324,
+          "accuracy": 0.9506,
+          "missed": 0.0154,
+          "invented": 0.0031,
+          "macro_f1": 0.9099,
+          "classes": {
+            "salary": {
+              "precision": 1.0,
+              "recall": 0.9808,
+              "f1": 0.9903,
+              "support": 52
+            },
+            "rent": {
+              "precision": 1.0,
+              "recall": 0.9841,
+              "f1": 0.992,
+              "support": 63
+            },
+            "invoice": {
+              "precision": 1.0,
+              "recall": 0.95,
+              "f1": 0.9744,
+              "support": 160
+            },
+            "loan": {
+              "precision": 0.9412,
+              "recall": 0.9412,
+              "f1": 0.9412,
+              "support": 17
+            },
+            "family_support": {
+              "precision": 0.9444,
+              "recall": 0.85,
+              "f1": 0.8947,
+              "support": 20
+            },
+            "other": {
+              "precision": 0.5263,
+              "recall": 0.9091,
+              "f1": 0.6667,
+              "support": 11
+            },
+            "unknown": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 1
+            }
+          },
+          "confusion": {
+            "salary": {
+              "salary": 51,
+              "rent": 0,
+              "invoice": 0,
+              "loan": 0,
+              "family_support": 0,
+              "other": 1,
+              "unknown": 0
+            },
+            "rent": {
+              "salary": 0,
+              "rent": 62,
+              "invoice": 0,
+              "loan": 0,
+              "family_support": 1,
+              "other": 0,
+              "unknown": 0
+            },
+            "invoice": {
+              "salary": 0,
+              "rent": 0,
+              "invoice": 152,
+              "loan": 0,
+              "family_support": 0,
+              "other": 4,
+              "unknown": 4
+            },
+            "loan": {
+              "salary": 0,
+              "rent": 0,
+              "invoice": 0,
+              "loan": 16,
+              "family_support": 0,
+              "other": 1,
+              "unknown": 0
+            },
+            "family_support": {
+              "salary": 0,
+              "rent": 0,
+              "invoice": 0,
+              "loan": 0,
+              "family_support": 17,
+              "other": 2,
+              "unknown": 1
+            },
+            "other": {
+              "salary": 0,
+              "rent": 0,
+              "invoice": 0,
+              "loan": 1,
+              "family_support": 0,
+              "other": 10,
+              "unknown": 0
+            },
+            "unknown": {
+              "salary": 0,
+              "rent": 0,
+              "invoice": 0,
+              "loan": 0,
+              "family_support": 0,
+              "other": 1,
+              "unknown": 0
+            }
+          }
+        },
+        {
+          "task": "iban",
+          "subset": "easy",
+          "items": 191,
+          "accuracy": 1.0,
+          "missed": 0.0,
+          "invented": 0.0,
+          "macro_f1": null,
+          "classes": {},
+          "confusion": {}
+        },
+        {
+          "task": "counterparty",
+          "subset": "easy",
+          "items": 191,
+          "accuracy": 0.9686,
+          "missed": 0.0,
+          "invented": 0.0,
+          "macro_f1": null,
+          "classes": {},
+          "confusion": {}
+        },
+        {
+          "task": "counterparty_type",
+          "subset": "easy",
+          "items": 191,
+          "accuracy": 1.0,
+          "missed": 0.0,
+          "invented": 0.0,
+          "macro_f1": 1.0,
+          "classes": {
+            "natural_person": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 55
+            },
+            "legal_person": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 136
+            },
+            "none": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 0
+            }
+          },
+          "confusion": {
+            "natural_person": {
+              "natural_person": 55,
+              "legal_person": 0,
+              "none": 0
+            },
+            "legal_person": {
+              "natural_person": 0,
+              "legal_person": 136,
+              "none": 0
+            },
+            "none": {
+              "natural_person": 0,
+              "legal_person": 0,
+              "none": 0
+            }
+          }
+        },
+        {
+          "task": "payment_purpose",
+          "subset": "easy",
+          "items": 191,
+          "accuracy": 0.9738,
+          "missed": 0.0,
+          "invented": 0.0052,
+          "macro_f1": 0.9235,
+          "classes": {
+            "salary": {
+              "precision": 1.0,
+              "recall": 0.9643,
+              "f1": 0.9818,
+              "support": 28
+            },
+            "rent": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 36
+            },
+            "invoice": {
+              "precision": 1.0,
+              "recall": 0.99,
+              "f1": 0.995,
+              "support": 100
+            },
+            "loan": {
+              "precision": 1.0,
+              "recall": 0.9167,
+              "f1": 0.9565,
+              "support": 12
+            },
+            "family_support": {
+              "precision": 1.0,
+              "recall": 0.8889,
+              "f1": 0.9412,
+              "support": 9
+            },
+            "other": {
+              "precision": 0.5,
+              "recall": 1.0,
+              "f1": 0.6667,
+              "support": 5
+            },
+            "unknown": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 1
+            }
+          },
+          "confusion": {
+            "salary": {
+              "salary": 27,
+              "rent": 0,
+              "invoice": 0,
+              "loan": 0,
+              "family_support": 0,
+              "other": 1,
+              "unknown": 0
+            },
+            "rent": {
+              "salary": 0,
+              "rent": 36,
+              "invoice": 0,
+              "loan": 0,
+              "family_support": 0,
+              "other": 0,
+              "unknown": 0
+            },
+            "invoice": {
+              "salary": 0,
+              "rent": 0,
+              "invoice": 99,
+              "loan": 0,
+              "family_support": 0,
+              "other": 1,
+              "unknown": 0
+            },
+            "loan": {
+              "salary": 0,
+              "rent": 0,
+              "invoice": 0,
+              "loan": 11,
+              "family_support": 0,
+              "other": 1,
+              "unknown": 0
+            },
+            "family_support": {
+              "salary": 0,
+              "rent": 0,
+              "invoice": 0,
+              "loan": 0,
+              "family_support": 8,
+              "other": 1,
+              "unknown": 0
+            },
+            "other": {
+              "salary": 0,
+              "rent": 0,
+              "invoice": 0,
+              "loan": 0,
+              "family_support": 0,
+              "other": 5,
+              "unknown": 0
+            },
+            "unknown": {
+              "salary": 0,
+              "rent": 0,
+              "invoice": 0,
+              "loan": 0,
+              "family_support": 0,
+              "other": 1,
+              "unknown": 0
+            }
+          }
+        },
+        {
+          "task": "iban",
+          "subset": "hard",
+          "items": 133,
+          "accuracy": 0.9925,
+          "missed": 0.0075,
+          "invented": 0.0,
+          "macro_f1": null,
+          "classes": {},
+          "confusion": {}
+        },
+        {
+          "task": "counterparty",
+          "subset": "hard",
+          "items": 133,
+          "accuracy": 0.9323,
+          "missed": 0.0,
+          "invented": 0.0,
+          "macro_f1": null,
+          "classes": {},
+          "confusion": {}
+        },
+        {
+          "task": "counterparty_type",
+          "subset": "hard",
+          "items": 133,
+          "accuracy": 1.0,
+          "missed": 0.0,
+          "invented": 0.0,
+          "macro_f1": 1.0,
+          "classes": {
+            "natural_person": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 44
+            },
+            "legal_person": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 89
+            },
+            "none": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 0
+            }
+          },
+          "confusion": {
+            "natural_person": {
+              "natural_person": 44,
+              "legal_person": 0,
+              "none": 0
+            },
+            "legal_person": {
+              "natural_person": 0,
+              "legal_person": 89,
+              "none": 0
+            },
+            "none": {
+              "natural_person": 0,
+              "legal_person": 0,
+              "none": 0
+            }
+          }
+        },
+        {
+          "task": "payment_purpose",
+          "subset": "hard",
+          "items": 133,
+          "accuracy": 0.9173,
+          "missed": 0.0376,
+          "invented": 0.0,
+          "macro_f1": 0.892,
+          "classes": {
+            "salary": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 24
+            },
+            "rent": {
+              "precision": 1.0,
+              "recall": 0.963,
+              "f1": 0.9811,
+              "support": 27
+            },
+            "invoice": {
+              "precision": 1.0,
+              "recall": 0.8833,
+              "f1": 0.9381,
+              "support": 60
+            },
+            "loan": {
+              "precision": 0.8333,
+              "recall": 1.0,
+              "f1": 0.9091,
+              "support": 5
+            },
+            "family_support": {
+              "precision": 0.9,
+              "recall": 0.8182,
+              "f1": 0.8571,
+              "support": 11
+            },
+            "other": {
+              "precision": 0.5556,
+              "recall": 0.8333,
+              "f1": 0.6667,
+              "support": 6
+            },
+            "unknown": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 0
+            }
+          },
+          "confusion": {
+            "salary": {
+              "salary": 24,
+              "rent": 0,
+              "invoice": 0,
+              "loan": 0,
+              "family_support": 0,
+              "other": 0,
+              "unknown": 0
+            },
+            "rent": {
+              "salary": 0,
+              "rent": 26,
+              "invoice": 0,
+              "loan": 0,
+              "family_support": 1,
+              "other": 0,
+              "unknown": 0
+            },
+            "invoice": {
+              "salary": 0,
+              "rent": 0,
+              "invoice": 53,
+              "loan": 0,
+              "family_support": 0,
+              "other": 3,
+              "unknown": 4
+            },
+            "loan": {
+              "salary": 0,
+              "rent": 0,
+              "invoice": 0,
+              "loan": 5,
+              "family_support": 0,
+              "other": 0,
+              "unknown": 0
+            },
+            "family_support": {
+              "salary": 0,
+              "rent": 0,
+              "invoice": 0,
+              "loan": 0,
+              "family_support": 9,
+              "other": 1,
+              "unknown": 1
+            },
+            "other": {
+              "salary": 0,
+              "rent": 0,
+              "invoice": 0,
+              "loan": 1,
+              "family_support": 0,
+              "other": 5,
+              "unknown": 0
+            },
+            "unknown": {
+              "salary": 0,
+              "rent": 0,
+              "invoice": 0,
+              "loan": 0,
+              "family_support": 0,
+              "other": 0,
+              "unknown": 0
+            }
+          }
+        }
+      ],
+      "cases": [
+        {
+          "scenario": "dormant_reactivation",
+          "expected_flags": [
+            "RF-DORMANT-REACTIVATION",
+            "RF-FOREIGN-INFLOWS",
+            "RF-CASH-WITHDRAWALS",
+            "RF-OUTFLOW-SPIKE"
+          ],
+          "raised_flags": [
+            "RF-DORMANT-REACTIVATION",
+            "RF-FOREIGN-INFLOWS",
+            "RF-CASH-WITHDRAWALS",
+            "RF-OUTFLOW-SPIKE"
+          ],
+          "expected_level": "high",
+          "level": "high"
+        },
+        {
+          "scenario": "fp_property_sale",
+          "expected_flags": [],
+          "raised_flags": [],
+          "expected_level": "low",
+          "level": "low"
+        },
+        {
+          "scenario": "fp_salary_bonus",
+          "expected_flags": [],
+          "raised_flags": [],
+          "expected_level": "low",
+          "level": "low"
+        },
+        {
+          "scenario": "pass_through",
+          "expected_flags": [
+            "RF-PASS-THROUGH",
+            "RF-OUTFLOW-SPIKE"
+          ],
+          "raised_flags": [
+            "RF-PASS-THROUGH",
+            "RF-OUTFLOW-SPIKE"
+          ],
+          "expected_level": "high",
+          "level": "high"
+        },
+        {
+          "scenario": "profile_mismatch",
+          "expected_flags": [
+            "RF-PROFILE-MISMATCH"
+          ],
+          "raised_flags": [
+            "RF-PROFILE-MISMATCH"
+          ],
+          "expected_level": "medium",
+          "level": "medium"
+        },
+        {
+          "scenario": "structuring_cash",
+          "expected_flags": [
+            "RF-STRUCTURING"
+          ],
+          "raised_flags": [
+            "RF-STRUCTURING"
+          ],
+          "expected_level": "high",
+          "level": "high"
+        }
+      ]
+    }
+  ]
+}
