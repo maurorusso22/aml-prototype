@@ -22,16 +22,14 @@ def customer_profile(context: AnalysisContext) -> list[Fact]:
     profile = Facts("CUST", FactCategory.CUSTOMER)
     tenure = round((bundle.period_end - customer.onboarding_date).days / DAYS_PER_YEAR, 1)
     if isinstance(customer, IndividualCustomer):
-        kind, declared = "individual", customer.declared_annual_income
-        activity = ("Occupation", customer.occupation)
+        declared, activity = customer.declared_annual_income, customer.occupation
     else:
-        kind, declared = f"business ({customer.legal_form})", customer.declared_annual_turnover
-        activity = ("Sector", customer.sector)
-    profile.add(1, "Customer kind", kind)
+        declared, activity = customer.declared_annual_turnover, customer.sector
+    profile.add(1, "Customer kind", str(customer.kind))
     profile.add(2, "Years as a customer", tenure, "years")
     profile.add(3, "Risk rating", str(customer.risk_rating))
     profile.add(4, "Declared annual income or turnover", euros(declared), "EUR")
-    profile.add(5, activity[0], activity[1])
+    profile.add(5, "Occupation or sector", activity)
     relationship = Facts("REL", FactCategory.RELATIONSHIP)
     balance = sum((account.balance for account in bundle.accounts), declared * 0)
     relationship.add(1, "Accounts", len(bundle.accounts), "count")

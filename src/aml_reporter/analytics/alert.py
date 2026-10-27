@@ -16,7 +16,7 @@ def alert_in_context(context: AnalysisContext) -> list[Fact]:
         context: Case under analysis.
 
     Returns:
-        Facts F-ALERT-001 to F-ALERT-008.
+        Facts F-ALERT-001 to F-ALERT-009.
     """
     facts = Facts("ALERT", FactCategory.ALERT)
     alerted = context.alerted
@@ -47,7 +47,7 @@ def _add_counterparty(context: AnalysisContext, facts: Facts) -> None:
 
     Args:
         context: Case under analysis.
-        facts: Collection receiving F-ALERT-007 and F-ALERT-008.
+        facts: Collection receiving F-ALERT-007 to F-ALERT-009.
     """
     alerted = context.alerted
     enrichment = context.enrichments.get(alerted.transaction_id)
@@ -60,7 +60,8 @@ def _add_counterparty(context: AnalysisContext, facts: Facts) -> None:
         if tx.booked_at < alerted.booked_at and context.counterparty(tx) == key
     ]
     name = enrichment.counterparty_name or key
-    kind = enrichment.counterparty_type
-    label = f"{name} ({kind.replace('_', ' ')})" if kind else name
-    facts.add(7, "Counterparty of the alerted transaction", label, None, [alerted])
+    facts.add(7, "Counterparty of the alerted transaction", name, None, [alerted])
     facts.add(8, "Earlier transactions with the same counterparty", len(earlier), "count", earlier)
+    if enrichment.counterparty_type is not None:
+        kind = enrichment.counterparty_type.replace("_", " ")
+        facts.add(9, "Type of that counterparty", kind, None, [alerted])

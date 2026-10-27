@@ -35,7 +35,10 @@ def purpose_mix(context: AnalysisContext) -> list[Fact]:
                 for tx in flows
                 if context.enrichments[tx.transaction_id].payment_purpose is purpose
             ]
-            label = f"{word} for {purpose.replace('_', ' ')}"
+            if purpose is PaymentPurpose.UNKNOWN:
+                label = f"{word} with no stated purpose"
+            else:
+                label = f"{word} for {purpose.replace('_', ' ')}"
             facts.add(offset + number, label, euros(total(labelled)), "EUR", labelled)
     unknown = [
         tx
