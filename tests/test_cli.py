@@ -55,6 +55,23 @@ def test_assess_writes_flags_and_risk_level(tmp_path: Path) -> None:
     assert assessment["level"] == "high"
 
 
+def test_generate_writes_a_word_report(tmp_path: Path) -> None:
+    """`generate` writes the report of a bundle in the requested language."""
+    RUNNER.invoke(app, ["synth", "--scenario", "profile_mismatch", "--out-dir", str(tmp_path)])
+    bundle, output = tmp_path / "samples" / "profile_mismatch.json", tmp_path / "out" / "r.docx"
+    args = ["generate", str(bundle), "--enricher", "baseline", "--lang", "it", "--output"]
+    result = RUNNER.invoke(app, [*args, str(output)])
+    assert result.exit_code == 0, result.output
+    assert output.read_bytes().startswith(b"PK")
+
+
+def test_generate_rejects_unknown_languages(tmp_path: Path) -> None:
+    """An unsupported language fails with a clear message."""
+    result = RUNNER.invoke(app, ["generate", str(tmp_path / "x.json"), "--lang", "fr"])
+    assert result.exit_code != 0
+    assert "unknown language fr" in result.output
+
+
 def test_enrich_rejects_unknown_enrichers(tmp_path: Path) -> None:
     """An unknown enricher name fails with a clear message."""
     result = RUNNER.invoke(app, ["enrich", str(tmp_path / "x.json"), "--enricher", "magic"])
