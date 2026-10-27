@@ -7,7 +7,7 @@ Rules:
 - Return null when the description names no counterparty. Never invent a name.
 
 Input: a JSON list of items, each with an `id` and a `text`.
-Output: one answer per item, with the same `id`.
+Output: exactly one answer for every item, with the same `id`. Never skip an item: when there is nothing to extract, answer null for it.
 
 Examples (all data invented):
 

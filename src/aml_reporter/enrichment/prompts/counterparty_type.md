@@ -5,7 +5,7 @@ Labels:
 - `natural_person`: an individual, possibly written surname first or with initials.
 
 Input: a JSON list of items, each with an `id` and a `name`.
-Output: one answer per item, with the same `id`.
+Output: exactly one answer for every item, with the same `id`. Never skip an item.
 
 Examples (all data invented):
 

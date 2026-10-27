@@ -11,6 +11,7 @@ from pydantic import TypeAdapter, ValidationError
 from ..models.formats import Iban
 
 IBAN_FORMAT = TypeAdapter(Iban)  # Structural IBAN check shared with the domain model
+NO_VALUE = frozenset({"", "null", "none", "n/a"})  # How small models write null as text
 
 
 class InvalidAnswerError(ValueError):
@@ -32,7 +33,7 @@ def check_iban(value: object, text: str) -> str | None:
     Raises:
         InvalidAnswerError: When the IBAN is malformed or not in the text.
     """
-    if value is None:
+    if _absent(value):
         return None
     if not isinstance(value, str):
         raise InvalidAnswerError("IBAN is not text")
@@ -59,17 +60,29 @@ def check_name(value: object, text: str) -> str | None:
         The name exactly as it appears in the text, or None.
 
     Raises:
-        InvalidAnswerError: When the name is blank or not in the text.
+        InvalidAnswerError: When the name is not text or not in the text.
     """
-    if value is None:
+    if _absent(value):
         return None
-    if not isinstance(value, str) or not value.strip():
-        raise InvalidAnswerError("counterparty name is blank")
+    if not isinstance(value, str):
+        raise InvalidAnswerError("counterparty name is not text")
     pattern = r"\s+".join(re.escape(word) for word in value.split())
     match = re.search(pattern, text, re.IGNORECASE)
     if match is None:
         raise InvalidAnswerError("counterparty name does not appear in the description")
     return match.group()
+
+
+def _absent(value: object) -> bool:
+    """Tell whether an answer means "no value", as null or as text like "null" or "".
+
+    Args:
+        value: Answer returned by the model.
+
+    Returns:
+        True when the answer carries no value.
+    """
+    return value is None or (isinstance(value, str) and value.strip().lower() in NO_VALUE)
 
 
 def check_label(value: object, text: str) -> object:

@@ -25,8 +25,9 @@ class LLMEnricher:
     """Asks an LLM every task, and falls back to the baseline for any transaction with a failure.
 
     Answers are cached by task and normalised input, so repeated descriptions cost one call.
-    A transaction is enriched by the LLM only if every one of its answers passed validation;
-    otherwise the whole record comes from the baseline, so `source` stays truthful.
+    Inputs the model skips are asked once more, in a batch of their own. A transaction is
+    enriched by the LLM only if every one of its answers passed validation; otherwise the
+    whole record comes from the baseline, so `source` stays truthful.
     """
 
     def __init__(self, client: LLMClient, fallback: BaselineEnricher | None = None) -> None:
@@ -70,15 +71,24 @@ class LLMEnricher:
         """
         done = self._answers.keys() | self._failed
         pending = [value for value in inputs if (task.name, value) not in done]
+        unanswered: list[str] = []
         for start in range(0, len(pending), BATCH_SIZE):
-            self._run_batch(task, pending[start : start + BATCH_SIZE])
+            unanswered += self._run_batch(task, pending[start : start + BATCH_SIZE])
+        if unanswered:
+            logger.info("%s: asking again for %d unanswered inputs", task.name, len(unanswered))
+        for start in range(0, len(unanswered), BATCH_SIZE):
+            still = self._run_batch(task, unanswered[start : start + BATCH_SIZE])
+            self._failed.update((task.name, value) for value in still)
 
-    def _run_batch(self, task: Task, batch: Sequence[str]) -> None:
-        """Ask one batch and store each answer that passes its check.
+    def _run_batch(self, task: Task, batch: Sequence[str]) -> list[str]:
+        """Ask one batch, store each answer that passes its check, and report the gaps.
 
         Args:
             task: Task to run.
             batch: Inputs; their position is the item id sent to the model.
+
+        Returns:
+            Inputs the model skipped or answered twice, left for the caller to retry.
         """
         items = [{"id": number, task.input_key: value} for number, value in enumerate(batch)]
         try:
@@ -86,18 +96,21 @@ class LLMEnricher:
         except LLMError as error:
             logger.warning("%s: batch of %d failed: %s", task.name, len(batch), error)
             self._failed.update((task.name, value) for value in batch)
-            return
+            return []
         counts = Counter(answer.id for answer in result.answers)
         by_id = {answer.id: answer for answer in result.answers if counts[answer.id] == 1}
+        unanswered = [value for number, value in enumerate(batch) if number not in by_id]
         for number, value in enumerate(batch):
-            key = (task.name, value)
+            if number not in by_id:
+                continue
             try:
-                if number not in by_id:
-                    raise InvalidAnswerError("missing or duplicated answer")
-                self._answers[key] = task.check(getattr(by_id[number], task.field), value)
+                self._answers[(task.name, value)] = task.check(
+                    getattr(by_id[number], task.field), value
+                )
             except InvalidAnswerError as error:
                 logger.info("%s: answer %d rejected: %s", task.name, number, error)
-                self._failed.add(key)
+                self._failed.add((task.name, value))
+        return unanswered
 
     def _enrichment(self, transaction: Transaction) -> Enrichment:
         """Assemble one enrichment from validated answers, or fall back to the baseline.

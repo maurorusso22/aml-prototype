@@ -14,7 +14,7 @@ Rules:
 - Judge only what the text states. Do not infer a purpose from the counterparty name or from the amount.
 
 Input: a JSON list of items, each with an `id` and a `text`.
-Output: one answer per item, with the same `id`.
+Output: exactly one answer for every item, with the same `id`. Never skip an item.
 
 Examples (all data invented):
 
