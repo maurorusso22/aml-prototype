@@ -143,6 +143,8 @@ The risk indicator is a plain sum: 1, 2, or 3 points per flag by severity; 2 poi
 
 ## The report
 
+A Word document in English or Italian, built from fixed templates filled with facts. Every figure cites its fact identifier, values derived from enrichment are marked with †, every page carries a "synthetic data" header, and the decision fields are left blank for the analyst. Document metadata is written explicitly, so no local user or machine details end up in the file.
+
 | # | Section | Content | LLM contribution |
 |---|---|---|---|
 | 1 | Cover and case summary | Case ID, alert date, triggering scenario, generation metadata, disclaimer | — |
@@ -296,20 +298,17 @@ uv run aml-report analyze data/samples/structuring_cash.json --output output/fac
 
 # Raise the red flags and compute the risk indicator
 uv run aml-report assess data/samples/structuring_cash.json
+
+# Write the Word report (output/CASE-000003_en.docx), with the default local model
+uv run aml-report generate data/samples/structuring_cash.json
+
+# The same report in Italian, offline with the rule-based baseline
+uv run aml-report generate data/samples/structuring_cash.json --enricher baseline --lang it
 ```
 
-Target interface, available once the later phases of the implementation plan are complete:
+Target interface, available once the evaluation phase is complete:
 
 ```bash
-# Build a report offline with the rule-based baseline, no LLM needed
-uv run aml-report generate data/samples/structuring_cash.json --enricher baseline
-
-# Build a report with a local model (requires Ollama)
-uv run aml-report generate data/samples/structuring_cash.json --enricher local
-
-# Build a report with Claude, in Italian
-uv run aml-report generate data/samples/structuring_cash.json --enricher anthropic --lang it
-
 # Compare enrichers on the labelled synthetic dataset
 uv run aml-report evaluate --enricher baseline --enricher local
 ```

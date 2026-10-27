@@ -85,6 +85,9 @@ This plan breaks the prototype into small, independently testable phases. Each p
 - Blank analyst assessment section; enrichment statistics (LLM vs fallback) in the appendix.
 - Header or footer stating "Synthetic data — prototype".
 - DOCX core properties (author, company, title) set explicitly, so no local metadata leaks.
+- Wording in TOML catalogues per language; tests fail when an Italian translation is missing for a text, a fact, or a rule.
+- Table borders and shading written into each table, so the layout does not depend on the viewer supporting named table styles.
+- CLI command `aml-report generate`, added early so reports can be produced and reviewed.
 
 **Done when:** a report for every scenario opens in Word and LibreOffice, and a structural test checks headings, tables, and metadata.
 
