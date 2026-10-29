@@ -1,6 +1,5 @@
 """Enrichment through an LLM backend: batched calls, a cache, validation, and fallback."""
 
-import json
 import logging
 from collections import Counter
 from collections.abc import Sequence
@@ -93,9 +92,8 @@ class LLMEnricher:
         Returns:
             Inputs the model skipped or answered twice, left for the caller to retry.
         """
-        items = [{"id": number, task.input_key: value} for number, value in enumerate(batch)]
         try:
-            result = self.client.complete(task.prompt, json.dumps(items), task.schema)
+            result = self.client.complete(task.prompt, task.request(batch), task.schema)
         except LLMError as error:
             logger.warning("%s: batch of %d failed: %s", task.name, len(batch), error)
             self._failed.update((task.name, value) for value in batch)

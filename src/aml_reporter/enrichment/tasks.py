@@ -4,6 +4,7 @@ Each task is evaluated on its own. Three read descriptions; the counterparty typ
 names found by the counterparty task.
 """
 
+import json
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 from functools import cache
@@ -99,6 +100,19 @@ class Task:
             Prompt text.
         """
         return _load_prompt(self.name)
+
+    def request(self, batch: Sequence[str]) -> str:
+        """Write a batch as the user message, the same format as the prompt example.
+
+        Args:
+            batch: Descriptions or names; their position is the item id.
+
+        Returns:
+            JSON list of items, each with an `id` and the input under `input_key`.
+        """
+        return json.dumps(
+            [{"id": number, self.input_key: value} for number, value in enumerate(batch)]
+        )
 
 
 @cache

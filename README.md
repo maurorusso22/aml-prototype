@@ -206,7 +206,7 @@ Enrichment sits behind a small interface, so the same pipeline runs with differe
 Prompt design:
 
 - one versioned prompt file per task in [`src/aml_reporter/enrichment/prompts/`](src/aml_reporter/enrichment/prompts/), not strings buried in code;
-- few-shot examples made of invented data only;
+- few-shot examples made of invented data only, written as one full batch exactly as the model receives it and must answer it;
 - closed label sets, and an explicit instruction to answer `unknown` or `null` instead of guessing;
 - up to 20 inputs per request, and a cache keyed on the normalised description, since the same descriptions recur (salary, rent, utilities).
 

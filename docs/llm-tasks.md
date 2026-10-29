@@ -11,6 +11,20 @@ Four narrow tasks, each with its own prompt file in [`enrichment/prompts/`](../s
 
 Only wire transfers and direct debits are enriched; card and cash operations have no counterparty text.
 
+## What the model sees
+
+The prompt file is the system message. Each batch is the user message, a JSON list of items numbered from 0 ([`Task.request`](../src/aml_reporter/enrichment/tasks.py)); the answer is a JSON object with one entry per item. For `iban`:
+
+```json
+[{"id": 0, "text": "BONIFICO SEPA DA VEGA TRASPORTI SPA IBAN IT00C9999970215538846120931 CAUSALE STIEPNDIO OTTOBRE"}, {"id": 1, "text": "SDD MND730215 ZENIT FINANZIARIA SPA RATA PRESTITO 2214"}]
+```
+
+```json
+{"answers": [{"id": 0, "iban": "IT00C9999970215538846120931"}, {"id": 1, "iban": null}]}
+```
+
+Each prompt ends with one example batch in exactly this form, made of invented data in the style of the synthetic descriptions: abbreviations, typos, truncated purposes, missing field labels, lowercase text, foreign IBANs. The three description tasks share the same 14 descriptions; the `counterparty_type` example classifies the names that the `counterparty` example extracts. [`test_enrichment_prompts.py`](../tests/test_enrichment_prompts.py) checks that every example matches `Task.request`, fits the answer schema, passes the task's check, and reuses no description or name from the evaluation data.
+
 ## How a case is enriched
 
 1. Descriptions are normalised (single spaces) and deduplicated; answers are cached by task and text.
