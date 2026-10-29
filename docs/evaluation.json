@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-27T21:02:53Z",
+  "generated_at": "2026-10-29T21:37:04Z",
   "dataset": "data/",
   "hard_items": 133,
   "enrichers": [
@@ -644,20 +644,19 @@
       "enricher": "local",
       "model": "llama3.1:8b",
       "descriptions": 324,
-      "seconds": 868.93,
-      "llm_share": 0.9537,
+      "seconds": 893.0,
+      "llm_share": 0.9938,
       "cost_usd": null,
       "rejections": {
-        "iban: IBAN does not appear in the description": 10,
-        "iban: IBAN has an invalid structure": 5
+        "iban: IBAN does not appear in the description": 2
       },
       "tasks": [
         {
           "task": "iban",
           "subset": "all",
           "items": 324,
-          "accuracy": 0.9969,
-          "missed": 0.0031,
+          "accuracy": 1.0,
+          "missed": 0.0,
           "invented": 0.0,
           "macro_f1": null,
           "classes": {},
@@ -667,8 +666,8 @@
           "task": "counterparty",
           "subset": "all",
           "items": 324,
-          "accuracy": 0.9537,
-          "missed": 0.0,
+          "accuracy": 0.9938,
+          "missed": 0.0031,
           "invented": 0.0,
           "macro_f1": null,
           "classes": {},
@@ -678,15 +677,15 @@
           "task": "counterparty_type",
           "subset": "all",
           "items": 324,
-          "accuracy": 1.0,
-          "missed": 0.0,
+          "accuracy": 0.9969,
+          "missed": 0.0031,
           "invented": 0.0,
-          "macro_f1": 1.0,
+          "macro_f1": 0.9974,
           "classes": {
             "natural_person": {
               "precision": 1.0,
-              "recall": 1.0,
-              "f1": 1.0,
+              "recall": 0.9899,
+              "f1": 0.9949,
               "support": 99
             },
             "legal_person": {
@@ -704,9 +703,9 @@
           },
           "confusion": {
             "natural_person": {
-              "natural_person": 99,
+              "natural_person": 98,
               "legal_person": 0,
-              "none": 0
+              "none": 1
             },
             "legal_person": {
               "natural_person": 0,
@@ -724,45 +723,45 @@
           "task": "payment_purpose",
           "subset": "all",
           "items": 324,
-          "accuracy": 0.9506,
-          "missed": 0.0154,
+          "accuracy": 0.9722,
+          "missed": 0.0062,
           "invented": 0.0031,
-          "macro_f1": 0.9099,
+          "macro_f1": 0.9505,
           "classes": {
             "salary": {
               "precision": 1.0,
-              "recall": 0.9808,
-              "f1": 0.9903,
+              "recall": 1.0,
+              "f1": 1.0,
               "support": 52
             },
             "rent": {
-              "precision": 1.0,
-              "recall": 0.9841,
-              "f1": 0.992,
+              "precision": 0.9844,
+              "recall": 1.0,
+              "f1": 0.9921,
               "support": 63
             },
             "invoice": {
               "precision": 1.0,
-              "recall": 0.95,
-              "f1": 0.9744,
+              "recall": 0.9625,
+              "f1": 0.9809,
               "support": 160
             },
             "loan": {
-              "precision": 0.9412,
+              "precision": 1.0,
               "recall": 0.9412,
-              "f1": 0.9412,
+              "f1": 0.9697,
               "support": 17
             },
             "family_support": {
-              "precision": 0.9444,
-              "recall": 0.85,
-              "f1": 0.8947,
+              "precision": 1.0,
+              "recall": 0.95,
+              "f1": 0.9744,
               "support": 20
             },
             "other": {
-              "precision": 0.5263,
-              "recall": 0.9091,
-              "f1": 0.6667,
+              "precision": 0.6471,
+              "recall": 1.0,
+              "f1": 0.7857,
               "support": 11
             },
             "unknown": {
@@ -774,31 +773,31 @@
           },
           "confusion": {
             "salary": {
-              "salary": 51,
+              "salary": 52,
               "rent": 0,
               "invoice": 0,
               "loan": 0,
               "family_support": 0,
-              "other": 1,
+              "other": 0,
               "unknown": 0
             },
             "rent": {
               "salary": 0,
-              "rent": 62,
+              "rent": 63,
               "invoice": 0,
               "loan": 0,
-              "family_support": 1,
+              "family_support": 0,
               "other": 0,
               "unknown": 0
             },
             "invoice": {
               "salary": 0,
-              "rent": 0,
-              "invoice": 152,
+              "rent": 1,
+              "invoice": 154,
               "loan": 0,
               "family_support": 0,
               "other": 4,
-              "unknown": 4
+              "unknown": 1
             },
             "loan": {
               "salary": 0,
@@ -814,17 +813,17 @@
               "rent": 0,
               "invoice": 0,
               "loan": 0,
-              "family_support": 17,
-              "other": 2,
+              "family_support": 19,
+              "other": 0,
               "unknown": 1
             },
             "other": {
               "salary": 0,
               "rent": 0,
               "invoice": 0,
-              "loan": 1,
+              "loan": 0,
               "family_support": 0,
-              "other": 10,
+              "other": 11,
               "unknown": 0
             },
             "unknown": {
@@ -853,8 +852,8 @@
           "task": "counterparty",
           "subset": "easy",
           "items": 191,
-          "accuracy": 0.9686,
-          "missed": 0.0,
+          "accuracy": 0.9948,
+          "missed": 0.0052,
           "invented": 0.0,
           "macro_f1": null,
           "classes": {},
@@ -864,15 +863,15 @@
           "task": "counterparty_type",
           "subset": "easy",
           "items": 191,
-          "accuracy": 1.0,
-          "missed": 0.0,
+          "accuracy": 0.9948,
+          "missed": 0.0052,
           "invented": 0.0,
-          "macro_f1": 1.0,
+          "macro_f1": 0.9954,
           "classes": {
             "natural_person": {
               "precision": 1.0,
-              "recall": 1.0,
-              "f1": 1.0,
+              "recall": 0.9818,
+              "f1": 0.9908,
               "support": 55
             },
             "legal_person": {
@@ -890,9 +889,9 @@
           },
           "confusion": {
             "natural_person": {
-              "natural_person": 55,
+              "natural_person": 54,
               "legal_person": 0,
-              "none": 0
+              "none": 1
             },
             "legal_person": {
               "natural_person": 0,
@@ -910,15 +909,15 @@
           "task": "payment_purpose",
           "subset": "easy",
           "items": 191,
-          "accuracy": 0.9738,
+          "accuracy": 0.9895,
           "missed": 0.0,
           "invented": 0.0052,
-          "macro_f1": 0.9235,
+          "macro_f1": 0.965,
           "classes": {
             "salary": {
               "precision": 1.0,
-              "recall": 0.9643,
-              "f1": 0.9818,
+              "recall": 1.0,
+              "f1": 1.0,
               "support": 28
             },
             "rent": {
@@ -929,8 +928,8 @@
             },
             "invoice": {
               "precision": 1.0,
-              "recall": 0.99,
-              "f1": 0.995,
+              "recall": 1.0,
+              "f1": 1.0,
               "support": 100
             },
             "loan": {
@@ -941,14 +940,14 @@
             },
             "family_support": {
               "precision": 1.0,
-              "recall": 0.8889,
-              "f1": 0.9412,
+              "recall": 1.0,
+              "f1": 1.0,
               "support": 9
             },
             "other": {
-              "precision": 0.5,
+              "precision": 0.7143,
               "recall": 1.0,
-              "f1": 0.6667,
+              "f1": 0.8333,
               "support": 5
             },
             "unknown": {
@@ -960,12 +959,12 @@
           },
           "confusion": {
             "salary": {
-              "salary": 27,
+              "salary": 28,
               "rent": 0,
               "invoice": 0,
               "loan": 0,
               "family_support": 0,
-              "other": 1,
+              "other": 0,
               "unknown": 0
             },
             "rent": {
@@ -980,10 +979,10 @@
             "invoice": {
               "salary": 0,
               "rent": 0,
-              "invoice": 99,
+              "invoice": 100,
               "loan": 0,
               "family_support": 0,
-              "other": 1,
+              "other": 0,
               "unknown": 0
             },
             "loan": {
@@ -1000,8 +999,8 @@
               "rent": 0,
               "invoice": 0,
               "loan": 0,
-              "family_support": 8,
-              "other": 1,
+              "family_support": 9,
+              "other": 0,
               "unknown": 0
             },
             "other": {
@@ -1028,8 +1027,8 @@
           "task": "iban",
           "subset": "hard",
           "items": 133,
-          "accuracy": 0.9925,
-          "missed": 0.0075,
+          "accuracy": 1.0,
+          "missed": 0.0,
           "invented": 0.0,
           "macro_f1": null,
           "classes": {},
@@ -1039,7 +1038,7 @@
           "task": "counterparty",
           "subset": "hard",
           "items": 133,
-          "accuracy": 0.9323,
+          "accuracy": 0.9925,
           "missed": 0.0,
           "invented": 0.0,
           "macro_f1": null,
@@ -1096,10 +1095,10 @@
           "task": "payment_purpose",
           "subset": "hard",
           "items": 133,
-          "accuracy": 0.9173,
-          "missed": 0.0376,
+          "accuracy": 0.9474,
+          "missed": 0.015,
           "invented": 0.0,
-          "macro_f1": 0.892,
+          "macro_f1": 0.9386,
           "classes": {
             "salary": {
               "precision": 1.0,
@@ -1108,33 +1107,33 @@
               "support": 24
             },
             "rent": {
-              "precision": 1.0,
-              "recall": 0.963,
-              "f1": 0.9811,
+              "precision": 0.9643,
+              "recall": 1.0,
+              "f1": 0.9818,
               "support": 27
             },
             "invoice": {
               "precision": 1.0,
-              "recall": 0.8833,
-              "f1": 0.9381,
+              "recall": 0.9,
+              "f1": 0.9474,
               "support": 60
             },
             "loan": {
-              "precision": 0.8333,
+              "precision": 1.0,
               "recall": 1.0,
-              "f1": 0.9091,
+              "f1": 1.0,
               "support": 5
             },
             "family_support": {
-              "precision": 0.9,
-              "recall": 0.8182,
-              "f1": 0.8571,
+              "precision": 1.0,
+              "recall": 0.9091,
+              "f1": 0.9524,
               "support": 11
             },
             "other": {
-              "precision": 0.5556,
-              "recall": 0.8333,
-              "f1": 0.6667,
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.75,
               "support": 6
             },
             "unknown": {
@@ -1156,21 +1155,21 @@
             },
             "rent": {
               "salary": 0,
-              "rent": 26,
+              "rent": 27,
               "invoice": 0,
               "loan": 0,
-              "family_support": 1,
+              "family_support": 0,
               "other": 0,
               "unknown": 0
             },
             "invoice": {
               "salary": 0,
-              "rent": 0,
-              "invoice": 53,
+              "rent": 1,
+              "invoice": 54,
               "loan": 0,
               "family_support": 0,
-              "other": 3,
-              "unknown": 4
+              "other": 4,
+              "unknown": 1
             },
             "loan": {
               "salary": 0,
@@ -1186,17 +1185,17 @@
               "rent": 0,
               "invoice": 0,
               "loan": 0,
-              "family_support": 9,
-              "other": 1,
+              "family_support": 10,
+              "other": 0,
               "unknown": 1
             },
             "other": {
               "salary": 0,
               "rent": 0,
               "invoice": 0,
-              "loan": 1,
+              "loan": 0,
               "family_support": 0,
-              "other": 5,
+              "other": 6,
               "unknown": 0
             },
             "unknown": {

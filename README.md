@@ -244,18 +244,18 @@ From the [full report](docs/evaluation.md): 6 synthetic cases, 324 descriptions,
 
 | Accuracy | `baseline` | `local` (llama3.1:8b) |
 |---|---:|---:|
-| IBAN | 100.0% | 99.7% |
-| Counterparty | 69.1% | 95.4% |
-| Counterparty, hard descriptions | 57.1% | 93.2% |
-| Natural or legal person | 85.8% | 100.0% |
-| Payment purpose | 83.6% | 95.1% |
-| Payment purpose, hard descriptions | 76.7% | 91.7% |
+| IBAN | 100.0% | 100.0% |
+| Counterparty | 69.1% | 99.4% |
+| Counterparty, hard descriptions | 57.1% | 99.2% |
+| Natural or legal person | 85.8% | 99.7% |
+| Payment purpose | 83.6% | 97.2% |
+| Payment purpose, hard descriptions | 76.7% | 94.7% |
 | Cases with the expected flags and risk level | 6 / 6 | 6 / 6 |
 
 - **Rules are enough for IBANs**, which follow one fixed structure. For names and purposes they fall short: they leave 14% of counterparties and 16% of purposes empty, extract a wrong name for another 17% of descriptions, and do worse on hard ones.
-- **The local model closes most of that gap**, and keeps it on hard descriptions. It never invents a counterparty; 15 IBAN answers failed validation (not in the text, or malformed), and those records fell back to the baseline, as designed.
+- **The local model closes nearly all of that gap**, and keeps it on hard descriptions. It never invents a counterparty; 2 IBAN answers failed validation (not in the text), and those records fell back to the baseline, as designed.
 - **The decision on these cases does not change**: both enrichers raise exactly the expected flags. The rules that read enriched fields group counterparties by IBAN when there is one and take countries from IBANs, which the baseline already reads perfectly; the profile check sums salary or invoice inflows, and the purposes the baseline misses do not move it across its threshold. The LLM's gain shows in the counterparty names, types, and purposes the report cites.
-- **Speed is the price**: about 2.7 seconds per description for an 8B model on the machine used, against well under a millisecond for the rules. `--enricher anthropic` adds Claude Haiku 5.5 to the comparison, with its cost at list price.
+- **Speed is the price**: about 2.8 seconds per description for an 8B model on the machine used, against well under a millisecond for the rules. `--enricher anthropic` adds Claude Haiku 5.5 to the comparison, with its cost at list price.
 
 ## Documentation
 
