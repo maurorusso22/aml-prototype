@@ -6,7 +6,7 @@ from .models import CaseOutcome, EvaluationRun
 
 
 def _summary(run: EvaluationRun) -> list[str]:
-    """Build the overview: volume, LLM share, speed, cost, and end-to-end result.
+    """Build the overview: volume, accepted LLM answers, speed, cost, and end-to-end result.
 
     Args:
         run: Evaluation run.
@@ -14,12 +14,19 @@ def _summary(run: EvaluationRun) -> list[str]:
     Returns:
         Section lines.
     """
-    header = ["Enricher", "Model", "From the LLM", "Seconds / 1,000", "USD / 1,000", "Cases right"]
+    header = [
+        "Enricher",
+        "Model",
+        "Accepted LLM answers",
+        "Seconds / 1,000",
+        "USD / 1,000",
+        "Cases right",
+    ]
     rows = [
         [
             e.enricher,
             f"`{e.model}`",
-            pct(e.llm_share),
+            "–" if e.model == "rules" else pct(e.llm_share),
             f"{e.per_thousand(e.seconds):,.1f}",
             "–" if e.cost_usd is None else f"{e.per_thousand(e.cost_usd):.4f}",
             f"{sum(case.correct for case in e.cases)} / {len(e.cases)}",

@@ -39,8 +39,9 @@ def evaluate_enrichers(
     output.with_suffix(".json").write_text(run.model_dump_json(indent=2) + "\n", encoding="utf-8")
     for score in run.enrichers:
         right = sum(case.correct for case in score.cases)
+        share = "–" if score.model == "rules" else f"{score.llm_share:.0%}"
         typer.echo(
-            f"{score.enricher}: {score.llm_share:.0%} from the LLM, {score.seconds:.0f} s, "
+            f"{score.enricher}: {share} accepted LLM answers, {score.seconds:.0f} s, "
             f"{right}/{len(score.cases)} cases right",
             err=True,
         )

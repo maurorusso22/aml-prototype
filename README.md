@@ -342,8 +342,8 @@ uv run aml-report generate data/samples/structuring_cash.json --enricher baselin
 
 # Compare enrichers on the labelled dataset; writes docs/evaluation.md and docs/evaluation.json
 uv run aml-report evaluate --enricher baseline --enricher local
-# baseline: 0% from the LLM, 0 s, 6/6 cases right
-# local: 95% from the LLM, 869 s, 6/6 cases right
+# baseline: – accepted LLM answers, 0 s, 6/6 cases right
+# local: 95% accepted LLM answers, 869 s, 6/6 cases right
 ```
 
 Every command has `--help`. `enrich`, `analyze`, and `assess` print JSON to standard output unless `--output` is given; summaries go to standard error.
