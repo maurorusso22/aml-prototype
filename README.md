@@ -307,7 +307,7 @@ aml-prototype/
 ## Quickstart
 
 ```bash
-git clone https://github.com/<your-username>/aml-prototype.git
+git clone https://github.com/maurorusso22/aml-prototype.git
 cd aml-prototype
 uv sync
 
