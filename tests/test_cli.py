@@ -9,6 +9,7 @@ from typer.testing import CliRunner
 from aml_reporter.cli import app
 
 RUNNER = CliRunner()  # Invokes the CLI in-process
+FIXTURES_DIR = Path(__file__).parent / "fixtures"  # Hand-written synthetic test data
 ANSI_CODE = re.compile(r"\x1b\[[0-9;]*m")  # Colour codes Typer emits when it detects GitHub Actions
 
 
@@ -117,6 +118,21 @@ def test_synth_rejects_unknown_scenarios(tmp_path: Path) -> None:
     assert result.exit_code != 0
     assert "unknown scenario nope" in _plain(result.output)
     assert not any(tmp_path.iterdir())
+
+
+def test_invalid_bundles_are_rejected_without_their_values(tmp_path: Path) -> None:
+    """A broken bundle fails with status 2, naming the problem but not the personal data."""
+    case = json.loads((FIXTURES_DIR / "case_valid.json").read_text(encoding="utf-8"))
+    case["transactions"][0]["currency"] = "USD"
+    case["customer"]["tax_code"] = "SECRET-TAX-CODE"
+    path = tmp_path / "broken.json"
+    path.write_text(json.dumps(case), encoding="utf-8")
+    result = RUNNER.invoke(app, ["assess", str(path), "--enricher", "baseline"])
+    message = _plain(result.output)
+    assert result.exit_code == 2
+    assert "invalid case bundle" in message
+    assert "tax_code" in message
+    assert "SECRET-TAX-CODE" not in message
 
 
 def _plain(output: str) -> str:
