@@ -14,6 +14,8 @@ from ..models.formats import FactId, NonEmptyStr, RuleId
 
 type Operator = Literal[">", ">=", "<", "<=", "==", "!="]
 
+ORDERING = frozenset({">", ">=", "<", "<="})  # Operators that only make sense between numbers
+
 
 class Condition(DomainModel):
     """A comparison between one fact and a threshold."""
@@ -21,6 +23,17 @@ class Condition(DomainModel):
     fact: FactId = Field(description="Fact to read.")
     op: Operator = Field(description="Comparison operator.")
     value: int | float | str = Field(description="Threshold or expected value.")
+
+    @model_validator(mode="after")
+    def check_threshold(self) -> Self:
+        """Require a numeric threshold for ordering operators, so `> "5"` fails at load time.
+
+        Returns:
+            The validated condition.
+        """
+        if self.op in ORDERING and not isinstance(self.value, int | float):
+            raise ValueError(f"{self.fact} {self.op} needs a numeric threshold")
+        return self
 
 
 class Rule(DomainModel):
@@ -67,6 +80,8 @@ class RuleSet(DomainModel):
         """
         if set(self.points) != set(RiskLevel):
             raise ValueError("points must give a value for low, medium, and high")
+        if any(points <= 0 for points in self.points.values()):
+            raise ValueError("points must be positive, or a raised flag would lower the score")
         duplicates = [rule_id for rule_id, n in Counter(r.id for r in self.rules).items() if n > 1]
         if duplicates:
             raise ValueError(f"duplicate rule ids: {', '.join(sorted(duplicates))}")

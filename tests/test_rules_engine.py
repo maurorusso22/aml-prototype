@@ -115,6 +115,18 @@ def test_packaged_rules_load() -> None:
             "Input should be",
             id="bad-operator",
         ),
+        pytest.param(
+            {
+                "rules": [
+                    {**RULES["rules"][0], "when": [{"fact": "F-TEST-001", "op": ">", "value": "5"}]}
+                ]
+            },
+            "needs a numeric threshold",
+            id="text-threshold",
+        ),
+        pytest.param(
+            {"points": {"low": 0, "medium": 2, "high": 3}}, "must be positive", id="zero-points"
+        ),
     ],
 )
 def test_invalid_rule_files_are_rejected(change: dict[str, Any], message: str) -> None:
