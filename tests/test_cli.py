@@ -1,6 +1,7 @@
 """Tests for the `aml-report` command line."""
 
 import json
+import re
 from pathlib import Path
 
 from typer.testing import CliRunner
@@ -8,6 +9,7 @@ from typer.testing import CliRunner
 from aml_reporter.cli import app
 
 RUNNER = CliRunner()  # Invokes the CLI in-process
+ANSI_CODE = re.compile(r"\x1b\[[0-9;]*m")  # Colour codes Typer emits when it detects GitHub Actions
 
 
 def test_synth_writes_samples_and_labels(tmp_path: Path) -> None:
@@ -92,26 +94,41 @@ def test_evaluate_needs_case_bundles(tmp_path: Path) -> None:
     """An empty data folder fails with a hint instead of an empty report."""
     result = RUNNER.invoke(app, ["evaluate", "--data-dir", str(tmp_path)])
     assert result.exit_code != 0
-    assert "run synth first" in result.output
+    assert "run synth first" in _plain(result.output)
 
 
 def test_generate_rejects_unknown_languages(tmp_path: Path) -> None:
     """An unsupported language fails with a clear message."""
     result = RUNNER.invoke(app, ["generate", str(tmp_path / "x.json"), "--lang", "fr"])
     assert result.exit_code != 0
-    assert "unknown language fr" in result.output
+    assert "unknown language fr" in _plain(result.output)
 
 
 def test_enrich_rejects_unknown_enrichers(tmp_path: Path) -> None:
     """An unknown enricher name fails with a clear message."""
     result = RUNNER.invoke(app, ["enrich", str(tmp_path / "x.json"), "--enricher", "magic"])
     assert result.exit_code != 0
-    assert "unknown enricher magic" in result.output
+    assert "unknown enricher magic" in _plain(result.output)
 
 
 def test_synth_rejects_unknown_scenarios(tmp_path: Path) -> None:
     """An unknown scenario name fails before anything is written."""
     result = RUNNER.invoke(app, ["synth", "--scenario", "nope", "--out-dir", str(tmp_path)])
     assert result.exit_code != 0
-    assert "unknown scenario nope" in result.output
+    assert "unknown scenario nope" in _plain(result.output)
     assert not any(tmp_path.iterdir())
+
+
+def _plain(output: str) -> str:
+    """Reduce CLI output to plain text on one line.
+
+    Typer prints errors in a Rich panel: colours, borders, and line wrapping depend on the
+    terminal, so a message can be split across panel lines (e.g. by a long temporary path).
+
+    Args:
+        output: Text captured by the test runner.
+
+    Returns:
+        The words of the output, separated by single spaces.
+    """
+    return " ".join(ANSI_CODE.sub("", output).replace("│", " ").split())
