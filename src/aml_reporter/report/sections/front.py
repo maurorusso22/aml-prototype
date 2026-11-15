@@ -41,7 +41,7 @@ def cover(document: Document, data: ReportData, catalog: Catalog) -> None:
 
 
 def findings(document: Document, data: ReportData, catalog: Catalog) -> None:
-    """Write the risk indicator and the list of red flags raised.
+    """Write the risk indicator, any rules left undecided, and the list of red flags raised.
 
     Args:
         document: Report under construction.
@@ -52,9 +52,14 @@ def findings(document: Document, data: ReportData, catalog: Catalog) -> None:
     document.add_heading(catalog.t("h_findings"), level=1)
     level = catalog.word(str(assessment.level))
     paragraph(document, catalog.t("risk_summary", level=level, score=assessment.score))
+    undecided = assessment.unevaluated
+    if undecided:
+        key = "unevaluated_one" if len(undecided) == 1 else "unevaluated_many"
+        rules = ", ".join(rule.rule_id for rule in undecided)
+        paragraph(document, catalog.t(key, count=len(undecided), rules=rules))
     flags = assessment.flags
     if not flags:
-        paragraph(document, catalog.t("no_flags"))
+        paragraph(document, catalog.t("no_flags" if assessment.complete else "no_flags_incomplete"))
         return
     count = len(flags)
     paragraph(

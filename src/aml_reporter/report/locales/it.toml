@@ -55,6 +55,7 @@ risk_summary = "Indicatore di rischio: {level} (punteggio {score})."
 flags_one = "È scattata una red flag:"
 flags_many = "Sono scattate {count} red flag:"
 no_flags = "Nessuna regola è scattata. L'alert potrebbe essere un falso positivo: verificare le sezioni seguenti prima di chiuderlo."
+no_flags_incomplete = "Nessuna regola è scattata, ma le regole non valutabili lasciano la questione aperta: vanno verificate a mano prima di chiudere l'alert come falso positivo."
 
 alert_sentence = "L'alert riguarda un {kind} di {amount}, contabilizzato il {date} [F-ALERT-001, F-ALERT-002]."
 alert_multiple = "L'importo è {multiple} la mediana delle precedenti transazioni dello stesso tipo del cliente [F-ALERT-005]."
@@ -99,6 +100,10 @@ geography_some = "Conti di controparte in {countries} [F-GEO-001]. †"
 profile_intro = "Le entrate annualizzate sono {multiple} il reddito o fatturato dichiarato all'apertura del rapporto [F-PROF-002]."
 
 flag_none = "Nessuna red flag è scattata."
+unevaluated_one = "Una regola non è valutabile per mancanza di dati, quindi l'indicatore di rischio potrebbe sottostimare il rischio: {rules}."
+unevaluated_many = "{count} regole non sono valutabili per mancanza di dati, quindi l'indicatore di rischio potrebbe sottostimare il rischio: {rules}."
+h_unevaluated = "Regole non valutabili"
+unevaluated_intro = "Queste regole non sono scattate né sono state escluse: i fatti che leggono mancano o non sono misurabili su questo caso. Vanno verificate a mano."
 flag_transactions = "Transazioni alla base della red flag: {count}."
 flag_listing = "Tra cui: {ids}."
 

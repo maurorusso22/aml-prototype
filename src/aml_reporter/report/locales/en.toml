@@ -55,6 +55,7 @@ risk_summary = "Risk indicator: {level} (score {score})."
 flags_one = "One red flag raised:"
 flags_many = "{count} red flags raised:"
 no_flags = "No rule fired. The alert may be a false positive: check the sections below before closing it."
+no_flags_incomplete = "No rule fired, but the rules that could not be evaluated keep the question open: check them by hand before closing the alert as a false positive."
 
 alert_sentence = "The alert concerns an {kind} of {amount}, booked on {date} [F-ALERT-001, F-ALERT-002]."
 alert_multiple = "The amount is {multiple} the median of the customer's earlier transactions of the same kind [F-ALERT-005]."
@@ -99,6 +100,10 @@ geography_some = "Counterparty accounts were found in {countries} [F-GEO-001]. â
 profile_intro = "Annualised inflows are {multiple} the income or turnover declared at onboarding [F-PROF-002]."
 
 flag_none = "No red flag was raised."
+unevaluated_one = "One rule could not be evaluated for lack of data, so the risk indicator may understate the risk: {rules}."
+unevaluated_many = "{count} rules could not be evaluated for lack of data, so the risk indicator may understate the risk: {rules}."
+h_unevaluated = "Rules that could not be evaluated"
+unevaluated_intro = "These rules neither fired nor were ruled out: the facts they read are missing or could not be measured on this case. Check them by hand."
 flag_transactions = "Transactions behind this flag: {count}."
 flag_listing = "Including: {ids}."
 

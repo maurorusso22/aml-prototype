@@ -90,6 +90,35 @@ def test_flags_carry_facts_and_deduplicated_evidence() -> None:
     assert flag.evidence == ("TX-000001", "TX-000002", "TX-000003")
 
 
+@pytest.mark.parametrize(
+    ("values", "unevaluated"),
+    [
+        pytest.param({"f2": 0.9, "f3": "DE"}, {"RF-TEST-HIGH": ("F-TEST-001",)}, id="missing"),
+        pytest.param(
+            {"f1": "many", "f2": 0.9, "f3": "DE"},
+            {"RF-TEST-HIGH": ("F-TEST-001",)},
+            id="wrong-type",
+        ),
+        pytest.param({"f2": 0.1, "f3": "DE"}, {}, id="false-settles-unknown"),
+        pytest.param(
+            {"f1": 5, "f2": 0.9}, {"RF-TEST-LOW": ("F-TEST-003",)}, id="flag-and-unevaluated"
+        ),
+    ],
+)
+def test_rules_without_data_are_reported_not_dropped(
+    values: dict[str, Any], unevaluated: dict[str, tuple[str, ...]]
+) -> None:
+    """A rule some of whose facts cannot be read is not evaluable, unless another condition fails.
+
+    Args:
+        values: Fact values of the test sheet.
+        unevaluated: Rules expected to be undecided, with the facts they could not read.
+    """
+    assessment = assess(sheet(**values), RuleSet.model_validate(RULES))
+    assert {rule.rule_id: rule.facts for rule in assessment.unevaluated} == unevaluated
+    assert assessment.complete == (not unevaluated)
+
+
 def test_packaged_rules_load() -> None:
     """The illustrative rule file is valid and every rule has a distinct identifier."""
     ruleset = load_rules()
