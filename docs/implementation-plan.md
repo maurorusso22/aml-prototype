@@ -136,9 +136,11 @@ Run before every push to the public repository:
 
 - **Default report language.** English; Italian with `--lang it`. `aml-report examples` writes both.
 - **Local model.** `llama3.1:8b` through Ollama, overridable with `AML_OLLAMA_MODEL`; its results are in `docs/evaluation.md`.
+- **Missing data.** Facts carry a status instead of a zero when a measure cannot be computed, rules report what they cannot decide, and invalid ledgers are rejected; see `docs/production-readiness.md`.
 
 ## Open points
 
+- **Example reports.** Reports now open with a data-quality section and end with an audit trail. Regenerate `examples/` and `docs/images/report_first_page.png` with the local model.
 - **More LLM tasks.** Further extraction and classification tasks beyond the initial four, documented in `docs/llm-tasks.md` as they are added.
 - **DOCX template metadata.** Reports keep python-docx's default `app.xml` (application and template names) and a blank thumbnail. Overwrite them, then regenerate `examples/`, which also refreshes them with the current prompts.
 - **Stretch goal.** A small web UI (e.g. Streamlit) to upload a case bundle and download the report.

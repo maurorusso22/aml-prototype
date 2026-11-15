@@ -10,6 +10,7 @@ All data in this repository is synthetic. The controls below are built as they w
 | Data minimisation | Each LLM call sees only a description or a counterparty name, never the customer profile or history | `enrichment/tasks.py` |
 | No invented values | Extracted IBANs and names must appear in the source text | `enrichment/validation.py`, `tests/test_enrichment_validation.py` |
 | Quiet logs | Logs carry counts and fixed error reasons, never prompt or answer text | `llm/base.py`, `enrichment/llm_enricher.py` |
+| Quiet rejections | Invalid bundles are rejected naming fields and identifiers, never echoing input values | `cli/app.py`, `tests/test_cli.py` |
 | Clean documents | DOCX core properties overwritten (the author is the tool, never the local user), company left empty; a "synthetic data" header on every page | `tests/test_report_document.py` |
 | No secrets in git | `.env` and `output/` git-ignored; gitleaks on every commit and on the full history in CI | `.pre-commit-config.yaml`, `.github/workflows/ci.yml` |
 | Labels apart | Ground truth lives in `data/labels/`, never read by the pipeline | `synthetic/generate.py` |
