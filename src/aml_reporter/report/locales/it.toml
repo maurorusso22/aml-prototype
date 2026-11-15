@@ -233,6 +233,7 @@ F-TIME-002 = "Giorni senza operazioni del cliente prima dell'alert"
 F-TIME-003 = "Massimo di transazioni in 7 giorni"
 F-TIME-004 = "Media di transazioni ogni 7 giorni"
 F-TIME-005 = "Settimana più attiva rispetto alla media"
+F-TIME-006 = "Nessuna operazione del cliente prima dell'alert nello storico osservato"
 
 [rules.RF-STRUCTURING]
 name = "Contanti frazionati sotto la soglia"

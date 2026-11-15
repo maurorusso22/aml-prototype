@@ -4,7 +4,10 @@ Each test changes the hand-written fixture so that a reference value is zero or 
 missing, then checks the fact that carries the signal and the rule that reads it.
 """
 
+from collections.abc import Callable
 from typing import Any
+
+import pytest
 
 from aml_reporter.analytics import build_fact_sheet
 from aml_reporter.enrichment import BaselineEnricher
@@ -59,12 +62,59 @@ def test_no_outflows_at_all_is_not_a_spike(case_data: dict[str, Any]) -> None:
     assert "RF-OUTFLOW-SPIKE" not in decided + undecided
 
 
+def test_a_short_history_leaves_the_spike_rule_undecided(case_data: dict[str, Any]) -> None:
+    """Without enough earlier days there is no usual level: the rule is reported, not skipped."""
+    case_data["period_start"] = "2026-07-01"
+    sheet, assessment = analyse(case_data)
+    assert sheet.get("F-FLOW-008").status is FactStatus.UNAVAILABLE
+    unevaluated = {rule.rule_id: rule.facts for rule in assessment.unevaluated}
+    assert unevaluated == {"RF-OUTFLOW-SPIKE": ("F-FLOW-008",)}
+    assert not assessment.complete
+
+
 def test_zero_declared_income_makes_any_salary_a_mismatch(case_data: dict[str, Any]) -> None:
     """Salary received by a customer who declared no income exceeds the declared profile."""
     case_data["customer"]["declared_annual_income"] = "0.00"
     sheet, assessment = analyse(case_data)
     assert sheet.get("F-PROF-004").status is FactStatus.NO_BASELINE
     assert "RF-PROFILE-MISMATCH" in [flag.rule_id for flag in assessment.flags]
+
+
+def test_a_new_relationship_is_annualised_over_its_own_history(case_data: dict[str, Any]) -> None:
+    """Inflows of an account opened 42 days ago are scaled to a year from those 42 days."""
+    case_data["accounts"][0]["opened_on"] = "2026-08-20"
+    sheet, _ = analyse(case_data)
+    assert sheet.get("F-PROF-001").value == round(11_600 * 365 / 42, 2)
+    assert sheet.get("F-FLOW-008").status is FactStatus.UNAVAILABLE
+
+
+@pytest.mark.parametrize(
+    ("change", "silence", "fires"),
+    [
+        pytest.param(lambda d: None, 349, True, id="silent-since-period-start"),
+        pytest.param(
+            lambda d: d["accounts"][0].update(opened_on="2026-08-25"), 21, False, id="new-account"
+        ),
+    ],
+)
+def test_silence_without_earlier_activity_is_a_lower_bound(
+    case_data: dict[str, Any], change: Callable[[dict[str, Any]], None], silence: int, fires: bool
+) -> None:
+    """With no earlier customer activity, the silence runs back to the start of the history.
+
+    Args:
+        case_data: Raw fixture bundle.
+        change: Extra change to the bundle.
+        silence: Expected days of silence before the alert.
+        fires: Whether the dormant-reactivation rule should fire.
+    """
+    drop(case_data, "TX-000003")
+    change(case_data)
+    sheet, assessment = analyse(case_data)
+    assert sheet.get("F-TIME-002").value == silence
+    assert sheet.get("F-TIME-006").value is True
+    raised = [flag.rule_id for flag in assessment.flags]
+    assert ("RF-DORMANT-REACTIVATION" in raised) is fires
 
 
 def test_first_transaction_of_its_kind_has_no_median(case_data: dict[str, Any]) -> None:

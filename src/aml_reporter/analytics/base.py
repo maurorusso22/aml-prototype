@@ -8,6 +8,7 @@ from functools import cached_property
 from ..models import CaseBundle, Direction, Enrichment, Transaction
 
 RECENT_DAYS = 90  # Length of the recent window, counted back from the end of the look-back period
+MIN_BASELINE_DAYS = 30  # Shortest earlier history that can stand for the customer's usual level
 
 
 @dataclass(frozen=True)
@@ -27,6 +28,25 @@ class AnalysisContext:
     def recent_start(self) -> date:
         """First day of the recent window."""
         return self.bundle.period_end - timedelta(days=RECENT_DAYS - 1)
+
+    @cached_property
+    def observed_from(self) -> date:
+        """First day of observable history: the period start, or the first account opening if later.
+
+        Before this day the customer had no account, so their inactivity there is not a signal.
+        """
+        opened = min(account.opened_on for account in self.bundle.accounts)
+        return max(self.bundle.period_start, opened)
+
+    @cached_property
+    def observed_days(self) -> int:
+        """Days of observable history, used to scale flows to a month or a year."""
+        return (self.bundle.period_end - self.observed_from).days + 1
+
+    @cached_property
+    def baseline_days(self) -> int:
+        """Days of observable history before the recent window: the base of the usual level."""
+        return max((self.recent_start - self.observed_from).days, 0)
 
     def flows(self, direction: Direction, recent: bool = False) -> list[Transaction]:
         """Select inbound or outbound transactions.

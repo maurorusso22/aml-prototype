@@ -52,6 +52,7 @@ EXPECTED = [  # (fact id, expected value or status), one or more per analyser
     ("F-TIME-001", 9),
     ("F-TIME-002", 9),
     ("F-TIME-003", 2),
+    ("F-TIME-006", False),
 ]
 
 

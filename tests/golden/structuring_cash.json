@@ -70,6 +70,7 @@
     {"id": "F-TIME-002", "category": "transaction_behaviour", "label": "Days without customer-initiated activity before the alert", "value": 0, "status": "measured", "unit": "days", "evidence": ["TX-030129"]},
     {"id": "F-TIME-003", "category": "transaction_behaviour", "label": "Most transactions in any 7 days", "value": 7, "status": "measured", "unit": "count", "evidence": ["TX-030001", "TX-030002", "TX-030003", "TX-030004", "TX-030005", "TX-030006", "TX-030007"]},
     {"id": "F-TIME-004", "category": "transaction_behaviour", "label": "Average transactions per 7 days", "value": 2.67, "status": "measured", "unit": "count", "evidence": []},
-    {"id": "F-TIME-005", "category": "transaction_behaviour", "label": "Busiest week as a multiple of the average", "value": 2.6259, "status": "measured", "unit": "times", "evidence": ["TX-030001", "TX-030002", "TX-030003", "TX-030004", "TX-030005", "TX-030006", "TX-030007"]}
+    {"id": "F-TIME-005", "category": "transaction_behaviour", "label": "Busiest week as a multiple of the average", "value": 2.6259, "status": "measured", "unit": "times", "evidence": ["TX-030001", "TX-030002", "TX-030003", "TX-030004", "TX-030005", "TX-030006", "TX-030007"]},
+    {"id": "F-TIME-006", "category": "transaction_behaviour", "label": "No customer-initiated activity before the alert in the observed history", "value": false, "status": "measured", "unit": null, "evidence": []}
   ]
 }
