@@ -174,7 +174,7 @@ Every fact the report can cite, and the facts each rule reads, are listed in the
 Reports for all six scenarios, in English and Italian, are in [`examples/`](examples/). Below, the first page of the pass-through case and the monthly flows chart from the same report: the spike at the end is the money collected and wired abroad.
 
 <p align="center">
-  <img src="docs/images/report_first_page.png" width="48%" alt="First page of the pass-through report: case summary, risk indicator, red flags, and the alert in context">
+  <img src="docs/images/report_first_page.png" width="48%" alt="First page of the pass-through report: case summary, risk indicator, red flags, data quality, and the alert in context">
   <img src="docs/images/monthly_flows.png" width="48%" alt="Monthly inflows and outflows of the pass-through case, with a spike in the last two months">
 </p>
 

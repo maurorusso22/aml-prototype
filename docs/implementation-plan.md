@@ -140,7 +140,6 @@ Run before every push to the public repository:
 
 ## Open points
 
-- **Example reports.** Reports now open with a data-quality section and end with an audit trail. Regenerate `examples/` and `docs/images/report_first_page.png` with the local model.
 - **More LLM tasks.** Further extraction and classification tasks beyond the initial four, documented in `docs/llm-tasks.md` as they are added.
 - **DOCX template metadata.** Reports keep python-docx's default `app.xml` (application and template names) and a blank thumbnail. Overwrite them, then regenerate `examples/`, which also refreshes them with the current prompts.
 - **Stretch goal.** A small web UI (e.g. Streamlit) to upload a case bundle and download the report.
