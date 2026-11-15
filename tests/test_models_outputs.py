@@ -96,3 +96,30 @@ def test_fact_id_format_is_enforced() -> None:
     """Fact identifiers must follow the F-<AREA>-<NNN> format."""
     with pytest.raises(ValidationError, match="String should match pattern"):
         Fact.model_validate({"id": "F-cash-2", "category": "alert", "label": "x", "value": 1})
+
+
+@pytest.mark.parametrize(
+    ("value", "status"),
+    [
+        pytest.param(None, "measured", id="measured-without-value"),
+        pytest.param(0.0, "no_baseline", id="value-with-missing-status"),
+    ],
+)
+def test_fact_value_and_status_must_agree(value: float | None, status: str) -> None:
+    """A fact holds a value exactly when it is measured, so a missing measure never reads as 0.
+
+    Args:
+        value: Value to store.
+        status: Status that contradicts it.
+    """
+    raw = {"id": "F-FLOW-008", "category": "alert", "label": "x", "value": value}
+    with pytest.raises(ValidationError, match="value must be null exactly when"):
+        Fact.model_validate(raw | {"status": status})
+
+
+def test_unmeasured_facts_survive_json() -> None:
+    """A fact without a value keeps its null value and its reason through JSON."""
+    raw = {"id": "F-FLOW-008", "category": "alert", "label": "x", "value": None}
+    fact = Fact.model_validate(raw | {"status": "unavailable"})
+    restored = Fact.model_validate_json(fact.model_dump_json())
+    assert (restored.value, str(restored.status)) == (None, "unavailable")

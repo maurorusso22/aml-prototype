@@ -2,7 +2,7 @@
 
 from datetime import timedelta
 
-from ..models import Channel, Fact, FactCategory, Transaction
+from ..models import Channel, Fact, FactCategory, FactStatus, Transaction
 from .base import AnalysisContext
 from .facts import Facts, ratio
 from .registry import analyser
@@ -31,8 +31,12 @@ def temporal_patterns(context: AnalysisContext) -> list[Fact]:
         ((later.booked_at - earlier.booked_at).days, [earlier, later])
         for earlier, later in zip(own, own[1:], strict=False)
     ]
-    longest, bounds = max(gaps, key=lambda gap: gap[0], default=(0, []))
-    facts.add(1, "Longest period without customer-initiated activity", longest, "days", bounds)
+    longest_label = "Longest period without customer-initiated activity"
+    if gaps:
+        longest, bounds = max(gaps, key=lambda gap: gap[0])
+        facts.add(1, longest_label, longest, "days", bounds)
+    else:
+        facts.add(1, longest_label, FactStatus.NO_ACTIVITY, "days", own)
     before = [tx for tx in own if tx.booked_at < alerted.booked_at]
     silence = (alerted.booked_at - before[-1].booked_at).days if before else 0
     facts.add(

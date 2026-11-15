@@ -1,9 +1,9 @@
 """Evaluate red-flag rules on a fact sheet and derive the risk indicator.
 
 Each condition is true, false, or unknown. Unknown means the case lacks the data: the fact is
-missing or of a type the operator cannot compare. A rule fires when every condition is true,
-does not fire when any is false, and is otherwise not evaluable: it is reported as such instead
-of being read as an absence of risk.
+missing, unavailable, or of a type the operator cannot compare. A rule fires when every
+condition is true, does not fire when any is false, and is otherwise not evaluable: it is
+reported as such instead of being read as an absence of risk.
 """
 
 import operator
@@ -13,6 +13,7 @@ from typing import Any
 from ..models import (
     Fact,
     FactSheet,
+    FactStatus,
     RedFlag,
     RiskAssessment,
     RiskLevel,
@@ -28,6 +29,7 @@ OPERATORS: dict[str, Callable[[Any, Any], Any]] = {  # Operator symbol to compar
     "==": operator.eq,
     "!=": operator.ne,
 }
+UNBOUNDED_HOLDS = frozenset({">", ">=", "!="})  # Operators an increase from zero always satisfies
 
 
 def assess(sheet: FactSheet, ruleset: RuleSet) -> RiskAssessment:
@@ -108,10 +110,14 @@ def _holds(condition: Condition, fact: Fact | None) -> bool | None:
         fact: Fact the condition reads; None when the case has no such fact.
 
     Returns:
-        True or False, or None when the fact is missing or of the wrong type.
+        True or False, or None when the fact is missing, unavailable, or of the wrong type.
     """
-    if fact is None:
+    if fact is None or fact.status is FactStatus.UNAVAILABLE:
         return None
+    if fact.status is FactStatus.NO_ACTIVITY:
+        return False
+    if fact.status is FactStatus.NO_BASELINE:
+        return condition.op in UNBOUNDED_HOLDS
     value = fact.value
     if condition.op in ("==", "!="):
         return bool(OPERATORS[condition.op](value, condition.value))

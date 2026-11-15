@@ -2,7 +2,7 @@
 
 from decimal import Decimal
 
-from ..models import Direction, Fact, FactCategory, Transaction
+from ..models import Direction, Fact, FactCategory, FactStatus, Transaction
 from .base import RECENT_DAYS, AnalysisContext
 from .facts import Facts, euros, ratio, total
 from .registry import analyser
@@ -39,11 +39,12 @@ def flow_summary(context: AnalysisContext) -> list[Fact]:
 
 def _recent(
     context: AnalysisContext, direction: Direction, period_days: int
-) -> tuple[list[Transaction], Decimal, float]:
+) -> tuple[list[Transaction], Decimal, float | FactStatus]:
     """Measure recent flows against the earlier part of the period.
 
     The earlier total is scaled to the length of the recent window, so 1 means business as
-    usual and 3 means three times the usual flow.
+    usual and 3 means three times the usual flow. Without earlier days there is no usual level
+    to compare with, which is not the same as a usual level of 0.
 
     Args:
         context: Case under analysis.
@@ -51,11 +52,13 @@ def _recent(
         period_days: Length of the look-back period in days.
 
     Returns:
-        Recent transactions, their total, and the multiple of the usual level.
+        Recent transactions, their total, and the multiple of the usual level or why it is missing.
     """
     recent = context.flows(direction, recent=True)
-    earlier = total(tx for tx in context.flows(direction) if not context.is_recent(tx))
-    earlier_days = period_days - RECENT_DAYS
-    usual = earlier * RECENT_DAYS / earlier_days if earlier_days > 0 else Decimal(0)
     recent_total = total(recent)
+    earlier_days = period_days - RECENT_DAYS
+    if earlier_days <= 0:
+        return recent, recent_total, FactStatus.UNAVAILABLE
+    earlier = total(tx for tx in context.flows(direction) if not context.is_recent(tx))
+    usual = earlier * RECENT_DAYS / earlier_days
     return recent, recent_total, ratio(recent_total, usual)

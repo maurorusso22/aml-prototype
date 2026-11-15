@@ -6,26 +6,44 @@ from typing import Self
 from pydantic import Field, model_validator
 
 from .base import DomainModel
-from .enums import FactCategory
+from .enums import FactCategory, FactStatus
 from .formats import CaseId, FactId, NonEmptyStr, TransactionId
 
 
 class Fact(DomainModel):
     """A computed result, together with the transactions that support it.
 
-    Every figure in the report is a fact, and every fact points back to its evidence.
+    Every figure in the report is a fact, and every fact points back to its evidence. When a
+    measure cannot be computed, `value` is null and `status` says why, so that a missing
+    measure is never mistaken for a zero by the rules or by the analyst.
     """
 
     id: FactId = Field(description="Stable fact identifier, cited by the report.")
     category: FactCategory = Field(description="Report area the fact belongs to.")
     label: NonEmptyStr = Field(description="Short human-readable name of the measure.")
-    value: bool | int | float | str = Field(description="Computed value.")
+    value: bool | int | float | str | None = Field(
+        description="Computed value; null when the status is not `measured`."
+    )
+    status: FactStatus = Field(
+        default=FactStatus.MEASURED, description="Whether the value was measured, or why not."
+    )
     unit: NonEmptyStr | None = Field(
         default=None, description="Unit of measure, e.g. count, EUR, ratio, days."
     )
     evidence: tuple[TransactionId, ...] = Field(
         default=(), description="Transactions that support the value."
     )
+
+    @model_validator(mode="after")
+    def check_status(self) -> Self:
+        """Require a value exactly when the fact is measured.
+
+        Returns:
+            The validated fact.
+        """
+        if (self.value is None) == (self.status is FactStatus.MEASURED):
+            raise ValueError("value must be null exactly when status is not measured")
+        return self
 
 
 class FactSheet(DomainModel):
