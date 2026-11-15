@@ -28,3 +28,27 @@ def test_scenarios_raise_their_expected_flags(seed: int) -> None:
         scenario = case.labels.scenario
         assert raised == case.labels.expected_flags, f"{scenario} with seed {seed}"
         assert assessment.level is LEVEL_FOR_OUTCOME[case.labels.expected_outcome], scenario
+
+
+def test_packaged_rules_read_facts_the_analysers_produce() -> None:
+    """Every fact a packaged rule reads exists, so no rule is undecided on a typo."""
+    produced = set()
+    for case in generate_cases(list(SCENARIOS), 42):
+        enrichments = BaselineEnricher().enrich(case.bundle.transactions)
+        produced |= {fact.id for fact in build_fact_sheet(case.bundle, enrichments).facts}
+    read = {condition.fact for rule in load_rules().rules for condition in rule.when}
+    assert read <= produced, sorted(read - produced)
+
+
+@pytest.mark.parametrize("seed", SEEDS)
+def test_scenarios_leave_no_rule_undecided(seed: int) -> None:
+    """On complete synthetic cases every rule is decided: fired or ruled out.
+
+    Args:
+        seed: Generation seed.
+    """
+    ruleset = load_rules()
+    for case in generate_cases(list(SCENARIOS), seed):
+        enrichments = BaselineEnricher().enrich(case.bundle.transactions)
+        assessment = assess(build_fact_sheet(case.bundle, enrichments), ruleset)
+        assert assessment.complete, f"{case.labels.scenario}: {assessment.unevaluated}"

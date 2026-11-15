@@ -6,6 +6,7 @@ from typing import Annotated
 
 import typer
 from dotenv import load_dotenv
+from pydantic import ValidationError
 
 from ..enrichment import Enricher, make_enricher
 from ..models import CaseBundle
@@ -18,6 +19,10 @@ EnricherOption = Annotated[
     str | None, typer.Option(help="local, anthropic, or baseline; default AML_ENRICHER.")
 ]
 OutputOption = Annotated[Path | None, typer.Option(help="Write JSON here, not stdout.")]
+RulesOption = Annotated[
+    Path | None, typer.Option(help="TOML rule file; packaged rules if omitted.")
+]
+LISTED_PROBLEMS = 10  # Validation problems spelled out when a bundle is rejected; the rest counted
 
 
 @app.callback()
@@ -44,15 +49,45 @@ def choose_enricher(name: str | None) -> Enricher:
 
 
 def read_bundle(path: Path) -> CaseBundle:
-    """Load and validate a case bundle.
+    """Load and validate a case bundle, rejecting it with a readable list of problems.
+
+    Messages name fields and identifiers but never echo input values, which may be personal data.
 
     Args:
         path: Case bundle JSON file.
 
     Returns:
         The validated bundle.
+
+    Raises:
+        typer.BadParameter: When the file cannot be read or the bundle is invalid.
     """
-    return CaseBundle.model_validate_json(path.read_text(encoding="utf-8"))
+    try:
+        text = path.read_text(encoding="utf-8")
+    except OSError as error:
+        raise typer.BadParameter(f"cannot read case bundle {path}: {error.strerror}") from error
+    try:
+        return CaseBundle.model_validate_json(text)
+    except ValidationError as error:
+        raise typer.BadParameter(f"invalid case bundle {path}: {_problems(error)}") from error
+
+
+def _problems(error: ValidationError) -> str:
+    """List validation problems by field, leaving out the offending input values.
+
+    Args:
+        error: Validation error of a case bundle.
+
+    Returns:
+        The first `LISTED_PROBLEMS` problems, separated by semicolons, and how many remain.
+    """
+    problems = []
+    for item in error.errors():
+        where = ".".join(str(part) for part in item["loc"])
+        problems.append(f"{where}: {item['msg']}" if where else item["msg"])
+    remaining = len(problems) - LISTED_PROBLEMS
+    listed = "; ".join(problems[:LISTED_PROBLEMS])
+    return listed + (f" (and {remaining} more)" if remaining > 0 else "")
 
 
 def write_json(payload: str, output: Path | None) -> None:

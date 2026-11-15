@@ -33,6 +33,7 @@ AML Case Reporter takes a transaction flagged as suspicious, together with the c
 - [Synthetic data](#synthetic-data)
 - [LLM integration](#llm-integration)
 - [Privacy by design](#privacy-by-design)
+- [Production controls](#production-controls)
 - [Evaluation](#evaluation)
 - [Documentation](#documentation)
 - [Tech stack](#tech-stack)
@@ -144,6 +145,8 @@ About 70 facts per case feed a small set of transparent rules, defined in [`rule
 
 The risk indicator is a plain sum: 1, 2, or 3 points per flag by severity; 2 points or more is medium, 3 or more is high. No machine-learned score, so every level can be explained flag by flag. Thresholds are illustrative and invented for the synthetic scenarios.
 
+A rule whose facts the case cannot provide is reported as **not evaluable**, never silently read as "no risk": missing data, a history too short for a baseline, or a fact of the wrong type. Measures that cannot be computed are not written as zero either: outflows after a history with none, for instance, stand above any multiple of the usual level, so `RF-OUTFLOW-SPIKE` fires. See [production controls](#production-controls).
+
 ## The report
 
 A Word document in English or Italian, built from fixed templates filled with facts. Every figure cites its fact identifier, values derived from enrichment are marked with †, every page carries a "synthetic data" header, and the decision fields are left blank for the analyst. Document metadata is written explicitly, so no local user or machine details end up in the file.
@@ -151,17 +154,18 @@ A Word document in English or Italian, built from fixed templates filled with fa
 | # | Section | Content | LLM contribution |
 |---|---|---|---|
 | 1 | Cover and case summary | Case ID, alert date, triggering scenario, generation metadata, disclaimer | — |
-| 2 | Key findings | Triggered red flags and overall risk indicator | — |
-| 3 | Alert in context | The alerted transaction compared with the customer's own baseline | Counterparty and type of the alerted transaction |
-| 4 | Customer profile | KYC data, risk rating, tenure, declared economic profile | — |
-| 5 | Relationship overview | Accounts and cards, status, opening dates, balances | — |
-| 6 | Transaction behaviour | Monthly inflows and outflows, channels, cash share, payment purpose mix, charts | Payment purpose |
-| 7 | Counterparty analysis | Top and new counterparties, concentration, natural vs legal persons, recurring vs one-off | Counterparty name, IBAN, type |
-| 8 | Geographic exposure | Countries derived from counterparty IBANs, and flows with foreign accounts | IBAN |
-| 9 | Red flags and typologies | Triggered rules with evidence (e.g. structuring, pass-through of funds, dormant account reactivation) | Indirect: rules use enriched fields |
-| 10 | Profile consistency | Declared income or turnover vs observed flows by purpose | Payment purpose |
-| 11 | Analyst assessment | Blank fields for the decision (escalate / close / request more information) and notes | — |
-| 12 | Appendix | Methodology, data lineage, enrichment statistics (LLM vs fallback), limitations | — |
+| 2 | Key findings | Triggered red flags, rules that could not be evaluated, and overall risk indicator | — |
+| 3 | Data quality | Gaps that limit the findings: short history, missing descriptions, enrichment fallback, duplicates | Indirect: fallback share |
+| 4 | Alert in context | The alerted transaction compared with the customer's own baseline | Counterparty and type of the alerted transaction |
+| 5 | Customer profile | KYC data, risk rating, tenure, declared economic profile | — |
+| 6 | Relationship overview | Accounts and cards, status, opening dates, balances | — |
+| 7 | Transaction behaviour | Monthly inflows and outflows, channels, cash share, payment purpose mix, charts | Payment purpose |
+| 8 | Counterparty analysis | Top and new counterparties, concentration, natural vs legal persons, recurring vs one-off | Counterparty name, IBAN, type |
+| 9 | Geographic exposure | Countries derived from counterparty IBANs, and flows with foreign accounts | IBAN |
+| 10 | Red flags and typologies | Triggered rules with evidence (e.g. structuring, pass-through of funds, dormant account reactivation); rules that could not be evaluated, with the facts they lacked | Indirect: rules use enriched fields |
+| 11 | Profile consistency | Declared income or turnover vs observed flows by purpose | Payment purpose |
+| 12 | Analyst assessment | Blank fields for the decision (escalate / close / request more information) and notes | — |
+| 13 | Appendix | Methodology, data lineage, enrichment statistics (LLM vs fallback), limitations, audit trail (versions and SHA-256 fingerprints of inputs, rules, and prompts) | — |
 
 Every fact the report can cite, and the facts each rule reads, are listed in the [analysis catalogue](docs/analysis-catalog.md).
 
@@ -170,7 +174,7 @@ Every fact the report can cite, and the facts each rule reads, are listed in the
 Reports for all six scenarios, in English and Italian, are in [`examples/`](examples/). Below, the first page of the pass-through case and the monthly flows chart from the same report: the spike at the end is the money collected and wired abroad.
 
 <p align="center">
-  <img src="docs/images/report_first_page.png" width="48%" alt="First page of the pass-through report: case summary, risk indicator, red flags, and the alert in context">
+  <img src="docs/images/report_first_page.png" width="48%" alt="First page of the pass-through report: case summary, risk indicator, red flags, data quality, and the alert in context">
   <img src="docs/images/monthly_flows.png" width="48%" alt="Monthly inflows and outflows of the pass-through case, with a spike in the last two months">
 </p>
 
@@ -226,6 +230,18 @@ Even though all data is synthetic, the pipeline is designed as it would be for r
 
 These measures follow privacy-by-design principles such as those in GDPR Article 25. They are an engineering demonstration, not a legal compliance assessment. Where each one is enforced: [privacy controls](docs/privacy.md).
 
+## Production controls
+
+The pipeline rejects what would corrupt the figures, warns about what limits them, and never lets missing data read as absence of risk.
+
+- **Input validation.** Bundles with broken references, non-EUR amounts, or bookings outside an account's life are rejected with every problem listed, by field, without echoing personal data.
+- **Data-quality warnings.** Short history, empty descriptions, unenriched records, excessive LLM fallback, duplicate bookings, and cards used outside their validity open the report in a *Data quality* section.
+- **Missing is not zero.** Facts carry a status (`measured`, `no_baseline`, `no_activity`, `unavailable`); rules use three-valued logic and report what they could not decide.
+- **Audit trail.** Every report records the tool version, the model, and SHA-256 fingerprints of the case bundle, the rules, and the prompts, so it can be reproduced.
+- **Pipeline gate.** `aml-report check --strict` exits 1 on any issue and 2 on an invalid bundle, so a batch run can route those cases to manual handling.
+
+What is in place and what a bank deployment would still need: [production readiness](docs/production-readiness.md).
+
 ## Evaluation
 
 The synthetic generator provides ground-truth labels, so LLM quality is measured, not assumed:
@@ -265,6 +281,7 @@ From the [full report](docs/evaluation.md): 6 synthetic cases, 324 descriptions,
 | [LLM tasks](docs/llm-tasks.md) | Tasks, answer checks, batching, fallback, backends |
 | [Analysis catalogue](docs/analysis-catalog.md) | Every fact, and the facts each rule reads |
 | [Privacy controls](docs/privacy.md) | Each control and what enforces it |
+| [Production readiness](docs/production-readiness.md) | Input validation, data-quality checks, missing-data semantics, audit trail, remaining gaps |
 | [Evaluation](docs/evaluation.md) | Latest metrics, generated by `aml-report evaluate` |
 | [Implementation plan](docs/implementation-plan.md) | Phases, decisions, pre-publication checklist |
 
@@ -298,6 +315,7 @@ aml-prototype/
 │   ├── llm/                  # Backend clients: Ollama, Anthropic
 │   ├── analytics/            # One analyser per fact family
 │   ├── rules/                # Rule engine and illustrative rules (rules.toml)
+│   ├── controls/             # Data-quality checks, run manifests (thresholds.toml)
 │   ├── report/               # DOCX builder, sections, charts, en/it wording
 │   ├── evaluation/           # Metrics against the labels, Markdown report
 │   └── cli/                  # aml-report commands
@@ -333,6 +351,10 @@ uv run aml-report analyze data/samples/structuring_cash.json --output output/fac
 uv run aml-report assess data/samples/structuring_cash.json
 # risk high (score 3); flags: RF-STRUCTURING
 
+# Check data quality and whether every rule can be decided; --strict exits 1 on any issue
+uv run aml-report check data/samples/structuring_cash.json --enricher baseline --strict
+# CASE-000003: 0 data-quality issues, 0 rules undecided
+
 # Write the Word report (output/CASE-000003_en.docx), with the default local model
 uv run aml-report generate data/samples/structuring_cash.json
 
@@ -365,7 +387,7 @@ All phases of the [implementation plan](docs/implementation-plan.md) are complet
 
 ## Limitations
 
-- A prototype for demonstration, not a production system.
+- A prototype for demonstration, not a production system: [production readiness](docs/production-readiness.md) lists the controls in place and the gaps.
 - Rules and thresholds are illustrative, and no real jurisdiction is designated as high risk.
 - Sanctions screening, adverse-media search, and PEP list matching are out of scope.
 - Validation blocks invented values, but not every LLM error: a real name can still be assigned to the wrong role (payer instead of beneficiary). A human must always review the report.

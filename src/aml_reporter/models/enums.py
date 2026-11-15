@@ -103,6 +103,18 @@ class Outcome(StrEnum):
     REQUEST_INFORMATION = "request_information"  # Ask the customer for supporting documents
 
 
+class FactStatus(StrEnum):
+    """Whether a fact holds a measured value and, when it does not, why.
+
+    A missing measure is never written as zero: zero is a real value that rules compare.
+    """
+
+    MEASURED = "measured"  # The value is the computed result
+    NO_BASELINE = "no_baseline"  # Zero reference, positive observation: above any multiple
+    NO_ACTIVITY = "no_activity"  # Nothing to measure on either side, e.g. a share of no inflows
+    UNAVAILABLE = "unavailable"  # The case lacks the data, e.g. a history too short for a baseline
+
+
 class FactCategory(StrEnum):
     """Report area a fact belongs to."""
 

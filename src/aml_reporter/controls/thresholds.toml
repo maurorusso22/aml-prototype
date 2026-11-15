@@ -1,0 +1,10 @@
+# Tolerances of the data-quality checks. Like the red-flag thresholds, they are illustrative:
+# a real deployment would set them with the people who own the data and the model.
+
+# Share of enriched records that may fall back to the rule-based extractor before the report
+# warns that the LLM-derived figures are less reliable
+max_fallback_share = 0.2
+
+# Share of transfers and direct debits that may have an empty description before the report
+# warns that enrichment could not read them
+max_undescribed_share = 0.0

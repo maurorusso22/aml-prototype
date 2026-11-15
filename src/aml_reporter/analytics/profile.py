@@ -14,7 +14,9 @@ DAYS_PER_YEAR = 365  # Used to annualise flows observed over the look-back perio
 def profile_consistency(context: AnalysisContext) -> list[Fact]:
     """Compare annualised inflows with the income or turnover declared at onboarding.
 
-    Individuals are measured on salary inflows, businesses on invoice inflows.
+    Individuals are measured on salary inflows, businesses on invoice inflows. Flows are
+    annualised over the observed history, so a new relationship is not diluted over months
+    without an account; a declared figure of 0 makes any inflow exceed it (`no_baseline`).
 
     Args:
         context: Case under analysis.
@@ -23,8 +25,7 @@ def profile_consistency(context: AnalysisContext) -> list[Fact]:
         Facts F-PROF-001 to F-PROF-004.
     """
     facts = Facts("PROF", FactCategory.PROFILE_CONSISTENCY)
-    bundle, customer = context.bundle, context.bundle.customer
-    period_days = (bundle.period_end - bundle.period_start).days + 1
+    customer = context.bundle.customer
     if isinstance(customer, IndividualCustomer):
         declared, purpose, word = customer.declared_annual_income, PaymentPurpose.SALARY, "salary"
     else:
@@ -35,15 +36,15 @@ def profile_consistency(context: AnalysisContext) -> list[Fact]:
         )
 
     def annualise(amount: Decimal) -> Decimal:
-        """Scale an amount observed over the period to one year.
+        """Scale an amount observed over the history to one year.
 
         Args:
-            amount: Amount observed over the look-back period.
+            amount: Amount observed since the start of the observed history.
 
         Returns:
             The yearly equivalent.
         """
-        return amount * DAYS_PER_YEAR / period_days
+        return amount * DAYS_PER_YEAR / context.observed_days
 
     inflows = context.flows(Direction.INBOUND)
     expected = [

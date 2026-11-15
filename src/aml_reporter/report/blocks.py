@@ -9,7 +9,7 @@ from docx.shared import Cm, Pt
 from docx.table import Table
 from docx.text.paragraph import Paragraph
 
-from ..models import Fact
+from ..models import Fact, FactStatus
 from .data import is_enriched
 from .document import MUTED
 from .i18n import Catalog
@@ -34,6 +34,26 @@ def paragraph(document: Document, text: str, *, italic: bool = False) -> Paragra
     added = document.add_paragraph()
     added.add_run(text).italic = italic
     return added
+
+
+def fact_sentence(catalog: Catalog, key: str, multiple: Fact) -> str:
+    """Write a sentence built around a multiple, or a plain statement when it has no value.
+
+    A template such as "inflows reached {multiple} their usual level" reads wrongly with a
+    missing value, so an unmeasured fact falls back to "label: reason [id]".
+
+    Args:
+        catalog: Wording of the report language.
+        key: Template with a `{multiple}` placeholder.
+        multiple: Fact holding the multiple.
+
+    Returns:
+        The sentence.
+    """
+    if multiple.status is FactStatus.MEASURED:
+        return catalog.t(key, multiple=catalog.value(multiple))
+    label, value = catalog.label(multiple), catalog.value(multiple)
+    return catalog.t("fact_sentence", label=label, value=value, fact_id=multiple.id)
 
 
 def note(document: Document, text: str) -> None:

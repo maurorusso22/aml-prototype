@@ -11,14 +11,15 @@ from .base import DomainModel
 from .case_checks import find_reference_problems
 from .customer import Customer
 from .formats import CaseId
+from .ledger_checks import find_ledger_problems
 from .transaction import Transaction
 
 
 class CaseBundle(DomainModel):
     """Everything known about an alert: the alert itself, the customer, and their activity.
 
-    Besides field-level validation, the bundle checks that every cross-reference resolves, so
-    downstream stages can trust IDs without defensive lookups.
+    Besides field-level validation, the bundle checks that every cross-reference resolves and
+    that every amount can be added up, so downstream stages can trust it without defensive code.
     """
 
     case_id: CaseId = Field(description="Case identifier.")
@@ -33,13 +34,13 @@ class CaseBundle(DomainModel):
     )
 
     @model_validator(mode="after")
-    def check_references(self) -> Self:
-        """Report every broken cross-reference in a single error.
+    def check_consistency(self) -> Self:
+        """Report every broken cross-reference and ledger problem in a single error.
 
         Returns:
             The validated case bundle.
         """
-        problems = find_reference_problems(self)
+        problems = [*find_reference_problems(self), *find_ledger_problems(self)]
         if problems:
             raise ValueError("; ".join(problems))
         return self

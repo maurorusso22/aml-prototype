@@ -3,13 +3,15 @@
 import getpass
 from datetime import UTC, datetime
 from pathlib import Path
+from typing import Any
 
 import pytest
 from docx import Document
 from docx.document import Document as DocxDocument
 
 from aml_reporter.enrichment import BaselineEnricher
-from aml_reporter.report import build_report, save_report
+from aml_reporter.models import CaseBundle
+from aml_reporter.report import build_report, prepare_report, render_report, save_report
 from aml_reporter.report.catalogs import load_catalog
 from aml_reporter.report.document import AUTHOR
 from aml_reporter.synthetic import GeneratedCase
@@ -25,9 +27,11 @@ HEADINGS = (  # Catalogue keys of the section headings every report must contain
     "h_geography",
     "h_flags",
     "h_profile",
+    "h_quality",
     "h_assessment",
     "h_appendix",
     "h_fact_index",
+    "h_audit",
 )
 
 
@@ -97,3 +101,44 @@ def test_every_page_says_synthetic(pass_through_case: GeneratedCase, tmp_path: P
     header = document.sections[0].header.paragraphs[0].text
     assert header == load_catalog("it").t("header")
     assert "sintetici" in header
+
+
+@pytest.mark.parametrize("lang", ["en", "it"])
+def test_report_states_what_limits_the_findings(
+    case_data: dict[str, Any], tmp_path: Path, lang: str
+) -> None:
+    """Missing history and descriptions show as issues, an undecided rule, and unmeasured facts.
+
+    Args:
+        case_data: Raw fixture bundle.
+        tmp_path: Temporary folder.
+        lang: Report language.
+    """
+    case_data["period_start"] = "2026-07-01"
+    case_data["transactions"][0]["description"] = ""
+    bundle = CaseBundle.model_validate(case_data)
+    enrichments = BaselineEnricher().enrich(bundle.transactions)
+    data = prepare_report(bundle, enrichments, "baseline", generated_at=GENERATED_AT)
+    path = save_report(render_report(data, lang), tmp_path / f"limits_{lang}.docx")
+    document = Document(str(path))
+    catalog = load_catalog(lang)
+    text = "\n".join(p.text for p in document.paragraphs)
+    cells = " ".join(c.text for table in document.tables for row in table.rows for c in row.cells)
+    assert catalog.t("h_unevaluated") in text
+    assert catalog.t("unevaluated_one", rules="RF-OUTFLOW-SPIKE") in text
+    assert catalog.t("no_flags_incomplete") in text
+    assert catalog.t("dq_short_history", days=2, minimum=30) in text
+    assert catalog.t("dq_undescribed", count=1, total=3) in text
+    assert catalog.t("flag_listing", ids="TX-000001") in text
+    assert catalog.word("unavailable") in cells
+    assert "RF-OUTFLOW-SPIKE" in text + cells
+    assert data.manifest.bundle_sha256 in cells
+
+
+def test_clean_case_says_so(pass_through_case: GeneratedCase, tmp_path: Path) -> None:
+    """A complete synthetic case reports no data-quality issue and no undecided rule."""
+    document = write_and_reopen(pass_through_case, "en", tmp_path)
+    text = "\n".join(p.text for p in document.paragraphs)
+    catalog = load_catalog("en")
+    assert catalog.t("quality_none") in text
+    assert catalog.t("h_unevaluated") not in text

@@ -3,6 +3,7 @@
 from dataclasses import dataclass
 from datetime import datetime
 
+from ..controls import QualityIssue, RunManifest
 from ..models import CaseBundle, Enrichment, Fact, FactSheet, RiskAssessment
 
 ENRICHED_PREFIXES = ("F-PURP-", "F-CPTY-", "F-GEO-")  # Fact areas built on enrichment
@@ -13,16 +14,29 @@ ENRICHED_FACTS = frozenset(  # Single facts built on enrichment, outside those a
 
 @dataclass(frozen=True)
 class ReportData:
-    """A case with its enrichments, facts, assessment, and charts."""
+    """A case with its enrichments, facts, assessment, controls, and charts.
+
+    Everything here is independent of the report language, so one instance serves every one.
+    """
 
     bundle: CaseBundle
     enrichments: tuple[Enrichment, ...]
     sheet: FactSheet
     assessment: RiskAssessment
-    enricher: str
-    generated_at: datetime
+    quality: tuple[QualityIssue, ...]
+    manifest: RunManifest
     flows_chart: bytes
     purposes_chart: bytes
+
+    @property
+    def enricher(self) -> str:
+        """Name of the enricher that read the descriptions."""
+        return self.manifest.enricher
+
+    @property
+    def generated_at(self) -> datetime:
+        """When the report was generated."""
+        return self.manifest.generated_at
 
     def facts(self, *prefixes: str) -> list[Fact]:
         """Select facts by identifier prefix, in the order of the prefixes given.

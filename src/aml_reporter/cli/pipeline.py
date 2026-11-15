@@ -1,25 +1,28 @@
 """Commands that run the pipeline on one case bundle, step by step."""
 
 from collections import Counter
-from pathlib import Path
 from typing import Annotated
 
 import typer
 from pydantic import TypeAdapter
 
 from ..analytics import build_fact_sheet
+from ..controls import CaseCheck, check_quality, load_thresholds
 from ..enrichment import enrichable
 from ..models import Enrichment
 from ..rules import assess, load_rules
+from ..settings import Settings
 from .app import (
     CaseFile,
     EnricherOption,
     OutputOption,
+    RulesOption,
     app,
     choose_enricher,
     read_bundle,
     write_json,
 )
+from .checks import warn
 
 ENRICHMENTS = TypeAdapter(list[Enrichment])  # Serialises enrichment lists to JSON
 
@@ -69,12 +72,12 @@ def analyze(
 def assess_case(
     case_file: CaseFile,
     enricher: EnricherOption = None,
-    rules: Annotated[
-        Path | None, typer.Option(help="TOML rule file; packaged rules if omitted.")
-    ] = None,
+    rules: RulesOption = None,
     output: OutputOption = None,
 ) -> None:
     """Enrich one case bundle, compute its facts, and evaluate the red-flag rules.
+
+    Data-quality issues and undecided rules are printed as warnings on stderr.
 
     Args:
         case_file: Case bundle to read.
@@ -82,9 +85,13 @@ def assess_case(
         rules: Rule file; the packaged illustrative rules when omitted.
         output: File to write; standard output when omitted.
     """
-    chosen, ruleset = choose_enricher(enricher), load_rules(rules)
+    name = enricher or Settings.from_env().enricher
+    chosen, ruleset = choose_enricher(name), load_rules(rules)
     bundle = read_bundle(case_file)
-    assessment = assess(build_fact_sheet(bundle, chosen.enrich(bundle.transactions)), ruleset)
+    enrichments = chosen.enrich(bundle.transactions)
+    assessment = assess(build_fact_sheet(bundle, enrichments), ruleset)
     write_json(assessment.model_dump_json(indent=2), output)
+    issues = check_quality(bundle, enrichments, name, load_thresholds())
+    warn(CaseCheck(case_id=bundle.case_id, issues=issues, unevaluated=assessment.unevaluated))
     flags = ", ".join(flag.rule_id for flag in assessment.flags) or "none"
     typer.echo(f"risk {assessment.level} (score {assessment.score}); flags: {flags}", err=True)

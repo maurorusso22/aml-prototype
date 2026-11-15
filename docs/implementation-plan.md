@@ -136,6 +136,7 @@ Run before every push to the public repository:
 
 - **Default report language.** English; Italian with `--lang it`. `aml-report examples` writes both.
 - **Local model.** `llama3.1:8b` through Ollama, overridable with `AML_OLLAMA_MODEL`; its results are in `docs/evaluation.md`.
+- **Missing data.** Facts carry a status instead of a zero when a measure cannot be computed, rules report what they cannot decide, and invalid ledgers are rejected; see `docs/production-readiness.md`.
 
 ## Open points
 

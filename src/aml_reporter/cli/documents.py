@@ -5,9 +5,11 @@ from typing import Annotated
 
 import typer
 
-from ..report import LANGUAGES, build_report, save_report
+from ..controls import CaseCheck, model_name
+from ..report import LANGUAGES, prepare_report, render_report, save_report
 from ..settings import Settings
 from .app import CaseFile, EnricherOption, app, choose_enricher, read_bundle
+from .checks import warn
 from .data import DEFAULT_DATA_DIR
 
 DEFAULT_REPORT_DIR = Path("output")  # Git-ignored folder for generated reports
@@ -25,6 +27,8 @@ def generate(
 ) -> None:
     """Enrich a case bundle, analyse it, raise red flags, and write the report.
 
+    Data-quality issues and undecided rules are printed as warnings and written in the report.
+
     Args:
         case_file: Case bundle to read.
         enricher: Enricher name; the AML_ENRICHER setting when omitted.
@@ -36,9 +40,15 @@ def generate(
     name = enricher or Settings.from_env().enricher
     chosen = choose_enricher(name)
     bundle = read_bundle(case_file)
-    document = build_report(bundle, chosen.enrich(bundle.transactions), name, lang)
+    enrichments = chosen.enrich(bundle.transactions)
+    data = prepare_report(bundle, enrichments, name, model=model_name(chosen))
+    warn(
+        CaseCheck(
+            case_id=bundle.case_id, issues=data.quality, unevaluated=data.assessment.unevaluated
+        )
+    )
     path = output or DEFAULT_REPORT_DIR / f"{bundle.case_id}_{lang}.docx"
-    typer.echo(save_report(document, path))
+    typer.echo(save_report(render_report(data, lang), path))
 
 
 @app.command(help="Write the example reports: every sample case, in every language.")
@@ -47,7 +57,7 @@ def examples(
     data_dir: Annotated[Path, typer.Option(help="Folder holding samples/.")] = DEFAULT_DATA_DIR,
     out_dir: Annotated[Path, typer.Option(help="Folder for the reports.")] = DEFAULT_EXAMPLES_DIR,
 ) -> None:
-    """Enrich each sample case once, then write its report in every language.
+    """Enrich and analyse each sample case once, then write its report in every language.
 
     Args:
         enricher: Enricher name; the AML_ENRICHER setting when omitted.
@@ -58,7 +68,9 @@ def examples(
     chosen = choose_enricher(name)
     for sample in sorted((data_dir / "samples").glob("*.json")):
         bundle = read_bundle(sample)
-        enrichments = chosen.enrich(bundle.transactions)
+        data = prepare_report(
+            bundle, chosen.enrich(bundle.transactions), name, model=model_name(chosen)
+        )
         for lang in LANGUAGES:
-            document = build_report(bundle, enrichments, name, lang)
-            typer.echo(save_report(document, out_dir / f"{sample.stem}_{lang}.docx"))
+            path = out_dir / f"{sample.stem}_{lang}.docx"
+            typer.echo(save_report(render_report(data, lang), path))

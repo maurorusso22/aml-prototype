@@ -7,7 +7,7 @@ import re
 from dataclasses import dataclass
 from datetime import date
 
-from ..models import Fact
+from ..models import Fact, FactStatus
 
 COUNTRY_FACT = re.compile(r"^F-GEO-1\d\d$")  # Per-country facts, whose label embeds the country
 
@@ -116,9 +116,12 @@ class Catalog:
             fact: Fact to write.
 
         Returns:
-            Text such as `€9,346.91`, `81.9%`, `2.97×`, or `13 days`.
+            Text such as `€9,346.91`, `81.9%`, `2.97×`, or `13 days`; for a fact without a
+            value, the localised reason, such as `n/a (no activity)`.
         """
         value, unit = fact.value, fact.unit
+        if fact.status is not FactStatus.MEASURED or value is None:
+            return self.word(str(fact.status))
         if isinstance(value, bool):
             return self.word("yes" if value else "no")
         if isinstance(value, str):

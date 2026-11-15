@@ -10,17 +10,21 @@ import pytest
 
 from aml_reporter.analytics import build_fact_sheet
 from aml_reporter.enrichment import BaselineEnricher
-from aml_reporter.models import CaseBundle, FactSheet
+from aml_reporter.models import CaseBundle, FactSheet, FactStatus
 
-EXPECTED = [  # (fact id, expected value), one or more per analyser
+EXPECTED = [  # (fact id, expected value or status), one or more per analyser
     ("F-ALERT-001", 9500.0),
     ("F-ALERT-002", "inbound cash deposit"),
     ("F-ALERT-003", 0),
-    ("F-ALERT-005", 0.0),
+    ("F-ALERT-004", FactStatus.NO_ACTIVITY),
+    ("F-ALERT-005", FactStatus.NO_BASELINE),
+    ("F-ALERT-006", FactStatus.NO_ACTIVITY),
     ("F-FLOW-001", 11600.0),
     ("F-FLOW-002", 9795.3),
     ("F-FLOW-003", 1804.7),
     ("F-FLOW-004", 953.42),
+    ("F-FLOW-006", FactStatus.NO_BASELINE),
+    ("F-FLOW-008", FactStatus.NO_BASELINE),
     ("F-CASH-002", 1),
     ("F-CASH-004", 1),
     ("F-CASH-007", 0.819),
@@ -48,6 +52,7 @@ EXPECTED = [  # (fact id, expected value), one or more per analyser
     ("F-TIME-001", 9),
     ("F-TIME-002", 9),
     ("F-TIME-003", 2),
+    ("F-TIME-006", False),
 ]
 
 
@@ -67,14 +72,18 @@ def sheet(case_data: dict[str, Any]) -> FactSheet:
 
 @pytest.mark.parametrize(("fact_id", "expected"), EXPECTED)
 def test_fact_values(sheet: FactSheet, fact_id: str, expected: object) -> None:
-    """Each fact holds the value computed by hand.
+    """Each fact holds the value computed by hand, or no value and the reason why.
 
     Args:
         sheet: Fact sheet of the fixture.
         fact_id: Fact to check.
-        expected: Value computed by hand.
+        expected: Value computed by hand, or the status of a fact without a value.
     """
-    assert sheet.get(fact_id).value == expected
+    fact = sheet.get(fact_id)
+    if isinstance(expected, FactStatus):
+        assert (fact.value, fact.status) == (None, expected)
+    else:
+        assert (fact.value, fact.status) == (expected, FactStatus.MEASURED)
 
 
 def test_evidence_points_to_the_right_transactions(sheet: FactSheet) -> None:

@@ -2,7 +2,7 @@
 
 from docx.document import Document
 
-from ..blocks import facts_table, figure, note, paragraph
+from ..blocks import fact_sentence, facts_table, figure, note, paragraph
 from ..data import ReportData
 from ..i18n import Catalog
 
@@ -21,9 +21,9 @@ def behaviour(document: Document, data: ReportData, catalog: Catalog) -> None:
         "behaviour_intro",
         inflows=catalog.value(sheet.get("F-FLOW-001")),
         outflows=catalog.value(sheet.get("F-FLOW-002")),
-        multiple=catalog.value(sheet.get("F-FLOW-006")),
     )
-    paragraph(document, intro)
+    multiple = sheet.get("F-FLOW-006")
+    paragraph(document, f"{intro} {fact_sentence(catalog, 'behaviour_multiple', multiple)}")
     figure(document, data.flows_chart, catalog.t("chart_flows"))
     facts_table(document, data.facts("F-FLOW-", "F-CASH-", "F-CHAN-", "F-TIME-"), catalog)
     figure(document, data.purposes_chart, catalog.t("chart_purposes"))
@@ -77,7 +77,6 @@ def profile(document: Document, data: ReportData, catalog: Catalog) -> None:
         catalog: Wording of the report language.
     """
     document.add_heading(catalog.t("h_profile"), level=1)
-    multiple = catalog.value(data.sheet.get("F-PROF-002"))
-    paragraph(document, catalog.t("profile_intro", multiple=multiple))
+    paragraph(document, fact_sentence(catalog, "profile_intro", data.sheet.get("F-PROF-002")))
     facts_table(document, data.facts("F-PROF-"), catalog)
     note(document, catalog.t("enriched_note"))
