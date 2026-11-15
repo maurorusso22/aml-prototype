@@ -59,6 +59,26 @@ INVALID_BUNDLES = [  # (in-place mutation, expected error text) pairs
         id="transaction-unknown-account",
     ),
     pytest.param(
+        lambda d: d["transactions"][0].update(currency="USD"),
+        "transaction TX-000001 is in USD, not EUR",
+        id="foreign-currency-transaction",
+    ),
+    pytest.param(
+        lambda d: d["accounts"][0].update(currency="CHF"),
+        "account AC-000001 is in CHF, not EUR",
+        id="foreign-currency-account",
+    ),
+    pytest.param(
+        lambda d: d["accounts"][0].update(opened_on="2026-09-01"),
+        "transaction TX-000001 booked on 2026-08-27, before account AC-000001 opened",
+        id="booked-before-opening",
+    ),
+    pytest.param(
+        lambda d: d["accounts"][0].update(status="closed", closed_on="2026-09-10"),
+        "transaction TX-000004 booked on 2026-09-15, after account AC-000001 closed",
+        id="booked-after-closing",
+    ),
+    pytest.param(
         lambda d: d["transactions"].append(dict(d["transactions"][0])),
         "duplicate transaction_id TX-000001",
         id="duplicate-transaction",
