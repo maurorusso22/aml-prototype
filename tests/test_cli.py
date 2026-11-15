@@ -120,6 +120,52 @@ def test_synth_rejects_unknown_scenarios(tmp_path: Path) -> None:
     assert not any(tmp_path.iterdir())
 
 
+def _fixture_with(tmp_path: Path, **changes: str) -> Path:
+    """Write the hand-written fixture bundle, with top-level fields changed, to a file.
+
+    Args:
+        tmp_path: Temporary folder.
+        **changes: Top-level fields to overwrite.
+
+    Returns:
+        Path of the written bundle.
+    """
+    case = json.loads((FIXTURES_DIR / "case_valid.json").read_text(encoding="utf-8"))
+    path = tmp_path / "case.json"
+    path.write_text(json.dumps(case | changes), encoding="utf-8")
+    return path
+
+
+def test_check_passes_a_clean_case(tmp_path: Path) -> None:
+    """`check --strict` exits 0 and writes an empty result for a complete case."""
+    RUNNER.invoke(app, ["synth", "--scenario", "pass_through", "--out-dir", str(tmp_path)])
+    bundle, output = tmp_path / "samples" / "pass_through.json", tmp_path / "check.json"
+    args = ["check", str(bundle), "--enricher", "baseline", "--strict", "--output", str(output)]
+    result = RUNNER.invoke(app, args)
+    assert result.exit_code == 0, result.output
+    assert json.loads(output.read_text(encoding="utf-8"))["issues"] == []
+
+
+def test_check_strict_fails_on_a_limited_case(tmp_path: Path) -> None:
+    """A short history is a warning, and `--strict` turns it into exit status 1."""
+    bundle = _fixture_with(tmp_path, period_start="2026-07-01")
+    lenient = RUNNER.invoke(app, ["check", str(bundle), "--enricher", "baseline"])
+    assert lenient.exit_code == 0, lenient.output
+    assert "RF-OUTFLOW-SPIKE could not be evaluated" in lenient.output
+    strict = RUNNER.invoke(app, ["check", str(bundle), "--enricher", "baseline", "--strict"])
+    assert strict.exit_code == 1
+    assert "Only 2 days of history" in strict.output
+
+
+def test_assess_warns_about_undecided_rules(tmp_path: Path) -> None:
+    """`assess` still writes the assessment, and warns that a rule could not be decided."""
+    bundle = _fixture_with(tmp_path, period_start="2026-07-01")
+    result = RUNNER.invoke(app, ["assess", str(bundle), "--enricher", "baseline"])
+    assert result.exit_code == 0, result.output
+    assert '"unevaluated"' in result.output
+    assert "warning: RF-OUTFLOW-SPIKE could not be evaluated" in result.output
+
+
 def test_invalid_bundles_are_rejected_without_their_values(tmp_path: Path) -> None:
     """A broken bundle fails with status 2, naming the problem but not the personal data."""
     case = json.loads((FIXTURES_DIR / "case_valid.json").read_text(encoding="utf-8"))
@@ -133,6 +179,13 @@ def test_invalid_bundles_are_rejected_without_their_values(tmp_path: Path) -> No
     assert "invalid case bundle" in message
     assert "tax_code" in message
     assert "SECRET-TAX-CODE" not in message
+
+
+def test_missing_bundles_are_reported(tmp_path: Path) -> None:
+    """A path that does not exist fails with a short message instead of a traceback."""
+    result = RUNNER.invoke(app, ["check", str(tmp_path / "none.json"), "--enricher", "baseline"])
+    assert result.exit_code == 2
+    assert "cannot read case bundle" in _plain(result.output)
 
 
 def _plain(output: str) -> str:

@@ -19,6 +19,9 @@ EnricherOption = Annotated[
     str | None, typer.Option(help="local, anthropic, or baseline; default AML_ENRICHER.")
 ]
 OutputOption = Annotated[Path | None, typer.Option(help="Write JSON here, not stdout.")]
+RulesOption = Annotated[
+    Path | None, typer.Option(help="TOML rule file; packaged rules if omitted.")
+]
 LISTED_PROBLEMS = 10  # Validation problems spelled out when a bundle is rejected; the rest counted
 
 

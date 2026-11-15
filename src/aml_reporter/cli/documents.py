@@ -5,10 +5,11 @@ from typing import Annotated
 
 import typer
 
-from ..controls import model_name
+from ..controls import CaseCheck, model_name
 from ..report import LANGUAGES, prepare_report, render_report, save_report
 from ..settings import Settings
 from .app import CaseFile, EnricherOption, app, choose_enricher, read_bundle
+from .checks import warn
 from .data import DEFAULT_DATA_DIR
 
 DEFAULT_REPORT_DIR = Path("output")  # Git-ignored folder for generated reports
@@ -26,6 +27,8 @@ def generate(
 ) -> None:
     """Enrich a case bundle, analyse it, raise red flags, and write the report.
 
+    Data-quality issues and undecided rules are printed as warnings and written in the report.
+
     Args:
         case_file: Case bundle to read.
         enricher: Enricher name; the AML_ENRICHER setting when omitted.
@@ -39,6 +42,11 @@ def generate(
     bundle = read_bundle(case_file)
     enrichments = chosen.enrich(bundle.transactions)
     data = prepare_report(bundle, enrichments, name, model=model_name(chosen))
+    warn(
+        CaseCheck(
+            case_id=bundle.case_id, issues=data.quality, unevaluated=data.assessment.unevaluated
+        )
+    )
     path = output or DEFAULT_REPORT_DIR / f"{bundle.case_id}_{lang}.docx"
     typer.echo(save_report(render_report(data, lang), path))
 
